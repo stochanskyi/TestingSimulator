@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BetterLinearLayout">
+        <attr name="bll_children_spacing" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="AspectRatioImageView">
+        <attr name="iv_aspect_ratio" format="string" />
+        <attr name="iv_aspect_ratio_base" format="enum">
+            <enum name="width" value="0" />
+            <enum name="height" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="AspectRatioFrameLayout">
+        <attr name="frame_aspect_ratio" format="string" />
+        <attr name="frame_aspect_ratio_base" format="enum">
+            <enum name="width" value="0" />
+            <enum name="height" value="1" />
+        </attr>
+    </declare-styleable>
+
+</resources>
