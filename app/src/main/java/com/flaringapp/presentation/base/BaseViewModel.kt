@@ -23,7 +23,7 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelContract, SafeCallHandl
     }
 
     override fun showError(message: String?) {
-        if (message?.takeIfNotEmpty() == null) return
+        if (message == null || message.isEmpty()) return
         errorData.value = message
     }
 

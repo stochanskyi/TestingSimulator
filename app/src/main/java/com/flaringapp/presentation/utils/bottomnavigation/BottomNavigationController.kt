@@ -5,7 +5,6 @@ import android.util.SparseArray
 import android.view.MenuItem
 import androidx.annotation.NavigationRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
@@ -224,7 +223,7 @@ class BottomNavigationController(
 
         fun link(itemId: Int, graphId: Int, tag: String) {
             menuToGraphIdMap[itemId] = graphId
-            graphIdToTagMap[graphId] = tag
+            graphIdToTagMap.put(graphId, tag)
             if (mFirstGraphId == null) {
                 mFirstGraphId = graphId
             }
