@@ -9,7 +9,7 @@ class ParametrizedCallAdapter<R, T>(
     private val adapter: CallAdapter<R, T>,
     private val dataCache: RequestDataCache,
     private val modifier: RequestModifier
-): CallAdapter<R, T> {
+) : CallAdapter<R, T> {
 
     override fun responseType(): Type {
         return adapter.responseType()

@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
-import com.flaringapp.presentation.base.BaseFragment
-import com.flaringapp.presentation.base.BaseViewModelContract
 
 abstract class ModelledFragment : BaseFragment {
 
@@ -16,14 +14,10 @@ abstract class ModelledFragment : BaseFragment {
 
     protected abstract val model: BaseViewModelContract
 
-    protected open val observeErrors: Boolean = true
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeModel()
-        if (observeErrors) {
-            model.observeErrors()
-        }
+        model.observeErrors()
     }
 
     protected open fun observeModel() {

@@ -10,6 +10,7 @@
         <attr name="iv_aspect_ratio_base" format="enum">
             <enum name="width" value="0" />
             <enum name="height" value="1" />
+            <enum name="auto" value="2" />
         </attr>
     </declare-styleable>
 
@@ -18,6 +19,7 @@
         <attr name="frame_aspect_ratio_base" format="enum">
             <enum name="width" value="0" />
             <enum name="height" value="1" />
+            <enum name="auto" value="2" />
         </attr>
     </declare-styleable>
 

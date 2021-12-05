@@ -23,8 +23,7 @@ abstract class BaseFragment : Fragment {
 
     protected open fun BaseViewModelContract.observeErrors() {
         errorData.observe(viewLifecycleOwner) {
-            context?.showMessageDialog(it)
+            handleErrorInternal(it)
         }
     }
-
 }

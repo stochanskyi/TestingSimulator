@@ -13,5 +13,4 @@ class TextProviderImpl(
     override fun getText(res: Int, vararg params: Any): CharSequence {
         return context.getString(res, *params)
     }
-
 }

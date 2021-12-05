@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.flaringapp.app.common.forEachIndexed
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
 typealias MenuToNavigationMap = LinkedHashMap<Int, Int>
 
@@ -99,13 +100,13 @@ class BottomNavigationController(
     }
 
     private fun BottomNavigationView.setupItemSelected() {
-        setOnNavigationItemSelectedListener(
+        setOnItemSelectedListener(
             BottomNavigationItemSelectedProcessor(selectedItemId)
         )
     }
 
     private inner class BottomNavigationItemSelectedProcessor(selectedItemId: Int) :
-        BottomNavigationView.OnNavigationItemSelectedListener {
+        NavigationBarView.OnItemSelectedListener {
 
         private val firstFragmentTag = mapping.firstTag
 
@@ -143,8 +144,8 @@ class BottomNavigationController(
     }
 
     private fun BottomNavigationView.setupItemReselected() {
-        setOnNavigationItemReselectedListener { item ->
-            if (tryToCloseExternalFragment()) return@setOnNavigationItemReselectedListener
+        setOnItemReselectedListener { item ->
+            if (tryToCloseExternalFragment()) return@setOnItemReselectedListener
 
             val newlySelectedItemTag = mapping.tagForItem(item.itemId)
 

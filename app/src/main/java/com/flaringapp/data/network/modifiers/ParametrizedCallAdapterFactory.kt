@@ -1,7 +1,11 @@
 package com.flaringapp.data.network.modifiers
 
+import com.flaringapp.data.network.modifiers.annotations.AppendApiKey
+import com.flaringapp.data.network.modifiers.annotations.WithoutApiKey
 import com.flaringapp.data.network.modifiers.modifier.ComplexRequestModifier
 import com.flaringapp.data.network.modifiers.modifier.RequestModifier
+import com.flaringapp.data.network.modifiers.modifier.RequestTokenAppender
+import com.flaringapp.data.network.modifiers.modifier.RequestTokenCleaner
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import java.lang.reflect.Type
@@ -32,8 +36,13 @@ class ParametrizedCallAdapterFactory(
 
     private fun createModifierFromAnnotations(annotations: Array<Annotation>): RequestModifier? {
         val modifiers = staticModifiers.toMutableList()
-//        annotations.forEach {
-//        }
+        annotations.forEach {
+            modifiers += when (it) {
+                is AppendApiKey -> RequestTokenAppender()
+                is WithoutApiKey -> RequestTokenCleaner()
+                else -> return@forEach
+            }
+        }
         if (modifiers.isEmpty()) return null
         return ComplexRequestModifier(
             modifiers.distinctBy { it.javaClass }

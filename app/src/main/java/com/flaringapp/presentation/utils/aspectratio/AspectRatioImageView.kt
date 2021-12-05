@@ -6,6 +6,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.use
 import androidx.core.text.isDigitsOnly
 import com.flaringapp.base.R
+import com.flaringapp.presentation.utils.aspectratio.AspectRatioResolvers.DOMINANT_AUTO_RESOLVER
+import com.flaringapp.presentation.utils.aspectratio.AspectRatioResolvers.DOMINANT_HEIGHT_RESOLVER
+import com.flaringapp.presentation.utils.aspectratio.AspectRatioResolvers.DOMINANT_WIDTH_RESOLVER
 
 class AspectRatioImageView @JvmOverloads constructor(
     context: Context,
@@ -14,50 +17,74 @@ class AspectRatioImageView @JvmOverloads constructor(
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     companion object {
-        private const val DOMINANT_WIDTH = 0
+        const val DOMINANT_WIDTH = 0
+        const val DOMINANT_HEIGHT = 1
+        const val DOMINANT_AUTO = 2
     }
 
     private var isAspectRatioEnabled = false
 
-    private var mAspectRatioWidth: Int = 1
-    private var mAspectRatioHeight: Int = 1
+    var aspectRatioWidth: Int = 1
+        private set
+    var aspectRatioHeight: Int = 1
+        private set
 
-    private var isWidthDominant = true
+    private var sizeResolver: SizeResolver = DOMINANT_AUTO_RESOLVER
 
     init {
+        initAttrs(attrs, defStyleAttr)
+
+        updateSizeResolverAspectRatio()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        if (!isAspectRatioEnabled) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            return
+        }
+
+        val size = sizeResolver.resolve(widthMeasureSpec, heightMeasureSpec)
+
+        val finalWidthSpec = MeasureSpec.makeMeasureSpec(size.width, MeasureSpec.EXACTLY)
+        val finalHeightSpec = MeasureSpec.makeMeasureSpec(size.height, MeasureSpec.EXACTLY)
+
+        super.onMeasure(finalWidthSpec, finalHeightSpec)
+    }
+
+    fun setAspectRatio(width: Int, height: Int) {
+        aspectRatioWidth = width
+        aspectRatioHeight = height
+
+        isAspectRatioEnabled = true
+
+        updateSizeResolverAspectRatio()
+    }
+
+    private fun updateSizeResolverAspectRatio() {
+        sizeResolver.aspectRatioWidth = aspectRatioWidth
+        sizeResolver.aspectRatioHeight = aspectRatioHeight
+    }
+
+    private fun initAttrs(attrs: AttributeSet?, defStyleAttr: Int) {
         context.obtainStyledAttributes(
             attrs,
             R.styleable.AspectRatioImageView,
             defStyleAttr,
             0
         ).use {
-            val aspectRatioValue = it.getString(R.styleable.AspectRatioImageView_iv_aspect_ratio)
-                ?: return@use
+            val aspectRatioValue =
+                it.getString(R.styleable.AspectRatioImageView_iv_aspect_ratio)
+                    ?: return@use
 
             resolveAndSetupAspectRatio(aspectRatioValue)
 
             val aspectRatioBaseValue =
-                it.getInt(R.styleable.AspectRatioImageView_iv_aspect_ratio_base, DOMINANT_WIDTH)
+                it.getInt(
+                    R.styleable.AspectRatioImageView_iv_aspect_ratio_base,
+                    DOMINANT_WIDTH
+                )
             resolveAndSetupAspectRatioBase(aspectRatioBaseValue)
         }
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (!isAspectRatioEnabled) return
-
-        val finalWidth: Int
-        val finalHeight: Int
-
-        if (isWidthDominant) {
-            finalWidth = measuredWidth
-            finalHeight = finalWidth / mAspectRatioWidth * mAspectRatioHeight
-        } else {
-            finalHeight = measuredHeight
-            finalWidth = finalHeight * mAspectRatioWidth / mAspectRatioHeight
-        }
-
-        setMeasuredDimension(finalWidth, finalHeight)
     }
 
     private fun resolveAndSetupAspectRatio(value: String) {
@@ -70,14 +97,19 @@ class AspectRatioImageView @JvmOverloads constructor(
                 "Aspect ratio part '$it' is not a digit"
             )
         }
-        mAspectRatioWidth = parts[0].toInt()
-        mAspectRatioHeight = parts[1].toInt()
+        aspectRatioWidth = parts[0].toInt()
+        aspectRatioHeight = parts[1].toInt()
 
         isAspectRatioEnabled = true
     }
 
     private fun resolveAndSetupAspectRatioBase(value: Int) {
-        isWidthDominant = value == DOMINANT_WIDTH
+        sizeResolver = when (value) {
+            DOMINANT_WIDTH -> DOMINANT_WIDTH_RESOLVER
+            DOMINANT_HEIGHT -> DOMINANT_HEIGHT_RESOLVER
+            DOMINANT_AUTO -> DOMINANT_AUTO_RESOLVER
+            else -> throw IllegalStateException("Unsupported aspect ratio base type $value")
+        }
     }
 
 }

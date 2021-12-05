@@ -2,6 +2,8 @@ package com.flaringapp.data.network
 
 object NetworkConstants {
 
-    const val serverUrl: String = ""
+    const val API_KEY = "Authorization"
+
+    fun formatApiKey(token: String) = "Bearer $token"
 
 }

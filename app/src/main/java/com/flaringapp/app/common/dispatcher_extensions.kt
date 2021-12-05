@@ -1,6 +1,8 @@
 package com.flaringapp.app.common
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 suspend fun <T> withIComputationContext(block: suspend CoroutineScope.() -> T): T {
     return withContext(Dispatchers.Default, block)
@@ -37,3 +39,12 @@ fun CoroutineScope.launchOnUnconfined(
     start: CoroutineStart = CoroutineStart.DEFAULT,
     block: suspend CoroutineScope.() -> Unit
 ) = launch(Dispatchers.Unconfined, start, block)
+
+inline fun <T> Flow<T>.collectOn(
+    scope: CoroutineScope,
+    crossinline action: suspend (value: T) -> Unit
+) {
+    scope.launch {
+        collect(action)
+    }
+}

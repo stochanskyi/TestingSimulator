@@ -2,10 +2,10 @@ package com.flaringapp.data.common.call
 
 interface SafeCallHandler {
 
-    fun <T> handleCallResultError(error: CallResult.Error<T>): Boolean
+    fun <D> handleCallResultError(error: CallResult.Error<D>): Boolean
 
-    fun handleSafeCallError(): Boolean
+    fun handleSafeCallError(error: Throwable): Boolean
 
-    fun showError(message: String?)
+    fun showError(error: Throwable)
 
 }

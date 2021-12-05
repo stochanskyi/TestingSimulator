@@ -4,6 +4,6 @@ import androidx.lifecycle.LiveData
 
 interface BaseViewModelContract {
 
-    val errorData: LiveData<String>
+    val errorData: LiveData<Throwable>
 
 }

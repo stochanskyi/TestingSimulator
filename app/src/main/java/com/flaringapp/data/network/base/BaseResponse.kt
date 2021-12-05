@@ -16,4 +16,4 @@ class BaseResponse<T>(
     override val errorType: String? = null,
     @Json(name = "object")
     override val data: T? = null
-): ValidateableResponse<T>
+) : ValidateableResponse<T>

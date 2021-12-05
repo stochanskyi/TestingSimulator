@@ -1,30 +1,28 @@
 package com.flaringapp.presentation.base
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.flaringapp.app.common.takeIfNotEmpty
 import com.flaringapp.data.common.call.CallResult
 import com.flaringapp.data.common.call.SafeCallHandler
+import com.flaringapp.presentation.utils.common.SingleLiveEvent
 
 abstract class BaseViewModel : ViewModel(), BaseViewModelContract, SafeCallHandler {
 
-    override val errorData = MutableLiveData<String>()
+    override val errorData = SingleLiveEvent<Throwable>()
 
-    protected suspend fun <T> safeCall(action: suspend () -> CallResult<T>): T? {
+    protected suspend fun <D> safeCall(action: suspend () -> CallResult<D>): D? {
         return com.flaringapp.data.common.call.safeCall(this, action)
     }
 
-    override fun <T> handleCallResultError(error: CallResult.Error<T>): Boolean {
+    override fun <D> handleCallResultError(error: CallResult.Error<D>): Boolean {
         return false
     }
 
-    override fun handleSafeCallError(): Boolean {
+    override fun handleSafeCallError(error: Throwable): Boolean {
         return false
     }
 
-    override fun showError(message: String?) {
-        if (message == null || message.isEmpty()) return
-        errorData.value = message
+    override fun showError(error: Throwable) {
+        errorData.value = error
     }
 
 }

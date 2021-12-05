@@ -16,3 +16,6 @@ fun CoroutineScope.startLoadingTask(
         withMainContext { loadingData.value = false }
     }
 }
+
+val Job?.isRunning
+    get() = this != null && isActive

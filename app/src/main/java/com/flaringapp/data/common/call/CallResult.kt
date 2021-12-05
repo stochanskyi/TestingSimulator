@@ -1,40 +1,48 @@
 package com.flaringapp.data.common.call
 
-typealias CallResultList<T> = CallResult<List<T>>
+typealias CallResultList<D> = CallResult<List<D>>
 typealias CallResultNothing = CallResult<Unit?>
 
-private typealias Transformer<T, U> = T.() -> U
-private typealias InlineTransformer<T, U> = T.() -> CallResult<U>
+private typealias Transformer<D, O> = D.() -> O
+private typealias InlineTransformer<D, O> = suspend (D) -> CallResult<O>
 
-sealed class CallResult<T> {
+sealed class CallResult<D> {
 
-    class Success<T>(val data: T) : CallResult<T>()
+    class Success<D>(val data: D) : CallResult<D>()
 
-    open class Error<T>(
-        val errorType: String? = null,
-        val message: String
-    ) : CallResult<T>() {
+    open class Error<D>(
+        val exception: Throwable?,
+        val errorType: ErrorType? = null,
+    ) : CallResult<D>() {
 
-        constructor(message: String) : this(null, message)
+        constructor(message: String, errorType: ErrorType? = null) : this(
+            RuntimeException(message), errorType
+        )
     }
 
-    class UnknownError<T> : Error<T>("")
+    class UnknownError<D> : Error<D>(null)
 
-    fun <U> transform(transformer: Transformer<T, U>): CallResult<U> {
+    fun <O> transform(transformer: Transformer<D, O>): CallResult<O> {
         return when (this) {
             is Success -> Success(transformer(data))
-            is Error -> Error(errorType, message)
+            is Error -> Error(exception, errorType)
         }
     }
 
-    fun <U> transformInline(transformer: InlineTransformer<T, U>): CallResult<U> {
+    suspend fun <O> transformInline(transformer: InlineTransformer<D, O>): CallResult<O> {
         return when (this) {
             is Success -> transformer(data)
-            is Error -> Error(errorType, message)
+            is Error -> Error(exception, errorType)
         }
     }
 
-    fun doOnSuccess(action: (T) -> Unit) = apply {
+    fun doOnSuccess(action: (D) -> Unit) = apply {
+        if (this is Success) {
+            action(data)
+        }
+    }
+
+    suspend fun doOnSuccessSuspend(action: suspend (D) -> Unit) = apply {
         if (this is Success) {
             action(data)
         }
@@ -46,19 +54,25 @@ sealed class CallResult<T> {
         }
     }
 
+    suspend fun doOnErrorSuspend(action: suspend () -> Unit) = apply {
+        if (this is Error) {
+            action()
+        }
+    }
+
     fun ignoreData(): CallResultNothing {
         return when (this) {
             is Success -> Success(Unit)
-            is Error -> Error(errorType, message)
+            is Error -> Error(exception, errorType)
         }
     }
 
     companion object {
-        suspend fun <T> anySuccess(
-            specificError: Error<T>.() -> Boolean,
-            noSuccess: () -> CallResult<T>,
-            vararg sources: suspend () -> CallResult<T>,
-        ): CallResult<T> {
+        suspend fun <D> anySuccess(
+            specificError: Error<D>.() -> Boolean,
+            noSuccess: () -> CallResult<D>,
+            vararg sources: suspend () -> CallResult<D>,
+        ): CallResult<D> {
             sources.forEach {
                 when (val callResult = it()) {
                     is Success<*> -> return callResult
@@ -72,27 +86,27 @@ sealed class CallResult<T> {
     }
 }
 
-fun <T, U> CallResult<List<T>>.transformList(transformer: Transformer<T, U>) = transform {
+fun <D, O> CallResult<List<D>>.transformList(transformer: Transformer<D, O>) = transform {
     map { it.transformer() }
 }
 
-fun <T, U> CallResult<List<T>>.transformListNotNull(
-    transformer: Transformer<T, U?>
-): CallResult<List<U>> = transform {
+fun <D, O> CallResult<List<D>>.transformListNotNull(
+    transformer: Transformer<D, O?>
+): CallResult<List<O>> = transform {
     mapNotNull { it.transformer() }
 }
 
 val CallResult<*>.isSuccess: Boolean
     get() = this is CallResult.Success
 
-val <T> CallResult<T>.dataIfSuccess: T?
+val <D> CallResult<D>.dataIfSuccess: D?
     get() = if (this is CallResult.Success) data else null
 
-fun <T> CallResult<*>.castedError(): CallResult.Error<T>? {
+fun <D> CallResult<*>.castedError(): CallResult.Error<D>? {
     if (this !is CallResult.Error) return null
-    return CallResult.Error(errorType, message)
+    return CallResult.Error(exception, errorType)
 }
 
-fun <T> CallResult.Error<*>.castedError(): CallResult.Error<T> {
-    return CallResult.Error(errorType, message)
+fun <D> CallResult.Error<*>.castedError(): CallResult.Error<D> {
+    return CallResult.Error(exception, errorType)
 }

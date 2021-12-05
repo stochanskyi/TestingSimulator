@@ -14,14 +14,10 @@ abstract class ModelledDialog : BaseDialog {
 
     protected abstract val model: BaseViewModelContract
 
-    protected open val observeErrors: Boolean = true
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeModel()
-        if (observeErrors) {
-            model.observeErrors()
-        }
+        model.observeErrors()
     }
 
     protected open fun observeModel() {

@@ -3,8 +3,6 @@ package com.flaringapp.presentation.base
 import android.os.Bundle
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
-import com.flaringapp.presentation.base.BaseActivity
-import com.flaringapp.presentation.base.BaseViewModelContract
 
 abstract class ModelledActivity : BaseActivity {
 
@@ -15,14 +13,10 @@ abstract class ModelledActivity : BaseActivity {
 
     protected abstract val model: BaseViewModelContract
 
-    protected open val observeErrors: Boolean = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observeModel()
-        if (observeErrors) {
-            model.observeErrors()
-        }
+        model.observeErrors()
     }
 
     protected open fun observeModel() {

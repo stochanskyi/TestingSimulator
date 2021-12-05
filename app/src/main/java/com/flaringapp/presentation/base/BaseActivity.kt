@@ -21,8 +21,7 @@ abstract class BaseActivity : AppCompatActivity {
 
     protected open fun BaseViewModelContract.observeErrors() {
         errorData.observe(this@BaseActivity) {
-            showMessageDialog(it)
+            supportFragmentManager.handleErrorInternal(it)
         }
     }
-
 }
