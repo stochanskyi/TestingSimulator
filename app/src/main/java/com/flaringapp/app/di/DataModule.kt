@@ -8,6 +8,8 @@ import com.flaringapp.data.storage.DataStorage
 import com.flaringapp.data.storage.DataStorageImpl
 import com.flaringapp.data.text.TextProvider
 import com.flaringapp.data.text.TextProviderImpl
+import com.flaringapp.data.usecase.auth.LoginUseCase
+import com.flaringapp.data.usecase.auth.UserLoginUseCase
 import org.koin.dsl.module
 
 val DataModule = module {
@@ -19,5 +21,7 @@ val DataModule = module {
     single<ColorProvider> { ColorProviderImpl(get()) }
 
     single<DateTimeFormats> { DateTimeFormatsImpl() }
+
+    factory<LoginUseCase> { UserLoginUseCase() }
 
 }

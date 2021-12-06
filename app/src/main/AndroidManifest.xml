@@ -16,13 +16,16 @@
         android:theme="@style/Theme.Base">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.flaringapp.presentation.features.auth.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".MainActivity" />
+
     </application>
 
 </manifest>
