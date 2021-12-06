@@ -1,10 +1,7 @@
 package com.flaringapp.app
 
 import android.app.Application
-import com.flaringapp.app.di.DataModule
-import com.flaringapp.app.di.NetworkModule
-import com.flaringapp.app.di.PresentationModule
-import com.flaringapp.app.di.RepositoryModule
+import com.flaringapp.app.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -18,7 +15,7 @@ class ApplicationImpl: Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@ApplicationImpl)
-            modules(NetworkModule, DataModule, RepositoryModule, PresentationModule)
+            modules(NetworkModule, DataModule, RepositoryModule, PresentationModule, UseCaseModule)
         }
     }
 

@@ -22,6 +22,4 @@ val DataModule = module {
 
     single<DateTimeFormats> { DateTimeFormatsImpl() }
 
-    factory<LoginUseCase> { UserLoginUseCase() }
-
 }
