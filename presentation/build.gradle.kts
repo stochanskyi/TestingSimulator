@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
 
     kotlin("android")
     kotlin("kapt")
@@ -12,15 +12,11 @@ android {
     compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
-        applicationId = "com.flaringapp.testing_simulator"
-
         minSdk = ConfigData.minSdkVersion
         targetSdk = ConfigData.targetSdkVersion
 
-        versionCode = ConfigData.versionCode
-        versionName = ConfigData.versionName
-
         testInstrumentationRunner = ConfigData.testInstrumentationRunner
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -30,22 +26,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-    }
-
-    flavorDimensions += "appType"
-    productFlavors {
-        create("user") {
-            dimension = "appType"
-            versionNameSuffix = "-user"
-        }
-        create("admin") {
-            dimension = "appType"
-            versionNameSuffix = "-admin"
-        }
-        create("shared") {
-            dimension = "appType"
-            versionNameSuffix = "-shared"
         }
     }
 
@@ -65,19 +45,9 @@ android {
     }
 }
 
-val adminImplementation by configurations
-val userImplementation by configurations
-val sharedImplementation by configurations
-
 dependencies {
     implementation(project(mapOf("path" to ":core")))
     implementation(project(mapOf("path" to ":domain")))
-    implementation(project(mapOf("path" to ":presentation")))
-
-    adminImplementation(project(mapOf("path" to ":admin")))
-    userImplementation(project(mapOf("path" to ":user")))
-    sharedImplementation(project(mapOf("path" to ":admin")))
-    sharedImplementation(project(mapOf("path" to ":user")))
 
     implementation(Dependencies.kotlin)
     implementation(Dependencies.kotlinCoroutines)
@@ -96,14 +66,6 @@ dependencies {
     implementation(AndroidDependencies.swipeRefreshLayout)
 
     implementation(AndroidDependencies.koin)
-
-    implementation(Dependencies.moshi)
-    kapt(Dependencies.moshiCodegen)
-
-    implementation(Dependencies.retrofit)
-    implementation(Dependencies.retrofitMoshi)
-    implementation(Dependencies.okHttp)
-    implementation(Dependencies.okHttpLogging)
 
     implementation(AndroidDependencies.coil)
 
