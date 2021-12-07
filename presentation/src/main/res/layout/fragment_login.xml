@@ -40,7 +40,8 @@
             android:id="@+id/email_input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:maxLength="@integer/email_max_length" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +59,8 @@
             android:id="@+id/password_input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:maxLength="@integer/password_max_length" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
