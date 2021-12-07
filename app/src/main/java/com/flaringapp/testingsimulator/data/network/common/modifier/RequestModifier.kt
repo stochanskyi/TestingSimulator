@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.data.network.modifiers.modifier
+package com.flaringapp.testingsimulator.data.network.common.modifier
 
 import okhttp3.Request
 

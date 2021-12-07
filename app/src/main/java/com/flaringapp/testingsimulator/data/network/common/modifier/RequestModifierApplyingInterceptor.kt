@@ -1,9 +1,9 @@
-package com.flaringapp.testingsimulator.data.network.modifiers
+package com.flaringapp.testingsimulator.data.network.common.modifier
 
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ModifierApplyInterceptor(
+class RequestModifierApplyingInterceptor(
     private val dataCache: RequestDataCache
 ) : Interceptor {
 

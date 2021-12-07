@@ -1,16 +1,11 @@
-package com.flaringapp.testingsimulator.data.network
+package com.flaringapp.testingsimulator.data.network.adapter
 
 import android.util.Log
 import com.flaringapp.testingsimulator.app.Constants
 import com.flaringapp.testingsimulator.data.common.json.uuid.UuidStringAdapter
+import com.flaringapp.testingsimulator.data.network.common.modifier.*
 import com.flaringapp.testingsimulator.data.network.common.useragent.UserAgentInterceptor
 import com.flaringapp.testingsimulator.data.network.common.useragent.UserAgentProvider
-import com.flaringapp.testingsimulator.data.network.modifiers.ModifierApplyInterceptor
-import com.flaringapp.testingsimulator.data.network.modifiers.ParametrizedCallAdapterFactory
-import com.flaringapp.testingsimulator.data.network.modifiers.RequestDataCache
-import com.flaringapp.testingsimulator.data.network.modifiers.modifier.RequestModifier
-import com.flaringapp.testingsimulator.data.network.modifiers.modifier.RequestTokenAppender
-import com.flaringapp.testingsimulator.data.network.modifiers.setupModifiersCallAdapterFactory
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,8 +15,8 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitAdapter(
     private val userAgentProvider: UserAgentProvider,
-    private val apiUrl: String
-) {
+    private val modifierAnnotationProcessor: RequestModifierAnnotationProcessor?,
+) : NetworkAdapter {
 
     companion object {
         private const val LOGGER_TAG = "Http"
@@ -33,29 +28,17 @@ class RetrofitAdapter(
         }
     }
 
-    private inline fun <reified T> createClientAutoToken(prefix: String): T {
-        return createClient(prefix, RequestTokenAppender())
-    }
-
-    private inline fun <reified T> createClient(
-        prefix: String,
-        vararg modifiers: RequestModifier
-    ): T {
-        return createRetrofitClient(prefix, modifiers.toList()).create(T::class.java)
-    }
-
-    private fun createRetrofitClient(
-        prefix: String,
-        modifiers: List<RequestModifier> = emptyList()
+    override fun createClient(
+        baseUrl: String,
+        staticModifiers: List<RequestModifier>
     ): Retrofit {
         val dataCache = RequestDataCache()
         return Retrofit.Builder()
             .client(createHttpClient(dataCache))
-            .baseUrl(apiUrl + prefix)
+            .baseUrl(baseUrl)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .withModifiers(dataCache, modifiers)
+            .addModifiersCallAdapterFactory(dataCache, staticModifiers)
             .build()
-            .setupModifiersCallAdapterFactory()
     }
 
     private fun createHttpClient(dataCache: RequestDataCache) = OkHttpClient.Builder()
@@ -63,13 +46,17 @@ class RetrofitAdapter(
         .readTimeout(Constants.API_CALL_READ_TIMEOUT, TimeUnit.SECONDS)
         .writeTimeout(Constants.API_CALL_WRITE_TIMEOUT, TimeUnit.SECONDS)
         .addInterceptor(UserAgentInterceptor(userAgentProvider.provideUserAgent()))
-        .addInterceptor(ModifierApplyInterceptor(dataCache))
-        .addInterceptor(HttpLoggingInterceptor { message ->
-            Log.d(LOGGER_TAG, message)
-        }.apply { level = HttpLoggingInterceptor.Level.BODY })
+        .addInterceptor(RequestModifierApplyingInterceptor(dataCache))
+        .addInterceptor(createLoggingInterceptor())
         .build()
 
-    private fun Retrofit.Builder.withModifiers(
+    private fun createLoggingInterceptor() = HttpLoggingInterceptor { message ->
+        Log.d(LOGGER_TAG, message)
+    }.apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    private fun Retrofit.Builder.addModifiersCallAdapterFactory(
         dataCache: RequestDataCache,
         modifiers: List<RequestModifier>
     ) = apply {
@@ -83,8 +70,9 @@ class RetrofitAdapter(
         dataCache: RequestDataCache,
         modifiers: List<RequestModifier>
     ) = ParametrizedCallAdapterFactory(
-        emptyList(),
-        dataCache,
-        modifiers.toSet()
+        factories = emptyList(),
+        dataCache = dataCache,
+        annotationProcessor = modifierAnnotationProcessor,
+        staticModifiers = modifiers.toSet(),
     )
 }

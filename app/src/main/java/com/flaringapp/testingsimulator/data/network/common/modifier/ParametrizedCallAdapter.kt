@@ -1,6 +1,5 @@
-package com.flaringapp.testingsimulator.data.network.modifiers
+package com.flaringapp.testingsimulator.data.network.common.modifier
 
-import com.flaringapp.testingsimulator.data.network.modifiers.modifier.RequestModifier
 import retrofit2.Call
 import retrofit2.CallAdapter
 import java.lang.reflect.Type
@@ -9,7 +8,7 @@ class ParametrizedCallAdapter<R, T>(
     private val adapter: CallAdapter<R, T>,
     private val dataCache: RequestDataCache,
     private val modifier: RequestModifier
-) : CallAdapter<R, T> {
+): CallAdapter<R, T> {
 
     override fun responseType(): Type {
         return adapter.responseType()

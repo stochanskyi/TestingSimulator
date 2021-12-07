@@ -1,6 +1,5 @@
-package com.flaringapp.testingsimulator.data.network.modifiers
+package com.flaringapp.testingsimulator.data.network.common.modifier
 
-import com.flaringapp.testingsimulator.data.network.modifiers.modifier.RequestModifier
 import okhttp3.Request
 
 class RequestDataCache {
