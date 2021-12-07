@@ -16,11 +16,11 @@ interface Validator {
 class ValidatorImpl : Validator {
 
     override fun validateEmail(email: String): Boolean {
-        return EMAIL_ADDRESS.matcher(email).matches()
+        return EMAIL_ADDRESS.matcher(email.trim()).matches()
     }
 
     override fun validatePassword(password: String): Boolean {
-        return password.isNotEmpty() && password.length >= PASSWORD_MIN_SIZE
+        return password.trim().isNotEmpty() && password.length >= PASSWORD_MIN_SIZE
     }
 
     override fun validateFirstName(firstName: String): Boolean {
