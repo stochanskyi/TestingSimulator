@@ -14,82 +14,82 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
 
     private val binding: FragmentSignUpBinding by viewBinding { FragmentSignUpBinding.bind(it) }
 
-    override fun initViews() {
-        binding.emailInputEditText.doAfterTextChanged {
+    override fun initViews() = with(binding) {
+        emailInputEditText.doAfterTextChanged {
             model.setEmail(it.toString())
-            binding.emailInputLayout.error = null
+            emailInputLayout.error = null
         }
-        binding.firstNameInputEditText.doAfterTextChanged {
+        firstNameInputEditText.doAfterTextChanged {
             model.setFirstName(it.toString())
-            binding.firstNameInputLayout.error = null
+            firstNameInputLayout.error = null
         }
-        binding.lastNameInputEditText.doAfterTextChanged {
+        lastNameInputEditText.doAfterTextChanged {
             model.setLastName(it.toString())
-            binding.lastNameInputLayout.error = null
+            lastNameInputLayout.error = null
         }
-        binding.studyingAtInputEditText.doAfterTextChanged {
+        studyingAtInputEditText.doAfterTextChanged {
             model.setStudyingAt(it.toString())
-            binding.studyingAtInputLayout.error = null
+            studyingAtInputLayout.error = null
         }
-        binding.workPlaceInputEditText.doAfterTextChanged {
+        workPlaceInputEditText.doAfterTextChanged {
             model.setWorkPlace(it.toString())
-            binding.workPlaceInputLayout.error = null
+            workPlaceInputLayout.error = null
         }
-        binding.roleInputEditText.doAfterTextChanged {
+        roleInputEditText.doAfterTextChanged {
             model.setRole(it.toString())
-            binding.roleInputLayout.error = null
+            roleInputLayout.error = null
         }
-        binding.passwordInputEditText.doAfterTextChanged {
+        passwordInputEditText.doAfterTextChanged {
             model.setPassword(it.toString())
-            binding.passwordInputLayout.error = null
+            passwordInputLayout.error = null
         }
-        binding.confirmPasswordInputEditText.doAfterTextChanged {
+        confirmPasswordInputEditText.doAfterTextChanged {
             model.setConfirmPassword(it.toString())
-            binding.confirmPasswordInputLayout.error = null
+            confirmPasswordInputLayout.error = null
         }
 
-        binding.signUpButton.setOnClickListener { model.signUp() }
+        signUpButton.setOnClickListener { model.signUp() }
     }
 
-    override fun observeModel() {
-        model.emailLiveData.observeOnce(viewLifecycleOwner) {
-            binding.emailInputEditText.setText(it)
+    override fun observeModel() = with(model) {
+        emailLiveData.observeOnce(viewLifecycleOwner) { email ->
+            binding.emailInputEditText.setText(email)
         }
-        model.firstNameLiveData.observeOnce(viewLifecycleOwner) {
-            binding.firstNameInputEditText.setText(it)
+        firstNameLiveData.observeOnce(viewLifecycleOwner) { firstName ->
+            binding.firstNameInputEditText.setText(firstName)
         }
-        model.lastNameLiveData.observeOnce(viewLifecycleOwner) {
-            binding.lastNameInputEditText.setText(it)
+        lastNameLiveData.observeOnce(viewLifecycleOwner) { lastName ->
+            binding.lastNameInputEditText.setText(lastName)
         }
-        model.studyingAtLiveData.observeOnce(viewLifecycleOwner) {
-            binding.studyingAtInputEditText.setText(it)
+        studyingAtLiveData.observeOnce(viewLifecycleOwner) { studyingAt ->
+            binding.studyingAtInputEditText.setText(studyingAt)
         }
-        model.workPlaceLiveData.observeOnce(viewLifecycleOwner) {
-            binding.workPlaceInputEditText.setText(it)
+        workPlaceLiveData.observeOnce(viewLifecycleOwner) { workPlace ->
+            binding.workPlaceInputEditText.setText(workPlace)
         }
-        model.roleLiveData.observeOnce(viewLifecycleOwner) {
-            binding.roleInputEditText.setText(it)
+        roleLiveData.observeOnce(viewLifecycleOwner) { role ->
+            binding.roleInputEditText.setText(role)
         }
-        model.passwordLiveData.observeOnce(viewLifecycleOwner) {
-            binding.passwordInputEditText.setText(it)
+        passwordLiveData.observeOnce(viewLifecycleOwner) { password ->
+            binding.passwordInputEditText.setText(password)
         }
-        model.confirmPasswordLiveData.observeOnce(viewLifecycleOwner) {
-            binding.confirmPasswordInputEditText.setText(it)
+        confirmPasswordLiveData.observeOnce(viewLifecycleOwner) { confirmPassword ->
+            binding.confirmPasswordInputEditText.setText(confirmPassword)
         }
 
-        model.invalidEmailLiveData.observe(viewLifecycleOwner) {
+        invalidEmailLiveData.observe(viewLifecycleOwner) {
             binding.emailInputLayout.error = getString(R.string.error_invalid_email)
         }
-        model.invalidFirstNameLiveData.observe(viewLifecycleOwner) {
+        invalidFirstNameLiveData.observe(viewLifecycleOwner) {
             binding.firstNameInputLayout.error = getString(R.string.error_invalid_first_name)
         }
-        model.invalidLastNameLiveData.observe(viewLifecycleOwner) {
+        invalidLastNameLiveData.observe(viewLifecycleOwner) {
             binding.lastNameInputLayout.error = getString(R.string.error_invalid_last_name)
         }
-        model.invalidPasswordLiveData.observe(viewLifecycleOwner) {
+        invalidPasswordLiveData.observe(viewLifecycleOwner) {
             binding.passwordInputLayout.error = getString(R.string.error_invalid_password)
         }
-        model.passwordsNotEqualLiveData.observe(viewLifecycleOwner) {
+        passwordsNotEqualLiveData.observe(viewLifecycleOwner) {
             binding.confirmPasswordInputLayout.error = getString(R.string.error_passwords_not_equal)
         }
     }

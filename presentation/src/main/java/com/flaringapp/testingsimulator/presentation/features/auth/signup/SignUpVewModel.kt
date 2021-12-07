@@ -119,22 +119,18 @@ class SignUpVewModelImpl(
             invalidEmailLiveData.call()
             isDataValid = false
         }
-
         if (!validatePasswordUseCase(password)) {
             invalidPasswordLiveData.call()
             isDataValid = false
         }
-
         if (!validateFirstNameUseCase(firstName)) {
             invalidFirstNameLiveData.call()
             isDataValid = false
         }
-
         if (!validateLastNameUseCase(lastName)) {
             invalidLastNameLiveData.call()
             isDataValid = false
         }
-
         if (!passwordEqualityUseCase(password, confirmPassword)) {
             passwordsNotEqualLiveData.call()
         }
