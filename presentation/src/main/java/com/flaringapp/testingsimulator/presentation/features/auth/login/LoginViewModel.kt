@@ -16,14 +16,14 @@ abstract class LoginViewModel : BaseViewModel() {
     abstract val passwordLiveData: LiveData<String>
     abstract val rememberMeLiveData: LiveData<Boolean>
 
+    abstract val signUpEnabledLiveData: LiveData<Boolean>
+
     abstract val invalidPasswordLiveData: LiveData<Unit>
     abstract val invalidEmailLiveData: LiveData<Unit>
 
     abstract val loadingLiveData: LiveData<Boolean>
 
     abstract val authSuccessLiveData: LiveData<Unit>
-
-    abstract val signUpEnabledLiveData: LiveData<Boolean>
 
     abstract fun setEmail(email: String)
     abstract fun setPassword(password: String)
@@ -38,19 +38,18 @@ class LoginViewModelImpl(
     loginViewBehaviour: LoginViewBehaviour
 ) : LoginViewModel() {
 
-    override val emailLiveData: MutableLiveData<String> = MutableLiveData()
-    override val passwordLiveData: MutableLiveData<String> = MutableLiveData()
-    override val rememberMeLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    override val emailLiveData = MutableLiveData<String>()
+    override val passwordLiveData = MutableLiveData<String>()
+    override val rememberMeLiveData = MutableLiveData<Boolean>()
 
-    override val invalidEmailLiveData: SingleLiveEvent<Unit> = SingleLiveEvent()
-    override val invalidPasswordLiveData: SingleLiveEvent<Unit> = SingleLiveEvent()
+    override val invalidEmailLiveData = SingleLiveEvent<Unit>()
+    override val invalidPasswordLiveData = SingleLiveEvent<Unit>()
 
-    override val loadingLiveData: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    override val signUpEnabledLiveData = MutableLiveData(loginViewBehaviour.isSignUpEnabled)
 
-    override val authSuccessLiveData: SingleLiveEvent<Unit> = SingleLiveEvent()
+    override val loadingLiveData = MutableLiveData<Boolean>()
 
-    override val signUpEnabledLiveData: SingleLiveEvent<Boolean> =
-        SingleLiveEvent(loginViewBehaviour.isSignUpEnabled)
+    override val authSuccessLiveData = SingleLiveEvent<Unit>()
 
     private var email: String = ""
     private var password: String = ""
