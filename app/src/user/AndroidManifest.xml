@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.flaringapp.testingsimulator">
+
+    <application
+        android:name=".app.UserApplication"
+        tools:ignore="AllowBackup,MissingApplicationIcon" />
+
+</manifest>
