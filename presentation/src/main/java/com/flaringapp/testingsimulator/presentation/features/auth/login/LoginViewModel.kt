@@ -1,6 +1,5 @@
 package com.flaringapp.testingsimulator.presentation.features.auth.login
 
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -8,6 +7,8 @@ import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
+import com.flaringapp.testingsimulator.domain.features.auth.ValidateEmailUseCase
+import com.flaringapp.testingsimulator.domain.features.auth.ValidatePasswordUseCase
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class LoginViewModel : BaseViewModel() {
@@ -34,6 +35,8 @@ abstract class LoginViewModel : BaseViewModel() {
 }
 
 class LoginViewModelImpl(
+    private val validateEmailUseCase: ValidateEmailUseCase,
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val loginUseCase: LoginUseCase,
     loginViewBehaviour: LoginViewBehaviour
 ) : LoginViewModel() {
@@ -111,13 +114,11 @@ class LoginViewModelImpl(
     }
 
     private fun isEmailValid(email: String): Boolean {
-        // TODO login move out to validator
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return validateEmailUseCase(email)
     }
 
     private fun isPasswordValid(password: String): Boolean {
-        // TODO login move out to validator
-        return password.isNotEmpty()
+        return validatePasswordUseCase(password)
     }
 
 }
