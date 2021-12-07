@@ -14,12 +14,10 @@ import org.koin.dsl.module
 
 val NetworkModule = module {
 
-    val adapter: NetworkAdapter by lazy {
-        val userAgentProvider: UserAgentProvider = GlobalContext.get().get()
-
+    single<NetworkAdapter> {
         RetrofitAdapter(
-            userAgentProvider = userAgentProvider,
-            modifierAnnotationProcessor = GlobalContext.get().getOrNull(),
+            userAgentProvider = get(),
+            modifierAnnotationProcessor = getOrNull(),
             config = RetrofitAdapterConfig(
                 connectTimeout = Constants.API_CALL_CONNECT_TIMEOUT,
                 readTimeout = Constants.API_CALL_READ_TIMEOUT,
