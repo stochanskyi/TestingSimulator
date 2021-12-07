@@ -1,16 +1,8 @@
-package com.flaringapp.testingsimulator.data.usecase.auth
+package com.flaringapp.testingsimulator.user.domain.login
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
+import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
 
-interface LoginUseCase {
-    suspend fun login(
-        email: String,
-        password: String,
-        rememberMe: Boolean,
-    ): CallResult<Unit>
-}
-
-//TODO Should be moved to regular user presentation module and replaced with auth logic
 class UserLoginUseCase : LoginUseCase {
 
     override suspend fun login(

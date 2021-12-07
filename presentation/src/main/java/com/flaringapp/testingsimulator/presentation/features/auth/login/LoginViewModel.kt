@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
-import com.flaringapp.testingsimulator.data.usecase.auth.LoginUseCase
+import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class LoginViewModel : BaseViewModel() {

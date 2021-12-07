@@ -67,6 +67,8 @@ dependencies {
 
     implementation(AndroidDependencies.koin)
 
+    implementation(Dependencies.retrofit)
+
     implementation(AndroidDependencies.coil)
 
     implementation(AndroidDependencies.viewBindingDelegate)

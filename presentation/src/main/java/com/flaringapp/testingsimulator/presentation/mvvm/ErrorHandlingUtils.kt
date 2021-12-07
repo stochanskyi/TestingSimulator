@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.flaringapp.testingsimulator.R
-import com.flaringapp.testingsimulator.presentation.features.common.message.MessageDialogParams
+import com.flaringapp.testingsimulator.presentation.R
+import com.flaringapp.testingsimulator.presentation.common.message.MessageDialogParams
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException

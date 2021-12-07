@@ -1,23 +1,4 @@
 <resources>
     <string name="app_name">Base</string>
 
-    <!-- Common -->
-    <string name="ok">OK</string>
-
-    <!-- Errors -->
-    <string name="error_unknown">We\'ve faced an issue and will fix it soon</string>
-    <string name="error_server_connection">Seems like application service is currently down. Please contact your manager for further information</string>
-    <string name="error_server_access">You don\'t have enough permissions to perform this operation</string>
-    <string name="error_no_internet_connection">Please check your internet connection</string>
-    <string name="sign_in">Sign In</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="hello">Hello</string>
-    <string name="remember_me">Remember me</string>
-    <string name="or">or</string>
-    <string name="sign_up"><u>Sign Up</u></string>
-
-    <string name="error_invalid_email">Email is not valid</string>
-    <string name="error_invalid_password">Password is not valid</string>
-
 </resources>

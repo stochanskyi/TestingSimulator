@@ -1,11 +1,11 @@
-package com.flaringapp.testingsimulator.presentation.features.common.message
+package com.flaringapp.testingsimulator.presentation.common.message
 
 import android.os.Parcelable
 import androidx.annotation.StringRes
-import com.flaringapp.testingsimulator.R
 import com.flaringapp.testingsimulator.core.data.textresolver.TextNamedResolver
 import com.flaringapp.testingsimulator.core.data.textresolver.TextResolver
 import com.flaringapp.testingsimulator.core.data.textresolver.TextResourceResolver
+import com.flaringapp.testingsimulator.presentation.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.app.di
+package com.flaringapp.testingsimulator.presentation
 
 import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginViewModel
 import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginViewModelImpl
