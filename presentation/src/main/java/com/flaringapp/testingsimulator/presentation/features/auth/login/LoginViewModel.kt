@@ -85,7 +85,7 @@ class LoginViewModelImpl(
     private fun performLogin() {
         viewModelScope.startLoadingTask(loadingLiveData) {
             safeCall {
-                loginUseCase.login(
+                loginUseCase(
                     email = email,
                     password = password,
                     rememberMe = rememberMe

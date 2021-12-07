@@ -9,17 +9,19 @@ class AdminLoginUseCase(
     private val authRepository: AdminAuthRepository,
     private val userDataRepository: AdminDataRepository
 ) : LoginUseCase {
-    override suspend fun login(
+
+    override suspend operator fun invoke(
         email: String,
         password: String,
         rememberMe: Boolean
     ): CallResultNothing {
         //TODO remember me
 
-        val result = authRepository.login(email, password).doOnSuccess {
+        return authRepository.login(
+            email = email,
+            password = password
+        ).doOnSuccess {
             userDataRepository.setToken(it.token)
-        }
-
-        return result.ignoreData()
+        }.ignoreData()
     }
 }
