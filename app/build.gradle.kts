@@ -33,6 +33,18 @@ android {
         }
     }
 
+    flavorDimensions += "appType"
+    productFlavors {
+        create("user") {
+            dimension = "appType"
+            versionNameSuffix = "-user"
+        }
+        create("admin") {
+            dimension = "appType"
+            versionNameSuffix = "-admin"
+        }
+    }
+
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
