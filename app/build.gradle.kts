@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    implementation(project(mapOf("path" to ":core")))
+
     implementation(Dependencies.kotlin)
     implementation(Dependencies.kotlinCoroutines)
 
