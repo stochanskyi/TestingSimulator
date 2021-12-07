@@ -3,6 +3,7 @@ package com.flaringapp.testingsimulator.app
 import android.app.Application
 import com.flaringapp.testingsimulator.app.di.*
 import com.flaringapp.testingsimulator.domain.SharedDomainModule
+import com.flaringapp.testingsimulator.domain.SharedUseCaseModule
 import com.flaringapp.testingsimulator.presentation.PresentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -22,6 +23,7 @@ abstract class BaseApplication : Application() {
                 NetworkModule,
                 DataModule,
                 SharedDomainModule,
+                SharedUseCaseModule,
                 RepositoryModule,
                 SharedPresentationModule,
                 PresentationModule,
