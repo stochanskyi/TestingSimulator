@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.domain.features.auth
+package com.flaringapp.testingsimulator.domain.usecase.validation
 
 import com.flaringapp.testingsimulator.domain.validation.Validator
 

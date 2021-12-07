@@ -8,6 +8,9 @@ interface Validator {
 
     fun validatePassword(password: String): Boolean
 
+    fun validateFirstName(firstName: String): Boolean
+    fun validateLastName(lastName: String): Boolean
+
 }
 
 class ValidatorImpl : Validator {
@@ -18,6 +21,14 @@ class ValidatorImpl : Validator {
 
     override fun validatePassword(password: String): Boolean {
         return password.isNotEmpty() && password.length >= PASSWORD_MIN_SIZE
+    }
+
+    override fun validateFirstName(firstName: String): Boolean {
+        return firstName.trim().isNotEmpty()
+    }
+
+    override fun validateLastName(lastName: String): Boolean {
+        return lastName.trim().isNotEmpty()
     }
 
     companion object {
