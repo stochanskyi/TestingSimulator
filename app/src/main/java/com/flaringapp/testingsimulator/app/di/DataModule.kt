@@ -6,7 +6,7 @@ import com.flaringapp.testingsimulator.core.data.datetime.DateTimeFormats
 import com.flaringapp.testingsimulator.core.data.datetime.DateTimeFormatsImpl
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProviderImpl
-import com.flaringapp.testingsimulator.data.storage.DataStorage
+import com.flaringapp.testingsimulator.domain.storage.DataStorage
 import com.flaringapp.testingsimulator.data.storage.DataStorageImpl
 import org.koin.dsl.module
 

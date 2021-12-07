@@ -1,11 +1,13 @@
 package com.flaringapp.testingsimulator.data.storage
 
 import android.content.Context
-import com.flaringapp.testingsimulator.data.storage.common.Preferences
+import com.flaringapp.testingsimulator.core.data.storage.BaseDataStorage
+import com.flaringapp.testingsimulator.domain.storage.DataStorage
 
-class DataStorageImpl(context: Context) : Preferences(context, "data_prefs"), DataStorage {
+private const val PREFS_NAME = "data_prefs"
 
-    override var token: String by StringPref("token", "")
+class DataStorageImpl(context: Context) : BaseDataStorage(context, PREFS_NAME), DataStorage {
 
-    override var userId: String by StringPref("user_id", "")
+    override var token: String? by preferenceNullable("token")
+
 }
