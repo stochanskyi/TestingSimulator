@@ -1,21 +1,19 @@
-package com.flaringapp.testingsimulator.user.domain.login
+package com.flaringapp.testingsimulator.admin.domain.login
 
+import com.flaringapp.testingsimulator.admin.data.repository.auth.AdminAuthRepository
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
-import com.flaringapp.testingsimulator.user.data.repository.AuthRepository
-import com.flaringapp.testingsimulator.user.data.repository.UserDataRepository
+import com.flaringapp.testingsimulator.admin.data.repository.AdminDataRepository
 
-class UserLoginUseCase(
-    private val authRepository: AuthRepository,
-    private val userDataRepository: UserDataRepository
+class AdminLoginUseCase(
+    private val authRepository: AdminAuthRepository,
+    private val userDataRepository: AdminDataRepository
 ) : LoginUseCase {
-
     override suspend fun login(
         email: String,
         password: String,
-        rememberMe: Boolean,
+        rememberMe: Boolean
     ): CallResultNothing {
-
         //TODO remember me
 
         val result = authRepository.login(email, password).doOnSuccess {
@@ -24,5 +22,4 @@ class UserLoginUseCase(
 
         return result.ignoreData()
     }
-
 }

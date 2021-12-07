@@ -23,6 +23,8 @@ abstract class LoginViewModel : BaseViewModel() {
 
     abstract val authSuccessLiveData: LiveData<Unit>
 
+    abstract val signUpEnabledLiveData: LiveData<Boolean>
+
     abstract fun setEmail(email: String)
     abstract fun setPassword(password: String)
     abstract fun setRememberMe(remember: Boolean)
@@ -33,6 +35,7 @@ abstract class LoginViewModel : BaseViewModel() {
 
 class LoginViewModelImpl(
     private val loginUseCase: LoginUseCase,
+    loginViewBehaviour: LoginViewBehaviour
 ) : LoginViewModel() {
 
     override val emailLiveData: MutableLiveData<String> = MutableLiveData()
@@ -45,6 +48,9 @@ class LoginViewModelImpl(
     override val loadingLiveData: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     override val authSuccessLiveData: SingleLiveEvent<Unit> = SingleLiveEvent()
+
+    override val signUpEnabledLiveData: SingleLiveEvent<Boolean> =
+        SingleLiveEvent(loginViewBehaviour.isSignUpEnabled)
 
     private var email: String = ""
     private var password: String = ""

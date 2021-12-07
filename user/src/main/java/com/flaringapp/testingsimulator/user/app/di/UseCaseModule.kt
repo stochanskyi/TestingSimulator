@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val UseCaseModule = module {
 
-    factory<LoginUseCase> { UserLoginUseCase() }
+    factory<LoginUseCase> { UserLoginUseCase(get(), get()) }
 
 }
