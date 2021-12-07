@@ -12,7 +12,7 @@ android {
     compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
-        applicationId = "com.flaringapp.base"
+        applicationId = "com.flaringapp.testing_simulator"
 
         minSdk = ConfigData.minSdkVersion
         targetSdk = ConfigData.targetSdkVersion

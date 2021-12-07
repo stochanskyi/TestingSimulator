@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_login"
-        android:name="com.flaringapp.presentation.features.auth.login.LoginFragment"
+        android:name="com.flaringapp.testingsimulator.presentation.features.auth.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login"/>
 
