@@ -4,11 +4,11 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.flaringapp.testingsimulator.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
+import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.data.usecase.auth.LoginUseCase
-import com.flaringapp.testingsimulator.presentation.base.BaseViewModel
-import com.flaringapp.testingsimulator.presentation.utils.common.SingleLiveEvent
-import com.flaringapp.testingsimulator.presentation.utils.startLoadingTask
+import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class LoginViewModel : BaseViewModel() {
 

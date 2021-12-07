@@ -4,10 +4,10 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.setFragmentResult
 import com.flaringapp.testingsimulator.R
+import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
+import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.databinding.DialogMessageBinding
-import com.flaringapp.testingsimulator.data.text.TextProvider
-import com.flaringapp.testingsimulator.presentation.base.BaseDialog
-import com.flaringapp.testingsimulator.presentation.utils.textWithVisibility
+import com.flaringapp.testingsimulator.presentation.mvvm.BaseDialog
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.android.ext.android.inject
 

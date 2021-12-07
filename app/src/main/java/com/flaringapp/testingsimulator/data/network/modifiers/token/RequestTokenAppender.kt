@@ -1,6 +1,6 @@
 package com.flaringapp.testingsimulator.data.network.modifiers.token
 
-import com.flaringapp.testingsimulator.data.network.common.modifier.RequestModifier
+import com.flaringapp.testingsimulator.core.data.network.common.modifier.RequestModifier
 import com.flaringapp.testingsimulator.data.network.NetworkConstants
 import com.flaringapp.testingsimulator.data.storage.DataStorage
 import okhttp3.Request

@@ -1,10 +1,10 @@
 package com.flaringapp.testingsimulator.presentation.features.auth.login
 
 import androidx.core.widget.doAfterTextChanged
-import com.flaringapp.testingsimulator.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.R
+import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.databinding.FragmentLoginBinding
-import com.flaringapp.testingsimulator.presentation.base.ModelledFragment
+import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

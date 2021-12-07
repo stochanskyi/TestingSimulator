@@ -1,6 +1,6 @@
 package com.flaringapp.testingsimulator.data.usecase.auth
 
-import com.flaringapp.testingsimulator.data.common.call.CallResult
+import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 
 interface LoginUseCase {
     suspend fun login(
