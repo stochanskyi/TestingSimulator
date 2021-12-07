@@ -2,6 +2,7 @@ package com.flaringapp.presentation.features.auth.login
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.app.common.withMainContext
 import com.flaringapp.data.usecase.auth.LoginUseCase
@@ -9,7 +10,11 @@ import com.flaringapp.presentation.base.BaseViewModel
 import com.flaringapp.presentation.utils.common.SingleLiveEvent
 import com.flaringapp.presentation.utils.startLoadingTask
 
-abstract class AuthViewModel : BaseViewModel() {
+abstract class LoginViewModel : BaseViewModel() {
+
+    abstract val emailLiveData: LiveData<String>
+    abstract val passwordLiveData: LiveData<String>
+    abstract val rememberMeLiveData: LiveData<Boolean>
 
     abstract val invalidPasswordLiveData: LiveData<Unit>
     abstract val invalidEmailLiveData: LiveData<Unit>
@@ -26,9 +31,13 @@ abstract class AuthViewModel : BaseViewModel() {
     abstract fun signUp()
 }
 
-class AuthViewModelImpl(
+class LoginViewModelImpl(
     private val loginUseCase: LoginUseCase,
-) : AuthViewModel() {
+) : LoginViewModel() {
+
+    override val emailLiveData: MutableLiveData<String> = MutableLiveData()
+    override val passwordLiveData: MutableLiveData<String> = MutableLiveData()
+    override val rememberMeLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
     override val invalidEmailLiveData: SingleLiveEvent<Unit> = SingleLiveEvent()
     override val invalidPasswordLiveData: SingleLiveEvent<Unit> = SingleLiveEvent()
@@ -52,14 +61,17 @@ class AuthViewModelImpl(
 
     override fun setEmail(email: String) {
         this.email = email
+        emailLiveData.value = email
     }
 
     override fun setPassword(password: String) {
         this.password = password
+        passwordLiveData.value = password
     }
 
     override fun setRememberMe(remember: Boolean) {
         this.rememberMe = remember
+        rememberMeLiveData.value = remember
     }
 
     private fun performLogin() {

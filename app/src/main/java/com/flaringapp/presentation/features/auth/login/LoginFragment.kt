@@ -1,6 +1,7 @@
 package com.flaringapp.presentation.features.auth.login
 
 import androidx.core.widget.doAfterTextChanged
+import com.flaringapp.presentation.utils.livedata.observeOnce
 import com.flaringapp.base.R
 import com.flaringapp.base.databinding.FragmentLoginBinding
 import com.flaringapp.presentation.base.ModelledFragment
@@ -9,7 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : ModelledFragment(R.layout.fragment_login) {
 
-    override val model: AuthViewModel by viewModel()
+    override val model: LoginViewModel by viewModel()
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
 
@@ -32,6 +33,18 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
     }
 
     override fun observeModel() {
+        model.emailLiveData.observeOnce(viewLifecycleOwner) { email ->
+            binding.emailInputEditText.setText(email)
+        }
+
+        model.passwordLiveData.observeOnce(viewLifecycleOwner) { password ->
+            binding.passwordInputEditText.setText(password)
+        }
+
+        model.rememberMeLiveData.observeOnce(viewLifecycleOwner) { rememberMe ->
+            binding.rememberMeCheckBox.isChecked = rememberMe
+        }
+
         model.invalidEmailLiveData.observe(viewLifecycleOwner) {
             binding.emailInputLayout.error = getString(R.string.error_invalid_email)
         }
