@@ -17,8 +17,15 @@
     <string name="hello">Hello</string>
     <string name="remember_me">Remember me</string>
     <string name="or">or</string>
-    <string name="sign_up"><u>Sign Up</u></string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_underlined"><u>Sign Up</u></string>
     <string name="error_invalid_email">Email is not valid</string>
     <string name="error_invalid_password">Password is not valid</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="studying_at">Studying at (optional)</string>
+    <string name="role">Role (optional)</string>
+    <string name="work_place">Work place (optional)</string>
+    <string name="confirm_password">Confirm password</string>
 
 </resources>
