@@ -88,8 +88,16 @@
         <item name="errorTextAppearance">@style/ErrorTextAppearance</item>
     </style>
 
+    <style name="InputLayout.WithError">
+        <item name="errorEnabled">true</item>
+    </style>
+
     <style name="InputLayout.Expanded">
         <item name="expandedHintEnabled">false</item>
+    </style>
+
+    <style name="InputLayout.Password" parent="InputLayout.WithError">
+        <item name="endIconMode">password_toggle</item>
     </style>
 
     <style name="HintTextAppearance" parent="TextAppearance.AppCompat">
