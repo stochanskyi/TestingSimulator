@@ -63,6 +63,8 @@ android {
 
 dependencies {
     implementation(project(mapOf("path" to ":core")))
+    implementation(project(mapOf("path" to ":admin")))
+    implementation(project(mapOf("path" to ":user")))
 
     implementation(Dependencies.kotlin)
     implementation(Dependencies.kotlinCoroutines)
