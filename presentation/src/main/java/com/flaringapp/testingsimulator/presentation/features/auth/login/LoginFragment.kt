@@ -1,8 +1,8 @@
 package com.flaringapp.testingsimulator.presentation.features.auth.login
 
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.fragment.findNavController
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentLoginBinding
@@ -66,6 +66,10 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
         model.signUpEnabledLiveData.observe(viewLifecycleOwner) {
             binding.orTextView.isVisible = it
             binding.signUpTextView.isVisible = it
+        }
+
+        model.navigateToSignUpLiveData.observe(viewLifecycleOwner) {
+            findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentSignUp())
         }
     }
 }

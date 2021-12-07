@@ -21,6 +21,9 @@
     <string name="sign_up_underlined"><u>Sign Up</u></string>
     <string name="error_invalid_email">Email is not valid</string>
     <string name="error_invalid_password">Password is not valid</string>
+    <string name="error_invalid_first_name">First name should not be empty</string>
+    <string name="error_invalid_last_name">Last name should not be empty</string>
+    <string name="error_passwords_not_equal">Confirm password doesn\'t equal pasword</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="studying_at">Studying at (optional)</string>

@@ -26,6 +26,8 @@ abstract class LoginViewModel : BaseViewModel() {
 
     abstract val authSuccessLiveData: LiveData<Unit>
 
+    abstract val navigateToSignUpLiveData: LiveData<Unit>
+
     abstract fun setEmail(email: String)
     abstract fun setPassword(password: String)
     abstract fun setRememberMe(remember: Boolean)
@@ -54,6 +56,8 @@ class LoginViewModelImpl(
 
     override val authSuccessLiveData = SingleLiveEvent<Unit>()
 
+    override val navigateToSignUpLiveData = SingleLiveEvent<Unit>()
+
     private var email: String = ""
     private var password: String = ""
     private var rememberMe: Boolean = false
@@ -64,7 +68,7 @@ class LoginViewModelImpl(
     }
 
     override fun signUp() {
-        //TODO login implement sign up logic
+        navigateToSignUpLiveData.call()
     }
 
     override fun setEmail(email: String) {
