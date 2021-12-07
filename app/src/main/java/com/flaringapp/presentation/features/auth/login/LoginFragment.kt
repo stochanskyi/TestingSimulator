@@ -1,59 +1,51 @@
 package com.flaringapp.presentation.features.auth.login
 
-import android.os.Bundle
-import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import com.flaringapp.base.R
 import com.flaringapp.base.databinding.FragmentLoginBinding
+import com.flaringapp.presentation.base.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class LoginFragment : ModelledFragment(R.layout.fragment_login) {
 
-    private val viewModel: AuthViewModel by viewModel()
+    override val model: AuthViewModel by viewModel()
 
-    private val binding by viewBinding { FragmentLoginBinding.bind(it) }
+    private val binding by viewBinding(FragmentLoginBinding::bind)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initListeners()
-        initObservers()
-    }
-
-    private fun initListeners() {
+    override fun initViews() {
         binding.emailInputEditText.doAfterTextChanged {
-            viewModel.setEmail(it.toString())
+            model.setEmail(it.toString())
             binding.emailInputLayout.error = null
         }
         binding.passwordInputEditText.doAfterTextChanged {
-            viewModel.setPassword(it.toString())
+            model.setPassword(it.toString())
             binding.passwordInputLayout.error = null
         }
 
         binding.rememberMeCheckBox.setOnCheckedChangeListener { _, checked ->
-            viewModel.setRememberMe(checked)
+            model.setRememberMe(checked)
         }
 
-        binding.signInButton.setOnClickListener { viewModel.login() }
-        binding.signUpTextView.setOnClickListener { viewModel.signUp() }
+        binding.signInButton.setOnClickListener { model.login() }
+        binding.signUpTextView.setOnClickListener { model.signUp() }
     }
 
-    private fun initObservers() {
-        viewModel.invalidEmailLiveData.observe(viewLifecycleOwner) {
+    override fun observeModel() {
+        model.invalidEmailLiveData.observe(viewLifecycleOwner) {
             binding.emailInputLayout.error = getString(R.string.error_invalid_email)
         }
 
-        viewModel.invalidPasswordLiveData.observe(viewLifecycleOwner) {
+        model.invalidPasswordLiveData.observe(viewLifecycleOwner) {
             binding.passwordInputLayout.error = getString(R.string.error_invalid_password)
         }
 
-        viewModel.authSuccessLiveData.observe(viewLifecycleOwner) {
-            //TODO navigate to main
+        model.authSuccessLiveData.observe(viewLifecycleOwner) {
+            //TODO login navigate to main
         }
 
-        viewModel.loginLoadingLiveData.observe(viewLifecycleOwner) {
-            //TODO add progress
+        model.loadingLiveData.observe(viewLifecycleOwner) {
+            //TODO login add progress
         }
     }
 }
