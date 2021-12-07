@@ -12,4 +12,6 @@ val SharedUseCaseModule = module {
     factory<ValidateFirstNameUseCase> { ValidateFirstNameUseCaseImpl(get()) }
     factory<ValidateLastNameUseCase> { ValidateLastNameUseCaseImpl(get()) }
 
+    factory<ValidatePasswordEqualityUseCase> { ValidatePasswordEqualityUseCaseImpl(get()) }
+
 }

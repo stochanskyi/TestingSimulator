@@ -11,6 +11,8 @@ interface Validator {
     fun validateFirstName(firstName: String): Boolean
     fun validateLastName(lastName: String): Boolean
 
+    fun validatePasswordEquality(password: String, confirmPassword: String): Boolean
+
 }
 
 class ValidatorImpl : Validator {
@@ -29,6 +31,13 @@ class ValidatorImpl : Validator {
 
     override fun validateLastName(lastName: String): Boolean {
         return lastName.trim().isNotEmpty()
+    }
+
+    override fun validatePasswordEquality(
+        password: String,
+        confirmPassword: String
+    ): Boolean {
+        return password == confirmPassword
     }
 
     companion object {
