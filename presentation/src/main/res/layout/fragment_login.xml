@@ -37,6 +37,7 @@
         android:nextFocusDown="@id/password_input_layout">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Input"
             android:id="@+id/email_input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -56,6 +57,7 @@
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Input"
             android:id="@+id/password_input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
