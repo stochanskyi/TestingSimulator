@@ -1,7 +1,7 @@
 package com.flaringapp.testingsimulator.user.domain.signup
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
-import com.flaringapp.testingsimulator.user.data.repository.AuthRepository
+import com.flaringapp.testingsimulator.user.data.repository.auth.AuthRepository
 import com.flaringapp.testingsimulator.user.data.repository.UserDataRepository
 import com.flaringapp.testingsimulator.user.domain.signup.models.UserRegistrationData
 

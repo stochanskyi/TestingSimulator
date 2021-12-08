@@ -3,7 +3,7 @@ package com.flaringapp.testingsimulator.user.domain.login
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
-import com.flaringapp.testingsimulator.user.data.repository.AuthRepository
+import com.flaringapp.testingsimulator.user.data.repository.auth.AuthRepository
 import com.flaringapp.testingsimulator.user.data.repository.UserDataRepository
 
 class UserLoginUseCase(

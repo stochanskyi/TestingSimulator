@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.user.data.repository
+package com.flaringapp.testingsimulator.user.data.repository.auth
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.user.data.network.features.auth.AuthDataSource
