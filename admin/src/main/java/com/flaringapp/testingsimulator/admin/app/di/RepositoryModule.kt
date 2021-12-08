@@ -6,6 +6,8 @@ import com.flaringapp.testingsimulator.admin.data.repository.auth.mappers.AdminL
 import com.flaringapp.testingsimulator.admin.data.repository.auth.mappers.AdminLoginResponseMapperImpl
 import com.flaringapp.testingsimulator.admin.data.repository.AdminDataRepository
 import com.flaringapp.testingsimulator.admin.data.repository.AdminDataRepositoryImpl
+import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminProfileRepository
+import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminProfileRepositoryImpl
 import org.koin.dsl.module
 
 val RepositoryModule = module {
@@ -14,4 +16,7 @@ val RepositoryModule = module {
     factory<AdminLoginResponseMapper> { AdminLoginResponseMapperImpl() }
 
     factory<AdminDataRepository> { AdminDataRepositoryImpl(get()) }
+
+    factory<AdminProfileRepository> { AdminProfileRepositoryImpl(get(), get()) }
+
 }

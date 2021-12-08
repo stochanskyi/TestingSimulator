@@ -10,4 +10,5 @@ class DataStorageImpl(context: Context) : BaseDataStorage(context, PREFS_NAME), 
 
     override var token: String? by preferenceNullable("token")
 
+    override var userId: String? by preferenceNullable("user_id")
 }
