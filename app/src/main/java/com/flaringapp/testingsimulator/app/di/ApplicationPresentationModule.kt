@@ -4,7 +4,7 @@ import com.flaringapp.testingsimulator.presentation.features.auth.launcher.Scree
 import com.flaringapp.testingsimulator.presentation.launcher.ScreenLauncherImpl
 import org.koin.dsl.module
 
-val SharedPresentationModule = module {
+val ApplicationPresentationModule = module {
 
     factory<ScreenLauncher> { ScreenLauncherImpl() }
 

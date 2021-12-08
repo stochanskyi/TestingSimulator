@@ -4,7 +4,7 @@ import com.flaringapp.testingsimulator.domain.validation.Validator
 import com.flaringapp.testingsimulator.domain.validation.ValidatorImpl
 import org.koin.dsl.module
 
-val SharedDomainModule = module {
+val DomainModule = module {
 
     factory<Validator> { ValidatorImpl() }
 

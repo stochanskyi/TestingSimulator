@@ -3,7 +3,7 @@ package com.flaringapp.testingsimulator.domain
 import com.flaringapp.testingsimulator.domain.usecase.validation.*
 import org.koin.dsl.module
 
-val SharedUseCaseModule = module {
+val UseCaseModule = module {
 
     factory<ValidateEmailUseCase> { ValidateEmailUseCaseImpl(get()) }
 

@@ -3,8 +3,9 @@ package com.flaringapp.testingsimulator.app
 import android.app.Application
 import com.flaringapp.testingsimulator.app.di.*
 import com.flaringapp.testingsimulator.data.DataModule
-import com.flaringapp.testingsimulator.domain.SharedDomainModule
-import com.flaringapp.testingsimulator.domain.SharedUseCaseModule
+import com.flaringapp.testingsimulator.data.NetworkModule
+import com.flaringapp.testingsimulator.domain.DomainModule
+import com.flaringapp.testingsimulator.domain.UseCaseModule
 import com.flaringapp.testingsimulator.presentation.PresentationDomainBindingModule
 import com.flaringapp.testingsimulator.presentation.PresentationDefinitionsModule
 import com.flaringapp.testingsimulator.presentation.PresentationModule
@@ -23,12 +24,12 @@ abstract class BaseApplication : Application() {
             androidLogger(Level.DEBUG)
             androidContext(this@BaseApplication)
             modules(
+                ApplicationModule,
                 NetworkModule,
                 DataModule,
-                SharedDomainModule,
-                SharedUseCaseModule,
-                RepositoryModule,
-                SharedPresentationModule,
+                DomainModule,
+                UseCaseModule,
+                ApplicationPresentationModule,
                 PresentationDefinitionsModule,
                 PresentationDomainBindingModule,
                 PresentationModule,
