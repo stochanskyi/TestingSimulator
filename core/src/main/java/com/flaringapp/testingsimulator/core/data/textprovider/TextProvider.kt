@@ -11,4 +11,6 @@ interface TextProvider {
 
     fun getText(@StringRes res: Int, vararg params: Any): CharSequence
 
+    fun formatName(firstName: String, lastName: String): String
+
 }

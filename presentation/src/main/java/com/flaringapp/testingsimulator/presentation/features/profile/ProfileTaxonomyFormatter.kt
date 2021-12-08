@@ -21,9 +21,9 @@ class ProfileTaxonomyFormatter(
 
     fun formatTaxonomyText(
         @StringRes prefixStringRes: Int,
-        content: String,
+        content: String?,
     ): CharSequence {
-        if (content.isEmpty()) return ""
+        if (content.isNullOrEmpty()) return ""
 
         return buildSpannedString {
             prefix {

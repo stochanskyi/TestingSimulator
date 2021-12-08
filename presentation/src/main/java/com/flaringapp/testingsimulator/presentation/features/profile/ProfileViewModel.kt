@@ -2,6 +2,8 @@ package com.flaringapp.testingsimulator.presentation.features.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.flaringapp.testingsimulator.core.app.common.launchOnIO
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.data.common.call.transformList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
@@ -17,27 +19,48 @@ abstract class ProfileViewModel : BaseViewModel() {
 
     abstract val nameLiveData: LiveData<String>
     abstract val emailLiveData: LiveData<String>
-    abstract val studyingLiveData: LiveData<String>
-    abstract val workPlaceLiveData: LiveData<String>
-    abstract val roleLiveData: LiveData<String>
+    abstract val studyingLiveData: LiveData<String?>
+    abstract val workPlaceLiveData: LiveData<String?>
+    abstract val roleLiveData: LiveData<String?>
 
     abstract val statisticsLiveData: LiveDataList<ProfileStatisticsViewData>
 }
 
 class ProfileViewModelImpl(
+    private val profileBehaviour: ProfileBehaviour,
     private val getStatisticsUseCase: GetProfileStatisticsUseCase,
     private val emojiProvider: EmojiProvider,
     private val emojiColorsProvider: EmojiColorsProvider,
     private val colorProvider: ColorProvider,
-) : ProfileViewModel() {
+) : ProfileViewModel(), ProfileBehaviourGetProfileConsumer {
 
     override val nameLiveData = MutableLiveData<String>()
     override val emailLiveData = MutableLiveData<String>()
-    override val studyingLiveData = MutableLiveData<String>()
-    override val workPlaceLiveData = MutableLiveData<String>()
-    override val roleLiveData = MutableLiveData<String>()
+    override val studyingLiveData = MutableLiveData<String?>()
+    override val workPlaceLiveData = MutableLiveData<String?>()
+    override val roleLiveData = MutableLiveData<String?>()
     override val statisticsLiveData = liveDataIO<List<ProfileStatisticsViewData>> {
         loadStatistics()
+    }
+
+    init {
+        viewModelScope.launchOnIO {
+            profileBehaviour.loadProfile(this@ProfileViewModelImpl)
+        }
+    }
+
+    override fun handleProfileData(
+        name: String,
+        email: String,
+        studying: String?,
+        workPlace: String?,
+        role: String?
+    ) {
+        nameLiveData.value = name
+        emailLiveData.value = email
+        studyingLiveData.value = studying
+        workPlaceLiveData.value = workPlace
+        roleLiveData.value = role
     }
 
     private suspend fun loadStatistics() {

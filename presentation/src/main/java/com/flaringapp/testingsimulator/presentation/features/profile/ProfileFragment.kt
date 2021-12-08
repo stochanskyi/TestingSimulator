@@ -63,21 +63,21 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
         )
     }
 
-    private fun setStudyingAt(studying: String) {
+    private fun setStudyingAt(studying: String?) {
         binding.textStudyingAt.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
             prefixStringRes = R.string.profile_studying,
             content = studying,
         )
     }
 
-    private fun setWorkPlace(workPlace: String) {
+    private fun setWorkPlace(workPlace: String?) {
         binding.textWorkPlace.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
             prefixStringRes = R.string.profile_work_place,
             content = workPlace,
         )
     }
 
-    private fun setRole(role: String) {
+    private fun setRole(role: String?) {
         binding.textRole.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
             prefixStringRes = R.string.profile_role,
             content = role,

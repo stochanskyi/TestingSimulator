@@ -9,4 +9,8 @@ class FakeTextProvider: TextProvider {
     override fun getText(res: Int, vararg params: Any): CharSequence {
         return params.filterIsInstance<CharSequence>().joinToString(", ")
     }
+
+    override fun formatName(firstName: String, lastName: String): String {
+        return "$firstName $lastName"
+    }
 }

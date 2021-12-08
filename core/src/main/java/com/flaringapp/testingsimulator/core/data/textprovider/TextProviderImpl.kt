@@ -13,4 +13,8 @@ class TextProviderImpl(
     override fun getText(res: Int, vararg params: Any): CharSequence {
         return context.getString(res, *params)
     }
+
+    override fun formatName(firstName: String, lastName: String): String {
+        return "$firstName $lastName"
+    }
 }

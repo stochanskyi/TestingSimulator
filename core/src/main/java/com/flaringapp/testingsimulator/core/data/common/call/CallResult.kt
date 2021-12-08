@@ -1,5 +1,9 @@
 package com.flaringapp.testingsimulator.core.data.common.call
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
+
 typealias CallResultList<D> = CallResult<List<D>>
 typealias CallResultNothing = CallResult<Unit?>
 
@@ -48,6 +52,17 @@ sealed class CallResult<D> {
         }
     }
 
+    suspend fun doOnSuccessSuspend(
+        context: CoroutineContext,
+        action: suspend CoroutineScope.(D) -> Unit
+    ) = apply {
+        if (this is Success) {
+            withContext(context) {
+                action(data)
+            }
+        }
+    }
+
     fun doOnError(action: () -> Unit) = apply {
         if (this is Error) {
             action()
@@ -57,6 +72,17 @@ sealed class CallResult<D> {
     suspend fun doOnErrorSuspend(action: suspend () -> Unit) = apply {
         if (this is Error) {
             action()
+        }
+    }
+
+    suspend fun doOnErrorSuspend(
+        context: CoroutineContext,
+        action: suspend CoroutineScope.() -> Unit
+    ) = apply {
+        if (this is Error) {
+            withContext(context) {
+                action()
+            }
         }
     }
 
