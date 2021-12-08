@@ -31,4 +31,10 @@
     <string name="work_place">Work place (optional)</string>
     <string name="confirm_password">Confirm password</string>
 
+    <!-- Profile -->
+    <string name="profile_email">Email</string>
+    <string name="profile_studying">Studying at</string>
+    <string name="profile_work_place">Workplace</string>
+    <string name="profile_role">Role</string>
+
 </resources>

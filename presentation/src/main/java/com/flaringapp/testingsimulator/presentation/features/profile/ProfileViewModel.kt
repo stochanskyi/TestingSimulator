@@ -11,7 +11,7 @@ abstract class ProfileViewModel : BaseViewModel() {
 
     abstract val nameLiveData: LiveData<String>
     abstract val emailLiveData: LiveData<String>
-    abstract val studyingAtLiveData: LiveData<String>
+    abstract val studyingLiveData: LiveData<String>
     abstract val workPlaceLiveData: LiveData<String>
     abstract val roleLiveData: LiveData<String>
 
@@ -22,7 +22,7 @@ class ProfileViewModelImpl : ProfileViewModel() {
 
     override val nameLiveData = MutableLiveData<String>()
     override val emailLiveData = MutableLiveData<String>()
-    override val studyingAtLiveData = MutableLiveData<String>()
+    override val studyingLiveData = MutableLiveData<String>()
     override val workPlaceLiveData = MutableLiveData<String>()
     override val roleLiveData = MutableLiveData<String>()
     override val statisticsLiveData = MutableLiveDataList<ProfileStatisticsViewData>()
