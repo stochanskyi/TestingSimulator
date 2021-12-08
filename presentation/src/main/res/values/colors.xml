@@ -14,11 +14,11 @@
     <color name="gray">#3D3D3D</color>
     <color name="gray_dark">#343B48</color>
     <color name="gray_light">#515C70</color>
-    <color name="gray_very_light">#B0B0B0</color>
+    <color name="gray_very_light">#DBDFE5</color>
 
-    <color name="separator">#E2E2E2</color>
+    <color name="separator">#E8EAEE</color>
 
-    <color name="color_hint">#A6A6A6</color>
+    <color name="color_hint">#8893A8</color>
 
     <color name="error">#E95656</color>
     <color name="error_light">#FF6767</color>
