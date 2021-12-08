@@ -3,8 +3,10 @@ package com.flaringapp.testingsimulator.core.presentation.utils
 import android.content.Context
 import android.provider.Settings
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.isVisible
 
 var TextView.textWithVisibility: CharSequence?
@@ -42,4 +44,12 @@ fun MenuItem.updateCheckedDrawable(
         if (isChecked) checkedDrawableRes
         else uncheckedDrawableRes
     )
+}
+
+fun ViewGroup.setAlphaTraversable(alpha: Float) {
+    setAlpha(alpha)
+
+    children.forEach {
+        (it as? ViewGroup)?.setAlphaTraversable(alpha) ?: run { it.alpha = alpha }
+    }
 }

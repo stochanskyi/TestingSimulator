@@ -3,6 +3,7 @@ package com.flaringapp.testingsimulator.presentation.features.topics.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.flaringapp.testingsimulator.core.presentation.utils.inflater
+import com.flaringapp.testingsimulator.core.presentation.utils.setAlphaTraversable
 import com.flaringapp.testingsimulator.presentation.databinding.ViewHolderTopicBinding
 import com.flaringapp.testingsimulator.presentation.features.topics.models.TopicViewData
 
@@ -23,13 +24,14 @@ class TopicViewHolder private constructor(
         data: TopicViewData,
         clickBlock: (Int) -> Unit
     ) = with(binding) {
-        binding.root.alpha = getAlpha(data.isEnabled)
+        binding.root.setAlphaTraversable(getAlpha(data.isEnabled))
 
         titleTextView.text = data.name
         descriptionTextView.text = data.description
         emojiImageView.setImageResource(data.emojiRes)
 
         binding.root.setOnClickListener { clickBlock(data.id) }
+        binding.root.isEnabled = data.isEnabled
     }
 
     fun clear() {

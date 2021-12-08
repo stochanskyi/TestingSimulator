@@ -25,6 +25,11 @@ class TopicsAdapter(
         holder.bind(data[position], topicClickBlock)
     }
 
+    override fun onViewRecycled(holder: TopicViewHolder) {
+        holder.clear()
+        super.onViewRecycled(holder)
+    }
+
     override fun getItemCount(): Int = data.size
 
 }
