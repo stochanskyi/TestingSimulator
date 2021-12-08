@@ -5,6 +5,8 @@ import com.flaringapp.testingsimulator.core.data.network.adapter.RetrofitAdapter
 import com.flaringapp.testingsimulator.data.network.SharedNetworkAdapter
 import com.flaringapp.testingsimulator.data.network.features.profiles_tatistics.ProfileStatisticsDataSource
 import com.flaringapp.testingsimulator.data.network.features.profiles_tatistics.ProfileStatisticsDataSourceImpl
+import com.flaringapp.testingsimulator.data.network.features.topics.TopicsDataSource
+import com.flaringapp.testingsimulator.data.network.features.topics.TopicsDataSourceImpl
 import org.koin.core.context.GlobalContext
 import org.koin.dsl.module
 
@@ -24,5 +26,8 @@ val NetworkModule = module {
 
     single { adapter.createProfileStatisticsApi() }
     single<ProfileStatisticsDataSource> { ProfileStatisticsDataSourceImpl(get()) }
+
+    single { adapter.createTopicsApi() }
+    single<TopicsDataSource> { TopicsDataSourceImpl(get()) }
 
 }
