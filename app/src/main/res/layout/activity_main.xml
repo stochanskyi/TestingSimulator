@@ -10,7 +10,9 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary"
+        app:titleTextColor="@color/white" />
 
     <!-- Nav graph is set dynamically depending on active app type -->
     <androidx.fragment.app.FragmentContainerView
