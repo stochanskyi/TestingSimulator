@@ -4,5 +4,5 @@ class Topic(
     val id: Int,
     val name: String,
     val enabled: Boolean,
-    val emojiId: Boolean
+    val emojiId: Int
 )

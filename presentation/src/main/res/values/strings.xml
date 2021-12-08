@@ -37,4 +37,7 @@
     <string name="profile_work_place">Workplace</string>
     <string name="profile_role">Role</string>
 
+    <string name="topic_enabled_description">Vyo!</string>
+    <string name="topic_disabled_description">Skip</string>
+
 </resources>

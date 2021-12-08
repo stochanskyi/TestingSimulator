@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.topics.GetTopicsUseCase
@@ -24,6 +25,7 @@ abstract class TopicsViewModel : BaseViewModel() {
 
 class TopicsViewModelImpl(
     private val getTopicsUseCase: GetTopicsUseCase,
+    private val textProvider: TextProvider
 ) : TopicsViewModel() {
 
     override val loadingLiveData = MutableLiveData<Boolean>()
@@ -33,6 +35,7 @@ class TopicsViewModelImpl(
     init {
         viewModelScope.startLoadingTask(loadingLiveData) {
             val topics = safeCall { getTopicsUseCase() } ?: return@startLoadingTask
+
             withMainContext {
                 topicsLiveData.value = topics.map { it.toViewData() }
             }
@@ -50,9 +53,18 @@ class TopicsViewModelImpl(
     private fun Topic.toViewData() = TopicViewData(
         id = id,
         name = name,
+        description = getDescription(),
         //TODO replace with provider
         emojiRes = R.drawable.ic_emoji_testing_enabled,
         isEnabled = enabled
     )
+
+    private fun Topic.getDescription(): String {
+        val descriptionRes =
+            if (enabled) R.string.topic_enabled_description
+            else R.string.topic_disabled_description
+
+        return textProvider.getString(descriptionRes)
+    }
 
 }
