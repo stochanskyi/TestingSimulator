@@ -2,6 +2,7 @@ package com.flaringapp.testingsimulator.presentation.features.profile
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentProfileBinding
@@ -29,6 +30,7 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
     }
 
     override fun initViews() = with(binding) {
+        recyclerStatistics.layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerStatistics.adapter = ProfileStatisticsAdapter()
         recyclerStatistics.addItemDecoration(
             ProfileStatisticsItemDecoration()
