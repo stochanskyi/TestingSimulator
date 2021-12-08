@@ -2,10 +2,12 @@ package com.flaringapp.testingsimulator.presentation.features.auth.signup
 
 import androidx.core.widget.doAfterTextChanged
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
+import com.flaringapp.testingsimulator.presentation.features.auth.launcher.ScreenLauncher
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentSignUpBinding
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
@@ -13,6 +15,8 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
     override val model: SignUpVewModel by viewModel()
 
     private val binding: FragmentSignUpBinding by viewBinding { FragmentSignUpBinding.bind(it) }
+
+    private val screenLauncher: ScreenLauncher by inject()
 
     override fun initViews() = with(binding) {
         emailInputEditText.doAfterTextChanged {
@@ -91,6 +95,15 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
         }
         passwordsNotEqualLiveData.observe(viewLifecycleOwner) {
             binding.confirmPasswordInputLayout.error = getString(R.string.error_passwords_not_equal)
+        }
+
+        model.loadingLiveData.observe(viewLifecycleOwner) {
+            //TODO show progress
+        }
+
+        model.authSuccessLiveData.observe(viewLifecycleOwner) {
+            activity?.finish()
+            screenLauncher.launchMainScreen(context ?: return@observe)
         }
     }
 }

@@ -2,7 +2,10 @@ package com.flaringapp.testingsimulator.presentation.features.auth.signup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
+import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.usecase.validation.*
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
@@ -22,6 +25,14 @@ abstract class SignUpVewModel : BaseViewModel() {
     abstract val invalidPasswordLiveData: LiveData<Unit>
     abstract val passwordsNotEqualLiveData: LiveData<Unit>
 
+    abstract val isStudyingAtEnabled: LiveData<Boolean>
+    abstract val isWorkPlaceEnabled: LiveData<Boolean>
+    abstract val isRoleEnabled: LiveData<Boolean>
+
+    abstract val loadingLiveData: LiveData<Boolean>
+
+    abstract val authSuccessLiveData: LiveData<Unit>
+
     abstract fun setEmail(email: String)
     abstract fun setFirstName(firstName: String)
     abstract fun setLastName(lastName: String)
@@ -39,7 +50,8 @@ class SignUpVewModelImpl(
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val validateFirstNameUseCase: ValidateFirstNameUseCase,
     private val validateLastNameUseCase: ValidateLastNameUseCase,
-    private val passwordEqualityUseCase: ValidatePasswordEqualityUseCase
+    private val passwordEqualityUseCase: ValidatePasswordEqualityUseCase,
+    private val signUpBehaviour: SignUpViewBehaviour
 ) : SignUpVewModel() {
 
     private var email: String = ""
@@ -65,6 +77,14 @@ class SignUpVewModelImpl(
     override val invalidLastNameLiveData = SingleLiveEvent<Unit>()
     override val invalidPasswordLiveData = SingleLiveEvent<Unit>()
     override val passwordsNotEqualLiveData = SingleLiveEvent<Unit>()
+
+    override val isStudyingAtEnabled = MutableLiveData(signUpBehaviour.isStudyingAtEnabled)
+    override val isWorkPlaceEnabled = MutableLiveData(signUpBehaviour.isWorkPlaceEnabled)
+    override val isRoleEnabled: LiveData<Boolean> = MutableLiveData(signUpBehaviour.isRoleEnabled)
+
+    override val loadingLiveData = MutableLiveData<Boolean>()
+
+    override val authSuccessLiveData = SingleLiveEvent<Unit>()
 
     override fun setEmail(email: String) {
         this.email = email
@@ -109,7 +129,24 @@ class SignUpVewModelImpl(
     override fun signUp() {
         if (!validateData()) return
 
-        //TODO perform sign up
+        viewModelScope.startLoadingTask(loadingLiveData) {
+            safeCall {
+                signUpBehaviour.createAccount(
+                    email = email,
+                    firstName = firstName,
+                    lastName = lastName,
+                    studyingAt = studyingAt,
+                    workPlace = workPlace,
+                    role = role,
+                    password = password,
+                    repeatPassword = confirmPassword
+                )
+            } ?: return@startLoadingTask
+
+            withMainContext {
+                authSuccessLiveData.call()
+            }
+        }
     }
 
     private fun validateData(): Boolean {

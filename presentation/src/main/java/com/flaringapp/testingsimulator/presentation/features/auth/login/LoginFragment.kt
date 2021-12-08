@@ -4,10 +4,12 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
+import com.flaringapp.testingsimulator.presentation.features.auth.launcher.ScreenLauncher
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentLoginBinding
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : ModelledFragment(R.layout.fragment_login) {
@@ -15,6 +17,8 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
     override val model: LoginViewModel by viewModel()
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
+
+    private val screenLauncher: ScreenLauncher by inject()
 
     override fun initViews() = with(binding) {
         emailInputEditText.doAfterTextChanged {
@@ -67,8 +71,9 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
             openSignUp()
         }
 
-        authSuccessLiveData.observe(viewLifecycleOwner) {
-            //TODO login navigate to main
+        model.authSuccessLiveData.observe(viewLifecycleOwner) {
+            activity?.finish()
+            screenLauncher.launchMainScreen(context ?: return@observe)
         }
     }
 
