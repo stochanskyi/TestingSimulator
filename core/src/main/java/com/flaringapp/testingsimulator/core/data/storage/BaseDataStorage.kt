@@ -4,7 +4,7 @@ import android.content.Context
 
 abstract class BaseDataStorage(context: Context, name: String) {
 
-    private val prefs = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+    protected val prefs = context.getSharedPreferences(name, Context.MODE_PRIVATE)!!
 
     operator fun contains(o: Any) = prefs === o
 
@@ -14,10 +14,10 @@ abstract class BaseDataStorage(context: Context, name: String) {
         default = default
     )
 
-    protected fun <T> preferenceNullable(name: String, default: T? = null) = PreferenceNullable(
+    protected inline fun <reified T> preferenceNullable(name: String) = PreferenceNullable<T>(
         prefs = prefs,
         name = name,
-        default = default,
+        clazz = T::class,
     )
 
 }
