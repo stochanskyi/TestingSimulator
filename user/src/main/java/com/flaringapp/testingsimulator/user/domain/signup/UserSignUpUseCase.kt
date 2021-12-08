@@ -12,7 +12,7 @@ class UserSignUpUseCase(
 
     suspend fun signUp(userRegistrationData: UserRegistrationData): CallResultNothing {
         return authRepository.signUp(userRegistrationData)
-            .doOnSuccess { userDataRepository.setToken(it.token) }
+            .doOnSuccess { userDataRepository.token = it.token }
             .ignoreData()
     }
 

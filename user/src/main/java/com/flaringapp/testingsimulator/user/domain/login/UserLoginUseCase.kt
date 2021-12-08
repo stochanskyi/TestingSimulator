@@ -26,7 +26,7 @@ class UserLoginUseCase(
             email = email,
             password = password
         ).doOnSuccess {
-            userDataRepository.setToken(it.token)
+            userDataRepository.token = it.token
         }.ignoreData()
     }
 }
