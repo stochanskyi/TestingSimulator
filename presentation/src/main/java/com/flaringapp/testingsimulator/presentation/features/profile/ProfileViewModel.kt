@@ -6,10 +6,10 @@ import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.data.common.call.transformList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.liveDataIO
+import com.flaringapp.testingsimulator.domain.features.emoji.EmojiColorsProvider
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
 import com.flaringapp.testingsimulator.domain.features.profile.ProfileStatistics
 import com.flaringapp.testingsimulator.domain.features.profile_statistics.GetProfileStatisticsUseCase
-import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.features.profile.models.ProfileStatisticsViewData
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
@@ -27,6 +27,7 @@ abstract class ProfileViewModel : BaseViewModel() {
 class ProfileViewModelImpl(
     private val getStatisticsUseCase: GetProfileStatisticsUseCase,
     private val emojiProvider: EmojiProvider,
+    private val emojiColorsProvider: EmojiColorsProvider,
     private val colorProvider: ColorProvider,
 ) : ProfileViewModel() {
 
@@ -44,17 +45,17 @@ class ProfileViewModelImpl(
         statistics.transformList { toViewData() }
     }
 
-    // TODO finish appearance
     private fun ProfileStatistics.toViewData(): ProfileStatisticsViewData {
         val emojiRes = emojiProvider.getEmojiOrDefault(emojiId)
+        val emojiColorsRes = emojiColorsProvider.getEmojiColorsOrDefault(emojiRes)
 
         return ProfileStatisticsViewData(
             emojiRes = emojiRes,
             value = value,
             label = label,
-            backgroundColor = colorProvider.getColor(R.color.statistics_brain_bg),
-            valueColor = colorProvider.getColor(R.color.statistics_brain_accent),
-            labelColor = colorProvider.getColor(R.color.statistics_brain_variant),
+            backgroundColor = colorProvider.getColor(emojiColorsRes.background),
+            valueColor = colorProvider.getColor(emojiColorsRes.accent),
+            labelColor = colorProvider.getColor(emojiColorsRes.variant),
         )
     }
 }
