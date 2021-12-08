@@ -39,5 +39,6 @@
 
     <string name="topic_enabled_description">Vyo!</string>
     <string name="topic_disabled_description">Skip</string>
+    <string name="profile">Profile</string>
 
 </resources>
