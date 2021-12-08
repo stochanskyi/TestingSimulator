@@ -6,10 +6,10 @@ import com.flaringapp.testingsimulator.presentation.R
 class EmojiColorsDefinitionImpl : EmojiColorsDefinition {
 
     private val emojiColorsMap = mapOf(
-        R.drawable.img_emoji_test to EmojiColorsRes(
-            background = R.color.statistics_test_bg,
-            accent = R.color.statistics_test_accent,
-            variant = R.color.statistics_test_variant,
+        R.drawable.img_emoji_note to EmojiColorsRes(
+            background = R.color.statistics_note_bg,
+            accent = R.color.statistics_note_accent,
+            variant = R.color.statistics_note_variant,
         ),
         R.drawable.img_emoji_student to EmojiColorsRes(
             background = R.color.statistics_student_bg,
@@ -34,9 +34,9 @@ class EmojiColorsDefinitionImpl : EmojiColorsDefinition {
     )
 
     private val defaultEmojiColors = EmojiColorsRes(
-        background = R.color.statistics_test_bg,
-        accent = R.color.statistics_test_accent,
-        variant = R.color.statistics_test_variant,
+        background = R.color.statistics_note_bg,
+        accent = R.color.statistics_note_accent,
+        variant = R.color.statistics_note_variant,
     )
 
     override fun getEmojiColorsById(emojiId: Int): EmojiColorsRes? {

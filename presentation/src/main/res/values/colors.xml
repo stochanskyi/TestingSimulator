@@ -24,9 +24,9 @@
     <color name="error_light">#FF6767</color>
 
     <!-- Statistics -->
-    <color name="statistics_test_bg">#F5F7FA</color>
-    <color name="statistics_test_accent">#377DFF</color>
-    <color name="statistics_test_variant">#8893A8</color>
+    <color name="statistics_note_bg">#F5F7FA</color>
+    <color name="statistics_note_accent">#377DFF</color>
+    <color name="statistics_note_variant">#8893A8</color>
     <color name="statistics_student_bg">#FAF8F5</color>
     <color name="statistics_student_accent">#F2A000</color>
     <color name="statistics_student_variant">#A99E89</color>

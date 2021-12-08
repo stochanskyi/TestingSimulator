@@ -14,7 +14,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="fitCenter"
-        tools:src="@drawable/img_emoji_waving_hand" />
+        tools:src="@drawable/img_emoji_brain" />
 
     <LinearLayout
         android:id="@+id/layoutTexts"
