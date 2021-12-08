@@ -17,7 +17,7 @@ val PresentationModule = module {
 
     viewModel<SignUpVewModel> { SignUpVewModelImpl(get(), get(), get(), get(), get(), get()) }
 
-    viewModel<TopicsViewModel> { TopicsViewModelImpl(get()) }
+    viewModel<TopicsViewModel> { TopicsViewModelImpl(get(), get(), get()) }
 
     viewModel<ProfileViewModel> { ProfileViewModelImpl(get(), get(), get()) }
 

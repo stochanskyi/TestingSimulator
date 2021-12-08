@@ -7,6 +7,7 @@ import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
+import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
 import com.flaringapp.testingsimulator.domain.features.topics.GetTopicsUseCase
 import com.flaringapp.testingsimulator.domain.features.topics.models.Topic
 import com.flaringapp.testingsimulator.presentation.R
@@ -25,7 +26,8 @@ abstract class TopicsViewModel : BaseViewModel() {
 
 class TopicsViewModelImpl(
     private val getTopicsUseCase: GetTopicsUseCase,
-    private val textProvider: TextProvider
+    private val textProvider: TextProvider,
+    private val emojiProvider: EmojiProvider
 ) : TopicsViewModel() {
 
     override val loadingLiveData = MutableLiveData<Boolean>()
@@ -54,8 +56,7 @@ class TopicsViewModelImpl(
         id = id,
         name = name,
         description = getDescription(),
-        //TODO replace with provider
-        emojiRes = R.drawable.ic_emoji_testing_enabled,
+        emojiRes = emojiProvider.getEmojiOrDefault(emojiId),
         isEnabled = enabled
     )
 
