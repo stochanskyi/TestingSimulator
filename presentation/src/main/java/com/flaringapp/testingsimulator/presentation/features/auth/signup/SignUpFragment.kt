@@ -1,5 +1,6 @@
 package com.flaringapp.testingsimulator.presentation.features.auth.signup
 
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.presentation.features.auth.launcher.ScreenLauncher
@@ -56,6 +57,16 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
     }
 
     override fun observeModel() = with(model) {
+        isStudyingAtEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            binding.studyingAtInputLayout.isVisible = isEnabled
+        }
+        isWorkPlaceEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            binding.workPlaceInputLayout.isVisible = isEnabled
+        }
+        isRoleEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            binding.roleInputLayout.isVisible = isEnabled
+        }
+
         emailLiveData.observeOnce(viewLifecycleOwner) { email ->
             binding.emailInputEditText.setText(email)
         }
