@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.flaringapp.testingsimulator.R
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.*
 import com.flaringapp.testingsimulator.presentation.navigation.NavigationGraphProvider
@@ -20,7 +22,8 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initNavigationGraph()
+        setSupportActionBar(findViewById(R.id.toolbar))
+        initNavigation()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -70,10 +73,15 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun initNavigationGraph() {
+    private fun initNavigation() {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) ?: return
         val navController = navHost.findNavController()
 
+        initNavigationGraph(navController)
+        NavigationUI.setupActionBarWithNavController(this, navController)
+    }
+
+    private fun initNavigationGraph(navController: NavController) {
         val graphId = navigationGraphProvider.provideGraphId()
         navController.setGraph(graphId)
     }
