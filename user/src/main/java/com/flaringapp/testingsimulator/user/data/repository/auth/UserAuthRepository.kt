@@ -8,7 +8,7 @@ import com.flaringapp.testingsimulator.user.data.repository.auth.mappers.LoginRe
 import com.flaringapp.testingsimulator.user.data.repository.auth.models.UserLoginInfo
 import com.flaringapp.testingsimulator.user.domain.signup.models.UserRegistrationData
 
-interface AuthRepository {
+interface UserAuthRepository {
 
     suspend fun login(
         email: String,
@@ -21,10 +21,10 @@ interface AuthRepository {
 
 }
 
-class AuthRepositoryImpl(
+class UserAuthRepositoryImpl(
     private val authDataSource: AuthDataSource,
     private val loginResponseMapper: LoginResponseMapper
-) : AuthRepository {
+) : UserAuthRepository {
 
     override suspend fun login(
         email: String,
