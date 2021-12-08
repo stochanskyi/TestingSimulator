@@ -4,6 +4,7 @@ import android.app.Application
 import com.flaringapp.testingsimulator.app.di.*
 import com.flaringapp.testingsimulator.data.DataModule
 import com.flaringapp.testingsimulator.data.NetworkModule
+import com.flaringapp.testingsimulator.data.RepositoryModule
 import com.flaringapp.testingsimulator.domain.DomainModule
 import com.flaringapp.testingsimulator.domain.UseCaseModule
 import com.flaringapp.testingsimulator.presentation.PresentationDomainBindingModule
@@ -27,6 +28,7 @@ abstract class BaseApplication : Application() {
                 ApplicationModule,
                 NetworkModule,
                 DataModule,
+                RepositoryModule,
                 DomainModule,
                 UseCaseModule,
                 ApplicationPresentationModule,

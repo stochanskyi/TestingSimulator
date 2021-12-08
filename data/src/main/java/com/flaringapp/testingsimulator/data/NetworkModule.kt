@@ -23,7 +23,6 @@ val NetworkModule = module {
     }
 
     single { adapter.createProfileStatisticsApi() }
-
     single<ProfileStatisticsDataSource> { ProfileStatisticsDataSourceImpl(get()) }
 
 }
