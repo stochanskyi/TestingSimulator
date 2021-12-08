@@ -103,6 +103,7 @@
                 android:id="@+id/studying_at_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="text|textCapSentences"
                 android:maxLines="1"
                 android:maxLength="@integer/taxonomy_max_length"
                 android:nextFocusDown="@id/work_place_input_edit_text" />
@@ -121,6 +122,7 @@
                 android:id="@+id/work_place_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="text|textCapSentences"
                 android:maxLines="1"
                 android:maxLength="@integer/taxonomy_max_length"
                 android:nextFocusDown="@id/role_input_edit_text" />
@@ -139,6 +141,7 @@
                 android:id="@+id/role_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="text|textCapSentences"
                 android:maxLines="1"
                 android:maxLength="@integer/taxonomy_max_length"
                 android:nextFocusDown="@id/password_input_edit_text" />
