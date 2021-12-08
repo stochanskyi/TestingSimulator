@@ -5,16 +5,14 @@ import retrofit2.Retrofit
 import java.lang.reflect.Type
 
 class ParametrizedCallAdapterFactory(
-    private val factories: List<CallAdapter.Factory>,
+    private var factories: List<CallAdapter.Factory>,
     private val dataCache: RequestDataCache,
     private val annotationProcessor: RequestModifierAnnotationProcessor?,
     private val staticModifiers: Collection<RequestModifier>
 ) : CallAdapter.Factory() {
 
-    init {
-        require(factories.isNotEmpty()) {
-            "Parametrized call adapter requires not empty factories list"
-        }
+    fun setupFactories(factories: List<CallAdapter.Factory>) {
+        this.factories = factories
     }
 
     override fun get(
@@ -61,4 +59,18 @@ class ParametrizedCallAdapterFactory(
         }
         return null
     }
+}
+
+
+fun ParametrizedCallAdapterFactory.setupWith(retrofit: Retrofit) {
+    setupFactories(
+        retrofit.callAdapterFactories().filter { it != this }
+    )
+}
+
+fun Retrofit.setupModifiersCallAdapterFactory(): Retrofit {
+    callAdapterFactories().filterIsInstance(ParametrizedCallAdapterFactory::class.java)
+        .firstOrNull()
+        ?.setupWith(this)
+    return this
 }

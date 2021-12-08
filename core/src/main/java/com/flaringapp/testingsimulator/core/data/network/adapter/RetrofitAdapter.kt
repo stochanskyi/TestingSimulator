@@ -39,6 +39,7 @@ class RetrofitAdapter(
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addModifiersCallAdapterFactory(dataCache, staticModifiers)
             .build()
+            .setupModifiersCallAdapterFactory()
     }
 
     private fun createHttpClient(dataCache: RequestDataCache) = OkHttpClient.Builder()
