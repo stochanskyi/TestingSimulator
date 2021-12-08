@@ -1,8 +1,11 @@
 package com.flaringapp.testingsimulator.user.data.repository.profile
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
+import com.flaringapp.testingsimulator.data.network.features.edit_profile.EditProfileDataSource
+import com.flaringapp.testingsimulator.data.network.features.edit_profile.request.EditProfileRequest
 import com.flaringapp.testingsimulator.domain.storage.DataStorage
 import com.flaringapp.testingsimulator.user.data.storage.profile.UserProfileDataStorage
+import com.flaringapp.testingsimulator.user.domain.profile.EditUserProfile
 import com.flaringapp.testingsimulator.user.domain.profile.UserProfile
 
 interface UserProfileRepository {
@@ -11,11 +14,15 @@ interface UserProfileRepository {
 
     suspend fun saveProfile(profile: UserProfile)
 
+    suspend fun editProfile(profile: EditUserProfile): CallResult<UserProfile>
+
 }
 
 class UserProfileRepositoryImpl(
     private val dataStorage: DataStorage,
     private val profileDataStorage: UserProfileDataStorage,
+    private val editProfileDataSource: EditProfileDataSource,
+    private val editProfileMapper: UserEditProfileMapper,
 ) : UserProfileRepository {
 
     override suspend fun getProfile(): CallResult<UserProfile> {
@@ -27,6 +34,12 @@ class UserProfileRepositoryImpl(
 
     override suspend fun saveProfile(profile: UserProfile) {
         profile.saveIntoStorage()
+    }
+
+    override suspend fun editProfile(profile: EditUserProfile): CallResult<UserProfile> {
+        val request = profile.createEditProfileRequest()
+        return editProfileDataSource.editProfile(request)
+            .transform { editProfileMapper.map(this) }
     }
 
     private fun createProfileFromStorage(): UserProfile? {
@@ -51,5 +64,14 @@ class UserProfileRepositoryImpl(
             workPlace = workPlace
             role = role
         }
+    }
+
+    private fun EditUserProfile.createEditProfileRequest(): EditProfileRequest {
+        return EditProfileRequest(
+            firstName = firstName,
+            lastName = lastName,
+            workPlace = workPlace,
+            role = role
+        )
     }
 }
