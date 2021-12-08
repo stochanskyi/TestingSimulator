@@ -45,9 +45,9 @@ class LoginViewModelImpl(
 
     override val signUpEnabledLiveData = MutableLiveData(loginViewBehaviour.isSignUpEnabled)
 
-    override val emailLiveData = MutableLiveData<String>()
-    override val passwordLiveData = MutableLiveData<String>()
-    override val rememberMeLiveData = MutableLiveData<Boolean>()
+    override val emailLiveData = MutableLiveData("")
+    override val passwordLiveData = MutableLiveData("")
+    override val rememberMeLiveData = MutableLiveData(false)
 
     override val invalidEmailLiveData = SingleLiveEvent<Unit>()
     override val invalidPasswordLiveData = SingleLiveEvent<Unit>()

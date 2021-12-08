@@ -63,14 +63,14 @@ class SignUpVewModelImpl(
     private var password: String = ""
     private var confirmPassword: String = ""
 
-    override val emailLiveData = MutableLiveData<String>()
-    override val firstNameLiveData = MutableLiveData<String>()
-    override val lastNameLiveData = MutableLiveData<String>()
-    override val studyingAtLiveData = MutableLiveData<String>()
-    override val workPlaceLiveData = MutableLiveData<String>()
-    override val roleLiveData = MutableLiveData<String>()
-    override val passwordLiveData = MutableLiveData<String>()
-    override val confirmPasswordLiveData = MutableLiveData<String>()
+    override val emailLiveData = MutableLiveData("")
+    override val firstNameLiveData = MutableLiveData("")
+    override val lastNameLiveData = MutableLiveData("")
+    override val studyingAtLiveData = MutableLiveData("")
+    override val workPlaceLiveData = MutableLiveData("")
+    override val roleLiveData = MutableLiveData("")
+    override val passwordLiveData = MutableLiveData("")
+    override val confirmPasswordLiveData = MutableLiveData("")
 
     override val invalidEmailLiveData = SingleLiveEvent<Unit>()
     override val invalidFirstNameLiveData = SingleLiveEvent<Unit>()
