@@ -1,9 +1,7 @@
 package com.flaringapp.testingsimulator.core.presentation.utils.livedata
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 
 typealias LiveDataList<T> = LiveData<List<T>>
 typealias MutableLiveDataList<T> = MutableLiveData<List<T>>
@@ -24,3 +22,8 @@ fun MutableLiveData<*>.clearValue() {
         value = null
     }
 }
+
+fun <T> liveDataIO(
+    timeoutInMs: Long = 5000L,
+    block: suspend LiveDataScope<T>.() -> Unit
+): LiveData<T> = liveData(Dispatchers.IO, timeoutInMs, block)
