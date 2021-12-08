@@ -9,11 +9,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
+        android:orientation="vertical"
         android:paddingTop="56dp"
         android:paddingBottom="48dp"
-        android:clipToPadding="false"
-        android:orientation="vertical">
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false">
 
         <ImageView
             android:id="@+id/emoji_image_view"
@@ -40,14 +40,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:hint="@string/email"
-            android:nextFocusDown="@id/password_input_layout">
+            android:hint="@string/email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:maxLength="@integer/email_max_length"
+                android:nextFocusDown="@id/first_name_input_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +65,10 @@
                 android:id="@+id/first_name_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:maxLength="@integer/name_max_length"
+                android:nextFocusDown="@id/last_name_input_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,7 +84,10 @@
                 android:id="@+id/last_name_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:maxLength="@integer/name_max_length"
+                android:nextFocusDown="@id/studying_at_input_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +102,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/studying_at_input_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:maxLength="@integer/taxonomy_max_length"
+                android:nextFocusDown="@id/work_place_input_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,7 +120,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/work_place_input_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:maxLength="@integer/taxonomy_max_length"
+                android:nextFocusDown="@id/role_input_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +138,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/role_input_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:maxLength="@integer/taxonomy_max_length"
+                android:nextFocusDown="@id/password_input_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,15 +151,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="@string/password"
-            android:nextFocusDown="@id/sign_in_button"
-            app:endIconMode="password_toggle">
+            android:hint="@string/password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:maxLength="@integer/password_max_length"
+                android:nextFocusDown="@id/confirm_password_input_layout" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,15 +170,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="@string/confirm_password"
-            android:nextFocusDown="@id/sign_in_button"
-            app:endIconMode="password_toggle">
+            android:hint="@string/confirm_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirm_password_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:maxLength="@integer/password_max_length"
+                android:imeOptions="actionDone" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
