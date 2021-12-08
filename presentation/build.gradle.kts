@@ -48,7 +48,6 @@ android {
 dependencies {
     implementation(project(mapOf("path" to ":core")))
     implementation(project(mapOf("path" to ":domain")))
-    implementation(project(mapOf("path" to ":data")))
 
     implementation(Dependencies.kotlin)
     implementation(Dependencies.kotlinCoroutines)
