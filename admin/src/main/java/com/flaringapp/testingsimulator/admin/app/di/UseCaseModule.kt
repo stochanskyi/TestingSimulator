@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val UseCaseModule = module {
 
-    factory<LoginUseCase> { AdminLoginUseCase(get(), get()) }
+    factory<LoginUseCase> { AdminLoginUseCase(get(), get(), get()) }
 
     factory<GetProfileUseCase<AdminProfile>> { GetAdminProfileUseCase(get()) }
 

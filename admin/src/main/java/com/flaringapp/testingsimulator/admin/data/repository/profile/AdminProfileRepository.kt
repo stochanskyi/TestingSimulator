@@ -9,6 +9,8 @@ interface AdminProfileRepository {
 
     suspend fun getProfile(): CallResult<AdminProfile>
 
+    suspend fun saveProfile(profile: AdminProfile)
+
 }
 
 class AdminProfileRepositoryImpl(
@@ -23,6 +25,10 @@ class AdminProfileRepositoryImpl(
         return CallResult.Success(profile)
     }
 
+    override suspend fun saveProfile(profile: AdminProfile) {
+        profile.saveIntoStorage()
+    }
+
     private fun createProfileFromStorage(): AdminProfile? {
         return AdminProfile(
             id = dataStorage.userId,
@@ -32,5 +38,16 @@ class AdminProfileRepositoryImpl(
             workPlace = profileDataStorage.workPlace,
             role = profileDataStorage.role,
         )
+    }
+
+    private fun AdminProfile.saveIntoStorage() {
+        dataStorage.userId = id
+        with(profileDataStorage) {
+            firstName = firstName
+            lastName = lastName
+            email = email
+            workPlace = workPlace
+            role = role
+        }
     }
 }

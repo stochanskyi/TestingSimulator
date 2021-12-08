@@ -10,9 +10,9 @@ import org.koin.dsl.module
 
 val UseCaseModule = module {
 
-    factory<LoginUseCase> { UserLoginUseCase(get(), get()) }
+    factory<LoginUseCase> { UserLoginUseCase(get(), get(), get()) }
 
-    factory { UserSignUpUseCase(get(), get()) }
+    factory { UserSignUpUseCase(get(), get(), get()) }
 
     factory<GetProfileUseCase<UserProfile>> { GetUserProfileUseCase(get()) }
 

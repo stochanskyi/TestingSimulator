@@ -4,10 +4,12 @@ import com.flaringapp.testingsimulator.admin.data.repository.auth.AdminAuthRepos
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
 import com.flaringapp.testingsimulator.admin.data.repository.AdminDataRepository
+import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminProfileRepository
 
 class AdminLoginUseCase(
     private val authRepository: AdminAuthRepository,
-    private val dataRepository: AdminDataRepository
+    private val dataRepository: AdminDataRepository,
+    private val profileRepository: AdminProfileRepository,
 ) : LoginUseCase {
 
     override suspend operator fun invoke(
@@ -20,8 +22,13 @@ class AdminLoginUseCase(
         return authRepository.login(
             email = email,
             password = password
-        ).doOnSuccess {
-            dataRepository.token = it.token
-        }.ignoreData()
+        )
+            .doOnSuccess {
+                dataRepository.token = it.token
+            }
+            .doOnSuccessSuspend {
+                profileRepository.saveProfile(it.profile)
+            }
+            .ignoreData()
     }
 }
