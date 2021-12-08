@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.data.network.features.profiles_tatistics.response
+package com.flaringapp.testingsimulator.data.network.features.profiles_statistics.response
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

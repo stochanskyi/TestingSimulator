@@ -1,7 +1,7 @@
-package com.flaringapp.testingsimulator.data.network.features.profiles_tatistics
+package com.flaringapp.testingsimulator.data.network.features.profiles_statistics
 
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponseList
-import com.flaringapp.testingsimulator.data.network.features.profiles_tatistics.response.ProfileStatisticsResponse
+import com.flaringapp.testingsimulator.data.network.features.profiles_statistics.response.ProfileStatisticsResponse
 
 interface ProfileStatisticsApi {
 

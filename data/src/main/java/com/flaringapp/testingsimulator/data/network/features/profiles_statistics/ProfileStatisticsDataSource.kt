@@ -1,8 +1,8 @@
-package com.flaringapp.testingsimulator.data.network.features.profiles_tatistics
+package com.flaringapp.testingsimulator.data.network.features.profiles_statistics
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultList
 import com.flaringapp.testingsimulator.core.data.network.base.validate
-import com.flaringapp.testingsimulator.data.network.features.profiles_tatistics.response.ProfileStatisticsResponse
+import com.flaringapp.testingsimulator.data.network.features.profiles_statistics.response.ProfileStatisticsResponse
 
 interface ProfileStatisticsDataSource {
 

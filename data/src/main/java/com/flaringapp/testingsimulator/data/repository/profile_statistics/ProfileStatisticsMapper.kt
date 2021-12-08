@@ -1,6 +1,6 @@
 package com.flaringapp.testingsimulator.data.repository.profile_statistics
 
-import com.flaringapp.testingsimulator.data.network.features.profiles_tatistics.response.ProfileStatisticsResponse
+import com.flaringapp.testingsimulator.data.network.features.profiles_statistics.response.ProfileStatisticsResponse
 import com.flaringapp.testingsimulator.domain.features.profile.ProfileStatistics
 
 interface ProfileStatisticsMapper {
