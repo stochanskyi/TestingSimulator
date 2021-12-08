@@ -3,6 +3,7 @@ package com.flaringapp.testingsimulator.presentation.features.auth.signup
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.flaringapp.testingsimulator.core.presentation.utils.doOnDoneClicked
+import com.flaringapp.testingsimulator.core.presentation.utils.hideKeyboardAndClearCurrentFocus
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.presentation.features.auth.launcher.ScreenLauncher
 import com.flaringapp.testingsimulator.presentation.R
@@ -57,7 +58,10 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
             signUpButton.performClick()
         }
 
-        signUpButton.setOnClickListener { model.signUp() }
+        signUpButton.setOnClickListener {
+            hideKeyboardAndClearCurrentFocus()
+            model.signUp()
+        }
     }
 
     override fun observeModel() = with(model) {
