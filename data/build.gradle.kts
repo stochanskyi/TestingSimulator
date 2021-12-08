@@ -3,9 +3,6 @@ plugins {
 
     kotlin("android")
     kotlin("kapt")
-    id("kotlin-parcelize")
-
-    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -48,31 +45,19 @@ android {
 dependencies {
     implementation(project(mapOf("path" to ":core")))
     implementation(project(mapOf("path" to ":domain")))
-    implementation(project(mapOf("path" to ":data")))
 
     implementation(Dependencies.kotlin)
     implementation(Dependencies.kotlinCoroutines)
 
-    implementation(AndroidDependencies.appCompat)
-    implementation(AndroidDependencies.coreKtx)
-    implementation(AndroidDependencies.fragmentKtx)
-    implementation(AndroidDependencies.navigationKtx)
-    implementation(AndroidDependencies.navigationUIKtx)
-    implementation(AndroidDependencies.lifecycleViewModelKtx)
-    implementation(AndroidDependencies.lifecycleLiveDataKtx)
-    implementation(AndroidDependencies.lifecycleCompilerKtx)
-
-    implementation(AndroidDependencies.material)
-    implementation(AndroidDependencies.constraintLayout)
-    implementation(AndroidDependencies.swipeRefreshLayout)
-
     implementation(AndroidDependencies.koin)
 
+    implementation(Dependencies.moshi)
+    kapt(Dependencies.moshiCodegen)
+
     implementation(Dependencies.retrofit)
-
-    implementation(AndroidDependencies.coil)
-
-    implementation(AndroidDependencies.viewBindingDelegate)
+    implementation(Dependencies.retrofitMoshi)
+    implementation(Dependencies.okHttp)
+    implementation(Dependencies.okHttpLogging)
 
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.mockito)
@@ -89,5 +74,4 @@ dependencies {
             module = "kotlinx-coroutines-debug"
         )
     }
-    androidTestImplementation(AndroidDependencies.espresso)
 }

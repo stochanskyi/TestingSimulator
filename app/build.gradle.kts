@@ -72,6 +72,7 @@ val sharedImplementation by configurations
 dependencies {
     implementation(project(mapOf("path" to ":core")))
     implementation(project(mapOf("path" to ":domain")))
+    implementation(project(mapOf("path" to ":data")))
     implementation(project(mapOf("path" to ":presentation")))
 
     adminImplementation(project(mapOf("path" to ":admin")))
