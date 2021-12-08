@@ -8,6 +8,8 @@ import com.flaringapp.testingsimulator.presentation.features.edit_profile.EditPr
 import com.flaringapp.testingsimulator.presentation.features.edit_profile.EditProfileViewModelImpl
 import com.flaringapp.testingsimulator.presentation.features.profile.ProfileViewModel
 import com.flaringapp.testingsimulator.presentation.features.profile.ProfileViewModelImpl
+import com.flaringapp.testingsimulator.presentation.features.tests.TestsViewModel
+import com.flaringapp.testingsimulator.presentation.features.tests.TestsViewModelImpl
 import com.flaringapp.testingsimulator.presentation.features.topics.TopicsViewModel
 import com.flaringapp.testingsimulator.presentation.features.topics.TopicsViewModelImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,5 +26,7 @@ val PresentationModule = module {
     viewModel<EditProfileViewModel> { EditProfileViewModelImpl(get(), get(), get()) }
 
     viewModel<TopicsViewModel> { TopicsViewModelImpl(get(), get(), get()) }
+
+    viewModel<TestsViewModel> { TestsViewModelImpl() }
 
 }
