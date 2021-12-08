@@ -34,6 +34,4 @@ val NetworkModule = module {
         )
     }
 
-    single<RequestModifierAnnotationProcessor> { CommonRequestModifierAnnotationProcessor() }
-
 }

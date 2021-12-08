@@ -2,6 +2,7 @@ package com.flaringapp.testingsimulator.app
 
 import android.app.Application
 import com.flaringapp.testingsimulator.app.di.*
+import com.flaringapp.testingsimulator.data.DataModule
 import com.flaringapp.testingsimulator.domain.SharedDomainModule
 import com.flaringapp.testingsimulator.domain.SharedUseCaseModule
 import com.flaringapp.testingsimulator.presentation.PresentationModule
