@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.presentation.providers
+package com.flaringapp.testingsimulator.presentation.data.emoji
 
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
 
