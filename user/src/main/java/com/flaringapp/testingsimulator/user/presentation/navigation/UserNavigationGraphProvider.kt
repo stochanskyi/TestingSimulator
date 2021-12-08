@@ -4,5 +4,5 @@ import com.flaringapp.testingsimulator.presentation.navigation.NavigationGraphPr
 import com.flaringapp.testingsimulator.user.R
 
 class UserNavigationGraphProvider : NavigationGraphProvider {
-    override fun provideGraphId(): Int = R.navigation.main_nav_graph
+    override fun provideGraphId(): Int = R.navigation.user_nav_graph
 }

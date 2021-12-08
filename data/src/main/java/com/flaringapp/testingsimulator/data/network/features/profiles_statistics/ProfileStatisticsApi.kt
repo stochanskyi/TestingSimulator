@@ -7,7 +7,7 @@ import retrofit2.http.GET
 interface ProfileStatisticsApi {
 
     // TODO API change route
-    @GET("")
+    @GET("profile")
     suspend fun getProfileStatistics(): ApiResponseList<ProfileStatisticsResponse>
 
 }
