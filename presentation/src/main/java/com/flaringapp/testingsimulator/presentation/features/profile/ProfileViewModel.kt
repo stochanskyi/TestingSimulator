@@ -4,16 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.launchOnIO
+import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
-import com.flaringapp.testingsimulator.core.data.common.call.transformList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
-import com.flaringapp.testingsimulator.core.presentation.utils.livedata.liveDataIO
+import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableLiveDataList
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiColorsProvider
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
 import com.flaringapp.testingsimulator.domain.features.profile.ProfileStatistics
 import com.flaringapp.testingsimulator.domain.features.profile_statistics.GetProfileStatisticsUseCase
 import com.flaringapp.testingsimulator.presentation.features.profile.models.ProfileStatisticsViewData
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 
 abstract class ProfileViewModel : BaseViewModel() {
 
@@ -36,16 +38,17 @@ class ProfileViewModelImpl(
 
     override val nameLiveData = MutableLiveData<String>()
     override val emailLiveData = MutableLiveData<String>()
-    override val studyingLiveData = MutableLiveData<String?>()
-    override val workPlaceLiveData = MutableLiveData<String?>()
-    override val roleLiveData = MutableLiveData<String?>()
-    override val statisticsLiveData = liveDataIO<List<ProfileStatisticsViewData>> {
-        loadStatistics()
-    }
+    override val studyingLiveData = MutableLiveData<String?>(null)
+    override val workPlaceLiveData = MutableLiveData<String?>(null)
+    override val roleLiveData = MutableLiveData<String?>(null)
+    override val statisticsLiveData = MutableLiveDataList<ProfileStatisticsViewData>(emptyList())
 
     init {
         viewModelScope.launchOnIO {
-            profileBehaviour.loadProfile(this@ProfileViewModelImpl)
+            listOf(
+                async { loadProfileData() },
+                async { loadStatistics() }
+            ).awaitAll()
         }
     }
 
@@ -63,9 +66,22 @@ class ProfileViewModelImpl(
         roleLiveData.value = role
     }
 
+    private suspend fun loadProfileData() {
+        safeCall {
+            profileBehaviour.loadProfile(this@ProfileViewModelImpl)
+        }
+    }
+
     private suspend fun loadStatistics() {
-        val statistics = getStatisticsUseCase()
-        statistics.transformList { toViewData() }
+        val statistics = safeCall {
+            getStatisticsUseCase()
+        } ?: return
+
+        val viewData = statistics.map { it.toViewData() }
+
+        withMainContext {
+            statisticsLiveData.value = viewData
+        }
     }
 
     private fun ProfileStatistics.toViewData(): ProfileStatisticsViewData {
