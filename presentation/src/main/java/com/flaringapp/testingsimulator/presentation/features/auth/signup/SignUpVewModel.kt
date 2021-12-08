@@ -10,6 +10,11 @@ import com.flaringapp.testingsimulator.domain.usecase.validation.*
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class SignUpVewModel : BaseViewModel() {
+
+    abstract val isStudyingAtEnabled: LiveData<Boolean>
+    abstract val isWorkPlaceEnabled: LiveData<Boolean>
+    abstract val isRoleEnabled: LiveData<Boolean>
+
     abstract val emailLiveData: LiveData<String>
     abstract val firstNameLiveData: LiveData<String>
     abstract val lastNameLiveData: LiveData<String>
@@ -24,10 +29,6 @@ abstract class SignUpVewModel : BaseViewModel() {
     abstract val invalidLastNameLiveData: LiveData<Unit>
     abstract val invalidPasswordLiveData: LiveData<Unit>
     abstract val passwordsNotEqualLiveData: LiveData<Unit>
-
-    abstract val isStudyingAtEnabled: LiveData<Boolean>
-    abstract val isWorkPlaceEnabled: LiveData<Boolean>
-    abstract val isRoleEnabled: LiveData<Boolean>
 
     abstract val loadingLiveData: LiveData<Boolean>
 
@@ -63,24 +64,24 @@ class SignUpVewModelImpl(
     private var password: String = ""
     private var confirmPassword: String = ""
 
-    override val emailLiveData = MutableLiveData("")
-    override val firstNameLiveData = MutableLiveData("")
-    override val lastNameLiveData = MutableLiveData("")
-    override val studyingAtLiveData = MutableLiveData("")
-    override val workPlaceLiveData = MutableLiveData("")
-    override val roleLiveData = MutableLiveData("")
-    override val passwordLiveData = MutableLiveData("")
-    override val confirmPasswordLiveData = MutableLiveData("")
+    override val isStudyingAtEnabled = MutableLiveData(signUpBehaviour.isStudyingAtEnabled)
+    override val isWorkPlaceEnabled = MutableLiveData(signUpBehaviour.isWorkPlaceEnabled)
+    override val isRoleEnabled: LiveData<Boolean> = MutableLiveData(signUpBehaviour.isRoleEnabled)
+
+    override val emailLiveData = MutableLiveData(email)
+    override val firstNameLiveData = MutableLiveData(firstName)
+    override val lastNameLiveData = MutableLiveData(lastName)
+    override val studyingAtLiveData = MutableLiveData(studyingAt)
+    override val workPlaceLiveData = MutableLiveData(workPlace)
+    override val roleLiveData = MutableLiveData(role)
+    override val passwordLiveData = MutableLiveData(password)
+    override val confirmPasswordLiveData = MutableLiveData(confirmPassword)
 
     override val invalidEmailLiveData = SingleLiveEvent<Unit>()
     override val invalidFirstNameLiveData = SingleLiveEvent<Unit>()
     override val invalidLastNameLiveData = SingleLiveEvent<Unit>()
     override val invalidPasswordLiveData = SingleLiveEvent<Unit>()
     override val passwordsNotEqualLiveData = SingleLiveEvent<Unit>()
-
-    override val isStudyingAtEnabled = MutableLiveData(signUpBehaviour.isStudyingAtEnabled)
-    override val isWorkPlaceEnabled = MutableLiveData(signUpBehaviour.isWorkPlaceEnabled)
-    override val isRoleEnabled: LiveData<Boolean> = MutableLiveData(signUpBehaviour.isRoleEnabled)
 
     override val loadingLiveData = MutableLiveData<Boolean>()
 
