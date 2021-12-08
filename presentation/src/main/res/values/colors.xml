@@ -22,4 +22,22 @@
 
     <color name="error">#E95656</color>
     <color name="error_light">#FF6767</color>
+
+    <!-- Statistics -->
+    <color name="statistics_test_bg">#F5F7FA</color>
+    <color name="statistics_test_accent">#377DFF</color>
+    <color name="statistics_test_variant">#8893A8</color>
+    <color name="statistics_student_bg">#FAF8F5</color>
+    <color name="statistics_student_accent">#F2A000</color>
+    <color name="statistics_student_variant">#A99E89</color>
+    <color name="statistics_eyes_bg">#F5FAF6</color>
+    <color name="statistics_eyes_accent">#00DD3E</color>
+    <color name="statistics_eyes_variant">#88A891</color>
+    <color name="statistics_brain_bg">#FAF5F6</color>
+    <color name="statistics_brain_accent">#EB83A0</color>
+    <color name="statistics_brain_variant">#A88891</color>
+    <color name="statistics_win_bg">#FAF8F5</color>
+    <color name="statistics_win_accent">#FCC63F</color>
+    <color name="statistics_win_variant">#A89F88</color>
+    
 </resources>

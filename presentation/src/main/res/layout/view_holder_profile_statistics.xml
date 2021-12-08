@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_profile_statistics_item"
+    android:padding="8dp"
+    android:gravity="center_vertical"
+    tools:backgroundTint="@color/statistics_brain_bg">
+
+    <ImageView
+        android:id="@+id/imageEmoji"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="fitCenter"
+        tools:src="@drawable/ic_waving_hand" />
+
+    <LinearLayout
+        android:id="@+id/layoutTexts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="8dp">
+
+        <TextView
+            style="@style/Text.Medium"
+            android:id="@+id/textValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="80%"
+            tools:textColor="@color/statistics_brain_accent" />
+
+        <TextView
+            style="@style/Text.Small"
+            android:id="@+id/textLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="Passed tasks%"
+            tools:textColor="@color/statistics_brain_variant" />
+
+    </LinearLayout>
+
+</LinearLayout>
