@@ -13,7 +13,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:src="@drawable/img_waving_hand"
+        android:src="@drawable/img_emoji_waving_hand"
         android:contentDescription="@string/hello" />
 
     <TextView
