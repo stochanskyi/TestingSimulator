@@ -5,10 +5,10 @@ import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.domain.features.profile.GetProfileUseCase
 
 class GetAdminProfileUseCase(
-    private val adminProfileRepository: AdminProfileRepository,
+    private val profileRepository: AdminProfileRepository,
 ) : GetProfileUseCase<AdminProfile> {
 
     override suspend fun invoke(): CallResult<AdminProfile> {
-        return adminProfileRepository.getProfile()
+        return profileRepository.getProfile()
     }
 }

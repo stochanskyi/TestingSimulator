@@ -1,9 +1,8 @@
 package com.flaringapp.testingsimulator.user.app.di
 
 import com.flaringapp.testingsimulator.user.data.network.UserNetworkAdapter
-import com.flaringapp.testingsimulator.user.data.network.features.auth.AuthApi
-import com.flaringapp.testingsimulator.user.data.network.features.auth.AuthDataSource
-import com.flaringapp.testingsimulator.user.data.network.features.auth.AuthDataSourceImpl
+import com.flaringapp.testingsimulator.user.data.network.features.auth.UserAuthDataSource
+import com.flaringapp.testingsimulator.user.data.network.features.auth.UserAuthDataSourceImpl
 import org.koin.core.context.GlobalContext
 import org.koin.dsl.module
 
@@ -15,6 +14,6 @@ val NetworkModule = module {
 
     single { adapter.createAuthApi() }
 
-    single<AuthDataSource> { AuthDataSourceImpl(get()) }
+    single<UserAuthDataSource> { UserAuthDataSourceImpl(get()) }
 
 }

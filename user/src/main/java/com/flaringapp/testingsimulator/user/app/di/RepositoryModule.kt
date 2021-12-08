@@ -4,8 +4,8 @@ import com.flaringapp.testingsimulator.user.data.repository.auth.UserAuthReposit
 import com.flaringapp.testingsimulator.user.data.repository.auth.UserAuthRepositoryImpl
 import com.flaringapp.testingsimulator.user.data.repository.UserDataRepository
 import com.flaringapp.testingsimulator.user.data.repository.UserDataRepositoryImpl
-import com.flaringapp.testingsimulator.user.data.repository.auth.mappers.LoginResponseMapper
-import com.flaringapp.testingsimulator.user.data.repository.auth.mappers.LoginResponseMapperImpl
+import com.flaringapp.testingsimulator.user.data.repository.auth.mappers.UserLoginMapper
+import com.flaringapp.testingsimulator.user.data.repository.auth.mappers.UserLoginMapperImpl
 import com.flaringapp.testingsimulator.user.data.repository.profile.UserProfileRepository
 import com.flaringapp.testingsimulator.user.data.repository.profile.UserProfileRepositoryImpl
 import org.koin.dsl.module
@@ -13,7 +13,7 @@ import org.koin.dsl.module
 val RepositoryModule = module {
 
     factory<UserAuthRepository> { UserAuthRepositoryImpl(get(), get()) }
-    factory<LoginResponseMapper> { LoginResponseMapperImpl() }
+    factory<UserLoginMapper> { UserLoginMapperImpl() }
 
     factory<UserDataRepository> { UserDataRepositoryImpl(get()) }
 

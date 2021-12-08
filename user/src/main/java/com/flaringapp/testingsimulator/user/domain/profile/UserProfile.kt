@@ -3,7 +3,7 @@ package com.flaringapp.testingsimulator.user.domain.profile
 import com.flaringapp.testingsimulator.domain.features.profile.Profile
 
 class UserProfile(
-    override val id: String,
+    override val id: Int,
     override val firstName: String,
     override val lastName: String,
     override val email: String,

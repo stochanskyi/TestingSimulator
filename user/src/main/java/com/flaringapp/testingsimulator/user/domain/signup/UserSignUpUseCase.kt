@@ -7,12 +7,12 @@ import com.flaringapp.testingsimulator.user.domain.signup.models.UserRegistratio
 
 class UserSignUpUseCase(
     private val authRepository: UserAuthRepository,
-    private val userDataRepository: UserDataRepository
+    private val dataRepository: UserDataRepository
 ) {
 
     suspend fun signUp(userRegistrationData: UserRegistrationData): CallResultNothing {
         return authRepository.signUp(userRegistrationData)
-            .doOnSuccess { userDataRepository.token = it.token }
+            .doOnSuccess { dataRepository.token = it.token }
             .ignoreData()
     }
 

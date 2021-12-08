@@ -7,7 +7,7 @@ import com.flaringapp.testingsimulator.admin.data.repository.AdminDataRepository
 
 class AdminLoginUseCase(
     private val authRepository: AdminAuthRepository,
-    private val userDataRepository: AdminDataRepository
+    private val dataRepository: AdminDataRepository
 ) : LoginUseCase {
 
     override suspend operator fun invoke(
@@ -21,7 +21,7 @@ class AdminLoginUseCase(
             email = email,
             password = password
         ).doOnSuccess {
-            userDataRepository.setToken(it.token)
+            dataRepository.token = it.token
         }.ignoreData()
     }
 }

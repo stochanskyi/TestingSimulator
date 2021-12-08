@@ -1,8 +1,8 @@
 package com.flaringapp.testingsimulator.admin.data.repository.auth
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
-import com.flaringapp.testingsimulator.admin.data.network.features.auth.models.request.AdminLoginRequest
-import com.flaringapp.testingsimulator.admin.data.repository.auth.mappers.AdminLoginResponseMapper
+import com.flaringapp.testingsimulator.admin.data.network.features.auth.request.AdminLoginRequest
+import com.flaringapp.testingsimulator.admin.data.repository.auth.mappers.AdminLoginMapper
 import com.flaringapp.testingsimulator.admin.data.repository.auth.models.AdminLoginInfo
 import com.flaringapp.testingsimulator.admin.data.network.features.auth.AdminAuthDataSource
 
@@ -17,7 +17,7 @@ interface AdminAuthRepository {
 
 class AdminAuthRepositoryImpl(
     private val authDataSource: AdminAuthDataSource,
-    private val loginResponseMapper: AdminLoginResponseMapper
+    private val loginMapper: AdminLoginMapper
 ) : AdminAuthRepository {
 
     override suspend fun login(
@@ -26,9 +26,9 @@ class AdminAuthRepositoryImpl(
     ): CallResult<AdminLoginInfo> {
         val loginRequest = AdminLoginRequest(email, password)
 
-        return authDataSource.login(loginRequest).transform {
-            loginResponseMapper.map(this)
-        }
+        return authDataSource.login(loginRequest)
+            .transform {
+                loginMapper.map(this)
+            }
     }
-
 }

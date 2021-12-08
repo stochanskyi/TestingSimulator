@@ -1,10 +1,10 @@
-package com.flaringapp.testingsimulator.user.data.network.features.common
+package com.flaringapp.testingsimulator.user.data.network.features.auth.response
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class UserDataModel(
+class UserLoginProfileResponse(
     @Json(name = "id")
     val id: Int,
     @Json(name = "firstName")
@@ -16,7 +16,7 @@ class UserDataModel(
     @Json(name = "studying")
     val studying: String?,
     @Json(name = "workplace")
-    val workplace: String?,
+    val workPlace: String?,
     @Json(name = "role")
     val role: String?,
 )

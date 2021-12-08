@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.admin.data.network.features.auth.models.request
+package com.flaringapp.testingsimulator.admin.data.network.features.auth.request
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

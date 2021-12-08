@@ -1,10 +1,10 @@
 package com.flaringapp.testingsimulator.user.data.repository.auth
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
-import com.flaringapp.testingsimulator.user.data.network.features.auth.AuthDataSource
-import com.flaringapp.testingsimulator.user.data.network.features.auth.models.request.LoginRequest
-import com.flaringapp.testingsimulator.user.data.network.features.auth.models.request.SignUpRequest
-import com.flaringapp.testingsimulator.user.data.repository.auth.mappers.LoginResponseMapper
+import com.flaringapp.testingsimulator.user.data.network.features.auth.UserAuthDataSource
+import com.flaringapp.testingsimulator.user.data.network.features.auth.request.UserLoginRequest
+import com.flaringapp.testingsimulator.user.data.network.features.auth.request.UserSignUpRequest
+import com.flaringapp.testingsimulator.user.data.repository.auth.mappers.UserLoginMapper
 import com.flaringapp.testingsimulator.user.data.repository.auth.models.UserLoginInfo
 import com.flaringapp.testingsimulator.user.domain.signup.models.UserRegistrationData
 
@@ -22,36 +22,37 @@ interface UserAuthRepository {
 }
 
 class UserAuthRepositoryImpl(
-    private val authDataSource: AuthDataSource,
-    private val loginResponseMapper: LoginResponseMapper
+    private val authDataSource: UserAuthDataSource,
+    private val loginMapper: UserLoginMapper
 ) : UserAuthRepository {
 
     override suspend fun login(
         email: String,
         password: String,
     ): CallResult<UserLoginInfo> {
-        val loginRequest = LoginRequest(email, password)
+        val loginRequest = UserLoginRequest(email, password)
 
-        return authDataSource.login(loginRequest).transform {
-            loginResponseMapper.map(this)
-        }
+        return authDataSource.login(loginRequest)
+            .transform {
+                loginMapper.map(this)
+            }
     }
 
     override suspend fun signUp(registrationData: UserRegistrationData): CallResult<UserLoginInfo> {
-        val signUpRequest = SignUpRequest(
+        val signUpRequest = UserSignUpRequest(
             email = registrationData.email,
             firstName = registrationData.firstName,
             lastName = registrationData.lastName,
             studying = registrationData.studyingAt,
-            workplace = registrationData.workPlace,
+            workPlace = registrationData.workPlace,
             role = registrationData.role,
             password = registrationData.password,
             passwordRepeat = registrationData.repeatPassword,
         )
 
-        return authDataSource.signUp(signUpRequest).transform {
-            loginResponseMapper.map(this)
-        }
+        return authDataSource.signUp(signUpRequest)
+            .transform {
+                loginMapper.map(this)
+            }
     }
-
 }

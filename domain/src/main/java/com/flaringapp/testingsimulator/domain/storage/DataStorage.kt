@@ -4,6 +4,6 @@ interface DataStorage {
 
     var token: String?
 
-    var userId: String?
+    var userId: Int
 
 }

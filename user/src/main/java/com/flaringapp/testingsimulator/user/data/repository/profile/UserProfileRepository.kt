@@ -25,7 +25,7 @@ class UserProfileRepositoryImpl(
 
     private fun createProfileFromStorage(): UserProfile? {
         return UserProfile(
-            id = dataStorage.userId ?: return null,
+            id = dataStorage.userId,
             firstName = profileDataStorage.firstName ?: return null,
             lastName = profileDataStorage.lastName ?: return null,
             email = profileDataStorage.email ?: return null,

@@ -25,7 +25,7 @@ class AdminProfileRepositoryImpl(
 
     private fun createProfileFromStorage(): AdminProfile? {
         return AdminProfile(
-            id = dataStorage.userId ?: return null,
+            id = dataStorage.userId,
             firstName = profileDataStorage.firstName ?: return null,
             lastName = profileDataStorage.lastName ?: return null,
             email = profileDataStorage.email ?: return null,

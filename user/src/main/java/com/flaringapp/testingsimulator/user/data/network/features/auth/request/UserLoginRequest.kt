@@ -1,10 +1,10 @@
-package com.flaringapp.testingsimulator.user.data.network.features.auth.models.request
+package com.flaringapp.testingsimulator.user.data.network.features.auth.request
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class LoginRequest(
+class UserLoginRequest(
     @Json(name = "email")
     val email: String,
     @Json(name = "password")

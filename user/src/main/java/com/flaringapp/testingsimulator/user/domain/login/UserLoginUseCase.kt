@@ -7,8 +7,8 @@ import com.flaringapp.testingsimulator.user.data.repository.auth.UserAuthReposit
 import com.flaringapp.testingsimulator.user.data.repository.UserDataRepository
 
 class UserLoginUseCase(
-    private val authRepository: AuthRepository,
-    private val userDataRepository: UserDataRepository
+    private val authRepository: UserAuthRepository,
+    private val dataRepository: UserDataRepository,
 ) : LoginUseCase {
 
     override suspend operator fun invoke(
@@ -26,7 +26,7 @@ class UserLoginUseCase(
             email = email,
             password = password
         ).doOnSuccess {
-            userDataRepository.token = it.token
+            dataRepository.token = it.token
         }.ignoreData()
     }
 }

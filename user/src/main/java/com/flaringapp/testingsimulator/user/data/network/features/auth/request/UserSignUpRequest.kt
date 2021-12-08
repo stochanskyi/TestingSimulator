@@ -1,10 +1,10 @@
-package com.flaringapp.testingsimulator.user.data.network.features.auth.models.request
+package com.flaringapp.testingsimulator.user.data.network.features.auth.request
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class SignUpRequest(
+class UserSignUpRequest(
     @Json(name = "email")
     val email: String,
     @Json(name = "firstName")
@@ -14,7 +14,7 @@ class SignUpRequest(
     @Json(name = "studying")
     val studying: String?,
     @Json(name = "workplace")
-    val workplace: String?,
+    val workPlace: String?,
     @Json(name = "role")
     val role: String?,
     @Json(name = "password")
