@@ -17,7 +17,7 @@ val UseCaseModule = module {
 
     factory<ValidatePasswordEqualityUseCase> { ValidatePasswordEqualityUseCaseImpl(get()) }
 
-    factory { GetTopicsUseCase() }
+    factory { GetTopicsUseCase(get()) }
     factory<GetProfileStatisticsUseCase> { GetProfileStatisticsUseCaseImpl(get()) }
 
 }
