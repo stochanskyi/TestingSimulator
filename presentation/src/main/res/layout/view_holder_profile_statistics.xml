@@ -14,7 +14,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="fitCenter"
-        tools:src="@drawable/ic_waving_hand" />
+        tools:src="@drawable/img_waving_hand" />
 
     <LinearLayout
         android:id="@+id/layoutTexts"
