@@ -47,12 +47,12 @@ abstract class SignUpVewModel : BaseViewModel() {
 }
 
 class SignUpVewModelImpl(
+    private val behaviour: SignUpViewBehaviour,
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val validateFirstNameUseCase: ValidateFirstNameUseCase,
     private val validateLastNameUseCase: ValidateLastNameUseCase,
     private val passwordEqualityUseCase: ValidatePasswordEqualityUseCase,
-    private val signUpBehaviour: SignUpViewBehaviour
 ) : SignUpVewModel() {
 
     private var email: String = ""
@@ -64,9 +64,9 @@ class SignUpVewModelImpl(
     private var password: String = ""
     private var confirmPassword: String = ""
 
-    override val isStudyingAtEnabled = MutableLiveData(signUpBehaviour.isStudyingAtEnabled)
-    override val isWorkPlaceEnabled = MutableLiveData(signUpBehaviour.isWorkPlaceEnabled)
-    override val isRoleEnabled: LiveData<Boolean> = MutableLiveData(signUpBehaviour.isRoleEnabled)
+    override val isStudyingAtEnabled = MutableLiveData(behaviour.isStudyingAtEnabled)
+    override val isWorkPlaceEnabled = MutableLiveData(behaviour.isWorkPlaceEnabled)
+    override val isRoleEnabled: LiveData<Boolean> = MutableLiveData(behaviour.isRoleEnabled)
 
     override val emailLiveData = MutableLiveData(email)
     override val firstNameLiveData = MutableLiveData(firstName)
@@ -132,7 +132,7 @@ class SignUpVewModelImpl(
 
         viewModelScope.startLoadingTask(loadingLiveData) {
             safeCall {
-                signUpBehaviour.createAccount(
+                behaviour.createAccount(
                     email = email,
                     firstName = firstName,
                     lastName = lastName,
