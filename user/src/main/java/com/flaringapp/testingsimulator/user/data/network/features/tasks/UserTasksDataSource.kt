@@ -8,8 +8,6 @@ import com.flaringapp.testingsimulator.user.data.network.features.tasks.response
 
 interface UserTasksDataSource {
 
-    suspend fun startTest(request: StartTestRequest): CallResult<UserTaskResponse>
-
     suspend fun getTask(testId: Int): CallResult<UserTaskResponse>
 
     suspend fun answerTask(request: UserTaskAnswerRequest): CallResult<UserTaskResponse?>
@@ -19,10 +17,6 @@ interface UserTasksDataSource {
 class UserTasksDataSourceImpl(
     private val api: UserTasksApi
 ) : UserTasksDataSource {
-
-    override suspend fun startTest(request: StartTestRequest): CallResult<UserTaskResponse> {
-        return api.startTest(request).validate()
-    }
 
     override suspend fun getTask(testId: Int): CallResult<UserTaskResponse> {
         return api.getTask(testId).validate()

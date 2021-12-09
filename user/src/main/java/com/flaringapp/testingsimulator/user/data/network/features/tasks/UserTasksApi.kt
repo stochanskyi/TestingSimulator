@@ -11,9 +11,6 @@ import retrofit2.http.Query
 
 interface UserTasksApi {
 
-    @POST("start_test")
-    suspend fun startTest(@Body request: StartTestRequest): ApiResponse<UserTaskResponse>
-
     @GET("answer")
     suspend fun getTask(@Query("testId") testId: Int): ApiResponse<UserTaskResponse>
 

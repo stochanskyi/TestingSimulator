@@ -2,11 +2,14 @@ package com.flaringapp.testingsimulator.user.data.network.features.tests
 
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponse
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponseList
+import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.StartTestRequest
+import com.flaringapp.testingsimulator.user.data.network.features.tasks.response.UserTaskResponse
 import com.flaringapp.testingsimulator.user.data.network.features.tests.response.UserTestDetailsResponse
 import com.flaringapp.testingsimulator.user.data.network.features.tests.response.UserTestResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.POST
 
 interface UserTestsApi {
 
@@ -19,5 +22,10 @@ interface UserTestsApi {
     suspend fun getTestDetails(
         @Path("testId") testId: Int
     ): ApiResponse<UserTestDetailsResponse>
+
+    @POST("start_test")
+    suspend fun startTest(
+        @Body request: StartTestRequest
+    ): ApiResponse<UserTaskResponse>
 
 }

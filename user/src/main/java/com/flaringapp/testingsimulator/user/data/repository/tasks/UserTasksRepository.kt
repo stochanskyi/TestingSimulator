@@ -12,8 +12,6 @@ import com.flaringapp.testingsimulator.user.data.repository.tasks.model.UserTask
 
 interface UserTasksRepository {
 
-    suspend fun startTest(testId: Int): CallResultNothing
-
     suspend fun getTask(testId: Int): CallResult<UserTask>
 
     suspend fun answerTask(taskId: Int, answerBlockIds: List<Int>): CallResult<PotentialUserTask>
@@ -25,12 +23,6 @@ class UserTasksRepositoryImpl(
     private val userTaskMapper: UserTaskMapper,
     private val potentialUserTaskMapper: PotentialUserTaskMapper
 ) : UserTasksRepository {
-
-    override suspend fun startTest(testId: Int): CallResultNothing {
-        val request = StartTestRequest(testId)
-
-        return userTasksDataSource.startTest(request).ignoreData()
-    }
 
     override suspend fun getTask(testId: Int): CallResult<UserTask> {
         return userTasksDataSource.getTask(testId).transform { userTaskMapper.mapUserTask(this) }
