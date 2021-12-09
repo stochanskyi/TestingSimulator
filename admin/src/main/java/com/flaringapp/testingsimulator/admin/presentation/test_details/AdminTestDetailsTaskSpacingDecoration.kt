@@ -1,19 +1,19 @@
-package com.flaringapp.testingsimulator.admin.presentation.test
+package com.flaringapp.testingsimulator.admin.presentation.test_details
 
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.flaringapp.testingsimulator.admin.presentation.test.adapter.AdminTestItemsAdapter
+import com.flaringapp.testingsimulator.admin.presentation.test_details.adapter.AdminTestDetailsItemsAdapter
 import com.flaringapp.testingsimulator.core.presentation.utils.dpi
 
-class AdminTestItemsTaskSpacingDecoration : RecyclerView.ItemDecoration() {
+class AdminTestDetailsTaskSpacingDecoration : RecyclerView.ItemDecoration() {
 
     companion object {
         private const val TOP_SPACING = 8
 
         private val taskViewTypes = listOf(
-            AdminTestItemsAdapter.VIEW_TYPE_TASK,
-            AdminTestItemsAdapter.VIEW_TYPE_ADD_TASK,
+            AdminTestDetailsItemsAdapter.VIEW_TYPE_TASK,
+            AdminTestDetailsItemsAdapter.VIEW_TYPE_ADD_TASK,
         )
     }
 

@@ -15,6 +15,6 @@
         android:clipToPadding="false"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="5"
-        tools:listitem="@layout/view_holder_admin_test_task" />
+        tools:listitem="@layout/view_holder_admin_test_details_task" />
 
 </LinearLayout>

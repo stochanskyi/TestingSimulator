@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.admin.presentation.test
+package com.flaringapp.testingsimulator.admin.presentation.test_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,10 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
-import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestAddTaskViewData
-import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestHeaderViewData
-import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestListItemViewData
-import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestTaskViewData
+import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsAddTaskViewData
+import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsHeaderViewData
+import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsItemViewData
+import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsTaskViewData
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusIsEditableTransformer
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusNameTransformer
 import com.flaringapp.testingsimulator.core.app.common.launchOnIO
@@ -21,11 +21,11 @@ import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableL
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
-abstract class AdminTestViewModel : BaseViewModel() {
+abstract class AdminTestDetailsViewModel : BaseViewModel() {
 
     abstract val nameLiveData: LiveData<String>
 
-    abstract val listItemsLiveData: LiveDataList<AdminTestListItemViewData>
+    abstract val listItemsLiveData: LiveDataList<AdminTestDetailsItemViewData>
 
     abstract fun init(
         testId: Int,
@@ -38,17 +38,17 @@ abstract class AdminTestViewModel : BaseViewModel() {
 
 }
 
-class AdminTestViewModeImpl(
+class AdminTestDetailsViewModeImpl(
     private val getTestDetailedUseCase: GetAdminTestDetailedUseCase,
     private val testStatusNameTransformer: AdminTestStatusNameTransformer,
     private val testStatusIsEditableTransformer: AdminTestStatusIsEditableTransformer,
     private val textProvider: TextProvider,
     private val taxonomyFormatter: TaxonomyFormatter,
-) : AdminTestViewModel() {
+) : AdminTestDetailsViewModel() {
 
     override val nameLiveData = MutableLiveData<String>()
 
-    override val listItemsLiveData = MutableLiveDataList<AdminTestListItemViewData>()
+    override val listItemsLiveData = MutableLiveDataList<AdminTestDetailsItemViewData>()
 
     private var test: AdminTestDetailed? = null
 
@@ -83,8 +83,8 @@ class AdminTestViewModeImpl(
 
     private fun composeListItemsViewData(
         test: AdminTestDetailed
-    ): List<AdminTestListItemViewData> {
-        val items = mutableListOf<AdminTestListItemViewData>()
+    ): List<AdminTestDetailsItemViewData> {
+        val items = mutableListOf<AdminTestDetailsItemViewData>()
         items.add(
             composeHeaderViewData(test)
         )
@@ -97,7 +97,7 @@ class AdminTestViewModeImpl(
         return items
     }
 
-    private fun composeHeaderViewData(test: AdminTestDetailed): AdminTestHeaderViewData {
+    private fun composeHeaderViewData(test: AdminTestDetailed): AdminTestDetailsHeaderViewData {
         val statusNameWithStatistics = LinkedHashMap<CharSequence, CharSequence>(
             test.statistics.size + 1
         )
@@ -107,26 +107,26 @@ class AdminTestViewModeImpl(
         statusNameWithStatistics[statusLabel] = statusName
         statusNameWithStatistics.putAll(test.statistics)
 
-        return AdminTestHeaderViewData(
+        return AdminTestDetailsHeaderViewData(
             name = test.name,
             statusAndStatistics = taxonomyFormatter.format(statusNameWithStatistics)
         )
     }
 
-    private fun composeTasksViewData(test: AdminTestDetailed): List<AdminTestTaskViewData> {
+    private fun composeTasksViewData(test: AdminTestDetailed): List<AdminTestDetailsTaskViewData> {
         return test.tasks.map { task ->
             val difficulty = "I".repeat(task.difficultyLevel)
-            AdminTestTaskViewData(
+            AdminTestDetailsTaskViewData(
                 id = task.id,
                 text = taxonomyFormatter.format(task.name, difficulty),
             )
         }
     }
 
-    private fun composeAddTaskViewData(test: AdminTestDetailed): AdminTestAddTaskViewData? {
+    private fun composeAddTaskViewData(test: AdminTestDetailed): AdminTestDetailsAddTaskViewData? {
         val isEditable = test.status.transform(testStatusIsEditableTransformer)
         if (!isEditable) return null
-        return AdminTestAddTaskViewData
+        return AdminTestDetailsAddTaskViewData
     }
 
 }

@@ -1,23 +1,25 @@
-package com.flaringapp.testingsimulator.admin.presentation.test
+package com.flaringapp.testingsimulator.admin.presentation.test_details
 
 import android.os.Bundle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flaringapp.testingsimulator.admin.R
-import com.flaringapp.testingsimulator.admin.databinding.FragmentAdminTestBinding
-import com.flaringapp.testingsimulator.admin.presentation.test.adapter.AdminTestItemsAdapter
+import com.flaringapp.testingsimulator.admin.databinding.FragmentAdminTestDetailsBinding
+import com.flaringapp.testingsimulator.admin.presentation.test_details.adapter.AdminTestDetailsItemsAdapter
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.updateAppBarConfiguration
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AdminTestFragment : ModelledFragment(R.layout.fragment_admin_test) {
+class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_details) {
 
-    override val model: AdminTestViewModel by viewModel()
+    override val model: AdminTestDetailsViewModel by viewModel()
 
-    private val binding: FragmentAdminTestBinding by viewBinding(FragmentAdminTestBinding::bind)
+    private val binding: FragmentAdminTestDetailsBinding by viewBinding(
+        FragmentAdminTestDetailsBinding::bind
+    )
 
-    private val args: AdminTestFragmentArgs by navArgs()
+    private val args: AdminTestDetailsFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +28,12 @@ class AdminTestFragment : ModelledFragment(R.layout.fragment_admin_test) {
 
     override fun initViews() = with(binding) {
         recyclerListItems.layoutManager = LinearLayoutManager(requireContext())
-        recyclerListItems.adapter = AdminTestItemsAdapter(
+        recyclerListItems.adapter = AdminTestDetailsItemsAdapter(
             openTask = model::openTask,
             addTask = model::createTask
         )
         recyclerListItems.addItemDecoration(
-            AdminTestItemsTaskSpacingDecoration()
+            AdminTestDetailsTaskSpacingDecoration()
         )
     }
 
@@ -46,8 +48,8 @@ class AdminTestFragment : ModelledFragment(R.layout.fragment_admin_test) {
         }
     }
 
-    private fun <T> adapterAction(action: (AdminTestItemsAdapter) -> T): T {
-        val adapter = binding.recyclerListItems.adapter as AdminTestItemsAdapter
+    private fun <T> adapterAction(action: (AdminTestDetailsItemsAdapter) -> T): T {
+        val adapter = binding.recyclerListItems.adapter as AdminTestDetailsItemsAdapter
         return adapter.let(action)
     }
 
