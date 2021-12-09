@@ -3,7 +3,8 @@ package com.flaringapp.testingsimulator.core.data.network.base
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.core.data.common.call.ErrorType
-import com.flaringapp.testingsimulator.core.data.common.call.ErrorType.*
+import com.flaringapp.testingsimulator.core.data.common.call.ErrorType.ApiResourceNotFound
+import com.flaringapp.testingsimulator.core.data.common.call.ErrorType.Unauthenticated
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import okhttp3.ResponseBody
@@ -26,7 +27,7 @@ fun <T> Response<out ValidateableResponse<List<T>>>.validateList(): CallResult<L
             if (it == null) CallResult.Success(emptyList())
             else CallResult.Success(it)
         }
-    } ?: errorBody().parseErrorResult()
+    } ?: classifyError()
 }
 
 fun <T> Response<out ValidateableResponse<T>>.validate(): CallResult<T> {
@@ -44,7 +45,7 @@ private inline fun <T> Response<out ValidateableResponse<out T>>.validateAny(
         !isSuccessful -> null
         code() == HTTP_NO_CONTENT -> noContentErrorResult()
         else -> body().parseResult(collector)
-    } ?: errorBody().parseErrorResult()
+    } ?: classifyError()
 }
 
 private inline fun <T> ValidateableResponse<out T>?.parseResult(
@@ -57,9 +58,21 @@ private inline fun <T> ValidateableResponse<out T>?.parseResult(
     }
 }
 
-private fun <T> ResponseBody?.parseErrorResult(): CallResult<T> {
-    if (this == null) return CallResult.UnknownError()
-    return convertErrorBody().toCallResult()
+private fun <T> Response<out ValidateableResponse<out T>>.classifyError() : CallResult.Error<T> {
+    return body()?.parseErrorResult()
+        ?: errorBody()?.parseErrorResult()
+        ?: unknownError()
+}
+
+private fun <T> ValidateableResponse<out T>.parseErrorResult(): CallResult.Error<T> {
+    return CallResult.Error(
+        exception = ApiException(message),
+        errorType = errorType?.parseErrorType(),
+    )
+}
+
+private fun <T> ResponseBody.parseErrorResult(): CallResult.Error<T>? {
+    return convertErrorBody()?.toCallResult()
 }
 
 private fun ResponseBody.convertErrorBody(): ErrorResponseContents? {
@@ -71,8 +84,7 @@ private fun ResponseBody.convertErrorBody(): ErrorResponseContents? {
     }
 }
 
-private fun <T> ErrorResponseContents?.toCallResult(): CallResult<T> {
-    if (this == null) return CallResult.Error(ApiException(message = null))
+private fun <T> ErrorResponseContents.toCallResult(): CallResult.Error<T> {
     return CallResult.Error(
         exception = ApiException(message),
         errorType = errorType?.parseErrorType()
@@ -89,3 +101,5 @@ private fun String.parseErrorType(): ErrorType? = when (this) {
     "RESOURCE_NOT_FOUND" -> ApiResourceNotFound
     else -> null
 }
+
+private fun <T> unknownError() = CallResult.Error<T>(ApiException(message = null))
