@@ -43,10 +43,6 @@ android {
             dimension = "appType"
             versionNameSuffix = "-admin"
         }
-        create("shared") {
-            dimension = "appType"
-            versionNameSuffix = "-shared"
-        }
     }
 
     compileOptions {
@@ -67,7 +63,6 @@ android {
 
 val adminImplementation by configurations
 val userImplementation by configurations
-val sharedImplementation by configurations
 
 dependencies {
     implementation(project(mapOf("path" to ":core")))
@@ -77,8 +72,6 @@ dependencies {
 
     adminImplementation(project(mapOf("path" to ":admin")))
     userImplementation(project(mapOf("path" to ":user")))
-    sharedImplementation(project(mapOf("path" to ":admin")))
-    sharedImplementation(project(mapOf("path" to ":user")))
 
     implementation(Dependencies.kotlin)
     implementation(Dependencies.kotlinCoroutines)
