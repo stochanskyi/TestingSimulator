@@ -8,7 +8,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserTaskPassingFragment : ModelledFragment(R.layout.fragment_user_task_passing) {
 
-    override val model: UserTaskPassingModel by viewModel()
+    override val model: UserTaskPassingViewModel by viewModel()
 
     private val binding: FragmentUserTestDetailsBinding by viewBinding(
         FragmentUserTestDetailsBinding::bind
