@@ -6,7 +6,7 @@ import com.flaringapp.testingsimulator.user.presentation.task.models.UserTaskPas
 
 class UserTaskPassingBlocksAdapter(
     private val dragListener: UserTaskPassingBlockTouchDragListener,
-    private val onEnabledChanged: (id: Int, isEnabled: Boolean) -> Unit,
+    private val onBlockActiveChanged: (id: Int, isActive: Boolean) -> Unit,
     private val onMove: (id: Int, fromPosition: Int, toPosition: Int) -> Unit,
 ): RecyclerView.Adapter<UserTaskPassingBlockViewHolder>(),
     UserTaskPassingBlocksTouchHelperAdapter {
@@ -26,16 +26,16 @@ class UserTaskPassingBlocksAdapter(
         holder.bind(
             dragListener = dragListener,
             item = getItem(position),
-            onEnabledChanged = onEnabledChanged,
+            onBlockActiveChanged = onBlockActiveChanged,
         )
     }
 
     override fun canDrag(position: Int): Boolean {
-        return getItem(position).isEnabled
+        return getItem(position).isBlockActive
     }
 
     override fun canMove(fromPosition: Int, toPosition: Int): Boolean {
-        return getItem(fromPosition).isEnabled && getItem(toPosition).isEnabled
+        return getItem(fromPosition).isBlockActive && getItem(toPosition).isBlockActive
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {

@@ -128,7 +128,7 @@ class UserTaskPassingViewModelImpl(
         return UserTaskPassingBlockViewData(
             id = id,
             text = text,
-            isEnabled = false
+            isBlockActive = true,
         )
     }
 

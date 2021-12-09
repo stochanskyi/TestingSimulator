@@ -18,13 +18,13 @@
         tools:text="Some block with some name 2" />
 
     <FrameLayout
-        android:id="@+id/layoutBlockEnabled"
+        android:id="@+id/layoutBlockDisabled"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:padding="8dp">
 
         <com.flaringapp.testingsimulator.core.presentation.views.bettercheckbox.BetterCheckBox
-            android:id="@+id/checkboxBlockEnabled"
+            android:id="@+id/checkboxBlockDisabled"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:duplicateParentState="true"

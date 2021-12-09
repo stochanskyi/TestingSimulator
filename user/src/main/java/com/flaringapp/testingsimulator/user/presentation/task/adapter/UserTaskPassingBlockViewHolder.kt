@@ -41,25 +41,25 @@ class UserTaskPassingBlockViewHolder private constructor(
     fun bind(
         dragListener: UserTaskPassingBlockTouchDragListener,
         item: UserTaskPassingBlockViewData,
-        onEnabledChanged: (Int, Boolean) -> Unit,
+        onBlockActiveChanged: (Int, Boolean) -> Unit,
     ) = with(binding) {
         textBlock.text = item.text
 
-        layoutBlockEnabled.setOnClickListener {
-            checkboxBlockEnabled.toggle()
+        layoutBlockDisabled.setOnClickListener {
+            checkboxBlockDisabled.toggle()
         }
 
-        checkboxBlockEnabled.setChecked(item.isEnabled, false)
-        checkboxBlockEnabled.setOnCheckedChangeListener { _, isChecked ->
-            onEnabledChanged(item.id, isChecked)
+        checkboxBlockDisabled.setChecked(!item.isBlockActive, false)
+        checkboxBlockDisabled.setOnCheckedChangeListener { _, isChecked ->
+            onBlockActiveChanged(item.id, !isChecked)
         }
 
         buttonDrag.setOnTouchListener(DragTouchListener(dragListener))
     }
 
     fun release() = with(binding) {
-        layoutBlockEnabled.setOnClickListener(null)
-        checkboxBlockEnabled.setOnCheckedChangeListener(null)
+        layoutBlockDisabled.setOnClickListener(null)
+        checkboxBlockDisabled.setOnCheckedChangeListener(null)
         buttonDrag.setOnTouchListener(null)
 
         elevationAnimator?.cancel()
@@ -85,8 +85,7 @@ class UserTaskPassingBlockViewHolder private constructor(
     ): View.OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent): Boolean {
             if (event.action != MotionEvent.ACTION_DOWN) return false
-            beginDrag(dragListener)
-            return true
+            return beginDrag(dragListener)
         }
     }
 
