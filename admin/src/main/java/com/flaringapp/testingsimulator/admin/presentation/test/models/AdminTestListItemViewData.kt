@@ -8,9 +8,9 @@ data class AdminTestHeaderViewData(
     val statistics: CharSequence,
 ) : AdminTestListItemViewData
 
-data class AdminTestBlockViewData(
+data class AdminTestTaskViewData(
     val id: Int,
     val text: CharSequence,
 ) : AdminTestListItemViewData
 
-object AdminTestAddBlockViewData : AdminTestListItemViewData
+object AdminTestAddTaskViewData : AdminTestListItemViewData

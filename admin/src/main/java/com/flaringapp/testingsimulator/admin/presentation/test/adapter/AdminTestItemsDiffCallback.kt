@@ -1,8 +1,8 @@
 package com.flaringapp.testingsimulator.admin.presentation.test.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestAddBlockViewData
-import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestBlockViewData
+import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestAddTaskViewData
+import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestTaskViewData
 import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestHeaderViewData
 import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestListItemViewData
 
@@ -16,10 +16,10 @@ class AdminTestItemsDiffCallback : DiffUtil.ItemCallback<AdminTestListItemViewDa
             oldItem is AdminTestHeaderViewData && newItem is AdminTestHeaderViewData -> {
                 oldItem.name == newItem.name
             }
-            oldItem is AdminTestBlockViewData && newItem is AdminTestBlockViewData -> {
+            oldItem is AdminTestTaskViewData && newItem is AdminTestTaskViewData -> {
                 oldItem.id == newItem.id
             }
-            oldItem is AdminTestAddBlockViewData && newItem is AdminTestAddBlockViewData -> true
+            oldItem is AdminTestAddTaskViewData && newItem is AdminTestAddTaskViewData -> true
             else -> false
         }
     }

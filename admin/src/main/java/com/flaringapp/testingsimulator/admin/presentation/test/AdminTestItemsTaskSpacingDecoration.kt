@@ -12,8 +12,8 @@ class AdminTestItemsTaskSpacingDecoration : RecyclerView.ItemDecoration() {
         private const val TOP_SPACING = 8
 
         private val taskViewTypes = listOf(
-            AdminTestItemsAdapter.VIEW_TYPE_BLOCK,
-            AdminTestItemsAdapter.VIEW_TYPE_BLOCK
+            AdminTestItemsAdapter.VIEW_TYPE_TASK,
+            AdminTestItemsAdapter.VIEW_TYPE_TASK
         )
     }
 

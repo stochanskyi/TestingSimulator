@@ -2,7 +2,7 @@ package com.flaringapp.testingsimulator.admin.presentation.test.adapter
 
 import android.view.ViewGroup
 import com.flaringapp.testingsimulator.admin.databinding.ViewHolderAdminTestTaskBinding
-import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestBlockViewData
+import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestTaskViewData
 import com.flaringapp.testingsimulator.core.presentation.utils.inflater
 
 class AdminTestTaskViewHolder private constructor(
@@ -15,7 +15,7 @@ class AdminTestTaskViewHolder private constructor(
         )
     }
 
-    fun bind(item: AdminTestBlockViewData) = with(binding) {
+    fun bind(item: AdminTestTaskViewData) = with(binding) {
         root.text = item.text
     }
 }
