@@ -13,6 +13,8 @@ class UserTestResponse(
     val tasksCount: Int,
     @Json(name = "isInProgress")
     val isInProgress: Boolean,
+    @Json(name = "tasksPassed")
+    val tasksPassed: Int,
     @Json(name = "bestScore")
     val bestScore: Int,
 )
