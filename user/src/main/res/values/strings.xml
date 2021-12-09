@@ -4,4 +4,10 @@
     <!-- Tasks -->
     <string name="task_in_progress">In progress</string>
 
+    <!-- Tests -->
+
+    <string name="button_start_test">Start test</string>
+    <string name="button_continue_test">Continue test</string>
+    <string name="button_try_again_test">Try again</string>
+
 </resources>

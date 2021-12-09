@@ -17,6 +17,8 @@ import com.flaringapp.testingsimulator.user.presentation.navigation.UserNavigati
 import com.flaringapp.testingsimulator.user.presentation.navigation.tests.UserTestsFragmentArgsHandler
 import com.flaringapp.testingsimulator.user.presentation.profile.UserProfileBehaviour
 import com.flaringapp.testingsimulator.user.presentation.tests.UserTestsBehaviour
+import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.UserTestDetailsViewModel
+import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.UserTestDetailsViewModelImpl
 import com.flaringapp.testingsimulator.user.presentation.topics.UserTopicsNavigator
 import org.koin.dsl.module
 
@@ -37,5 +39,7 @@ val PresentationModule = module {
 
     factory<TestsFragmentArgsHandler> { UserTestsFragmentArgsHandler() }
     factory<TestsBehaviour> { UserTestsBehaviour(get(), get(), get()) }
+
+    factory<UserTestDetailsViewModel> { UserTestDetailsViewModelImpl(get(), get(), get()) }
 
 }

@@ -20,12 +20,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/header_barrier"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/status_text_view"
+        app:layout_constraintEnd_toEndOf="@id/state_text_view"
         tools:text="Test 1" />
 
     <TextView
         style="@style/Text.Medium"
-        android:id="@+id/status_text_view"
+        android:id="@+id/state_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="12dp"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:barrierMargin="8dp"
-        app:constraint_referenced_ids="name_text_view, status_text_view" />
+        app:constraint_referenced_ids="name_text_view, state_text_view" />
 
     <View
         android:id="@+id/header_separator_view"
@@ -69,7 +69,7 @@
         tools:text="Status: test\nStatus 2: test 2" />
 
     <ImageView
-        android:id="@+id/emoji_image"
+        android:id="@+id/emoji_image_view"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginBottom="88dp"
@@ -86,9 +86,20 @@
         android:paddingHorizontal="64dp"
         android:layout_marginTop="40dp"
         android:layout_gravity="center"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Continue" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statistics_text_view"
+        app:layout_constraintBottom_toTopOf="@id/test_launch_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

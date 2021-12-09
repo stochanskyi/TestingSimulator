@@ -31,6 +31,10 @@
             android:name="topicData"
             app:argType="com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TopicPreliminaryData" />
 
+        <action
+            android:id="@+id/action_fragmentTests_to_fragmentTestDetails"
+            app:destination="@id/fragmentUserTestDetails" />
+
     </fragment>
 
     <fragment
@@ -51,5 +55,20 @@
         android:name="com.flaringapp.testingsimulator.presentation.features.edit_profile.EditProfileFragment"
         android:label="Edit profile"
         tools:layout="@layout/fragment_edit_profile" />
+
+    <fragment
+        android:id="@+id/fragmentUserTestDetails"
+        android:name="com.flaringapp.testingsimulator.user.presentation.tests.testDetails.UserTestDetailsFragment"
+        tools:layout="@layout/fragment_user_test_details">
+
+        <argument
+            app:argType="integer"
+            android:name="testId" />
+
+        <argument
+            app:argType="string"
+            android:name="testName" />
+
+    </fragment>
 
 </navigation>
