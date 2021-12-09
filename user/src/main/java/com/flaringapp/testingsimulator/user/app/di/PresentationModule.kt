@@ -48,6 +48,6 @@ val PresentationModule = module {
 
     viewModel<UserTestDetailsViewModel> { UserTestDetailsViewModelImpl(get(), get(), get(), get()) }
 
-    viewModel<UserTaskPassingViewModel> { UserTaskPassingViewModelImpl() }
+    viewModel<UserTaskPassingViewModel> { UserTaskPassingViewModelImpl(get(), get(), get()) }
 
 }

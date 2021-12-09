@@ -15,4 +15,6 @@
     <!-- Task passing -->
     <string name="button_task_passing_drag_block">Reorder block</string>
 
+    <string name="task_passing_number">Task %1$d/%2$d</string>
+
 </resources>
