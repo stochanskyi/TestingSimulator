@@ -7,10 +7,10 @@ import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestTask
 import com.flaringapp.testingsimulator.admin.domain.tests.models.SimpleAdminTest
-import com.flaringapp.testingsimulator.admin.domain.tests.models.status.AdminTestStatus
-import com.flaringapp.testingsimulator.admin.domain.tests.models.status.DraftAdminTestStatus
-import com.flaringapp.testingsimulator.admin.domain.tests.models.status.PublishedAdminTestStatus
-import com.flaringapp.testingsimulator.admin.domain.tests.models.status.ReadyToPublishAdminTestStatus
+import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestStatus
+import com.flaringapp.testingsimulator.admin.domain.tests.models.DraftAdminTestStatus
+import com.flaringapp.testingsimulator.admin.domain.tests.models.PublishedAdminTestStatus
+import com.flaringapp.testingsimulator.admin.domain.tests.models.ReadyToPublishAdminTestStatus
 
 
 interface AdminTestMapper {

@@ -2,7 +2,7 @@ package com.flaringapp.testingsimulator.admin.presentation.tests
 
 import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
-import com.flaringapp.testingsimulator.admin.domain.tests.models.status.AdminTestStatusTransformer
+import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestStatusTransformer
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultList
 import com.flaringapp.testingsimulator.core.data.common.call.transformList

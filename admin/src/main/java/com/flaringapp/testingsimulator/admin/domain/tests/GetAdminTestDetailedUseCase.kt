@@ -3,7 +3,7 @@ package com.flaringapp.testingsimulator.admin.domain.tests
 import com.flaringapp.testingsimulator.admin.data.repository.tests.AdminTestsRepository
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestTask
-import com.flaringapp.testingsimulator.admin.domain.tests.models.status.DraftAdminTestStatus
+import com.flaringapp.testingsimulator.admin.domain.tests.models.DraftAdminTestStatus
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 
 class GetAdminTestDetailedUseCase(

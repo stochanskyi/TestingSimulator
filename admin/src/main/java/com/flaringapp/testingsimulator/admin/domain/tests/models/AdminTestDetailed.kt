@@ -1,7 +1,5 @@
 package com.flaringapp.testingsimulator.admin.domain.tests.models
 
-import com.flaringapp.testingsimulator.admin.domain.tests.models.status.AdminTestStatus
-
 class AdminTestDetailed(
     override val id: Int,
     override val name: String,

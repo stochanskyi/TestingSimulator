@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.admin.domain.tests.models.status
+package com.flaringapp.testingsimulator.admin.domain.tests.models
 
 interface AdminTestStatus {
     fun <T> transform(transform: AdminTestStatusTransformer<T>): T
