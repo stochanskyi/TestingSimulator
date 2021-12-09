@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.presentation.features.profile
+package com.flaringapp.testingsimulator.presentation.features.profile.behaviour
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 

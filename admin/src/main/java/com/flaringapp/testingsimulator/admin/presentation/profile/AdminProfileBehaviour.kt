@@ -4,8 +4,8 @@ import com.flaringapp.testingsimulator.admin.domain.profile.AdminProfile
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.domain.features.profile.GetProfileUseCase
-import com.flaringapp.testingsimulator.presentation.features.profile.ProfileBehaviour
-import com.flaringapp.testingsimulator.presentation.features.profile.ProfileBehaviourGetProfileConsumer
+import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviour
+import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviourGetProfileConsumer
 import kotlinx.coroutines.Dispatchers
 
 class AdminProfileBehaviour(

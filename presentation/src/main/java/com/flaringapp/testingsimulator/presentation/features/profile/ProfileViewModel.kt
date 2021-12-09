@@ -12,6 +12,8 @@ import com.flaringapp.testingsimulator.domain.features.emoji.EmojiColorsProvider
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
 import com.flaringapp.testingsimulator.domain.features.profile.ProfileStatistics
 import com.flaringapp.testingsimulator.domain.features.profile_statistics.GetProfileStatisticsUseCase
+import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviour
+import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviourGetProfileConsumer
 import com.flaringapp.testingsimulator.presentation.features.profile.models.ProfileStatisticsViewData
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import kotlinx.coroutines.async

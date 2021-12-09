@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.presentation.features.profile
+package com.flaringapp.testingsimulator.presentation.features.profile.behaviour
 
 interface ProfileBehaviourGetProfileConsumer {
 
