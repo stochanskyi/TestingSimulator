@@ -13,4 +13,6 @@ interface TextProvider {
 
     fun formatName(firstName: String, lastName: String): String
 
+    fun formatPercent(value: String): String
+
 }

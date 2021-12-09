@@ -8,10 +8,10 @@ class UserTest(
     override val id: Int,
     override val name: String,
     override val tasksCount: Int,
-    val mark: Int,
-    val inProgress: Boolean
+    val mark: Int?,
+    val isInProgress: Boolean
 ) : Test {
 
-    val isPassed = mark > MIN_PASSED_MARK
+    val isPassed = mark != null && mark > MIN_PASSED_MARK
 
 }

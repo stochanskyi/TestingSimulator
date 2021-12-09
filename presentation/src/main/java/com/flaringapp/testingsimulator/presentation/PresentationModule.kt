@@ -27,6 +27,6 @@ val PresentationModule = module {
 
     viewModel<TopicsViewModel> { TopicsViewModelImpl(get(), get(), get()) }
 
-    viewModel<TestsViewModel> { TestsViewModelImpl() }
+    viewModel<TestsViewModel> { TestsViewModelImpl(get()) }
 
 }

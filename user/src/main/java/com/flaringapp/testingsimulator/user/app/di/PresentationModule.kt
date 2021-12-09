@@ -6,6 +6,7 @@ import com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.
 import com.flaringapp.testingsimulator.presentation.features.edit_profile.behaviour.EditProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.profile.navigation.ProfileNavigator
+import com.flaringapp.testingsimulator.presentation.features.tests.behaviour.TestsBehaviour
 import com.flaringapp.testingsimulator.presentation.features.topics.navigation.TopicsNavigator
 import com.flaringapp.testingsimulator.presentation.navigation.NavigationGraphProvider
 import com.flaringapp.testingsimulator.user.presentation.auth.login.UserLoginViewBehaviour
@@ -15,6 +16,7 @@ import com.flaringapp.testingsimulator.user.presentation.edit_profile.UserProfil
 import com.flaringapp.testingsimulator.user.presentation.navigation.UserNavigationGraphProvider
 import com.flaringapp.testingsimulator.user.presentation.navigation.tests.UserTestsFragmentArgsHandler
 import com.flaringapp.testingsimulator.user.presentation.profile.UserProfileBehaviour
+import com.flaringapp.testingsimulator.user.presentation.tests.UserTestsBehaviour
 import com.flaringapp.testingsimulator.user.presentation.topics.UserTopicsNavigator
 import org.koin.dsl.module
 
@@ -34,5 +36,6 @@ val PresentationModule = module {
     factory<EditProfileBehaviour> { UserEditProfileBehaviour(get(), get()) }
 
     factory<TestsFragmentArgsHandler> { UserTestsFragmentArgsHandler() }
+    factory<TestsBehaviour> { UserTestsBehaviour(get(), get(), get()) }
 
 }

@@ -19,7 +19,7 @@ class UserTestMapperImpl : UserTestMapper {
             name = dto.name,
             tasksCount = dto.tasksCount,
             mark = dto.bestScore,
-            inProgress = dto.isInProgress
+            isInProgress = dto.isInProgress
         )
     }
 

@@ -4,4 +4,6 @@ interface ColorProvider {
 
     fun getColor(colorRes: Int): Int
 
+    fun transparent(): Int
+
 }

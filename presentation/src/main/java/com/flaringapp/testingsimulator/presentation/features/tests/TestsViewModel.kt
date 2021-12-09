@@ -2,8 +2,12 @@ package com.flaringapp.testingsimulator.presentation.features.tests
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
+import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TopicPreliminaryData
+import com.flaringapp.testingsimulator.presentation.features.tests.behaviour.TestsBehaviour
 import com.flaringapp.testingsimulator.presentation.features.tests.models.TestViewData
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
@@ -21,9 +25,11 @@ abstract class TestsViewModel : BaseViewModel() {
     abstract fun addTest()
 }
 
-class TestsViewModelImpl : TestsViewModel() {
+class TestsViewModelImpl(
+    private val behaviour: TestsBehaviour,
+) : TestsViewModel() {
 
-    override val loadingLiveData: LiveData<Boolean> = MutableLiveData(false)
+    override val loadingLiveData = MutableLiveData(false)
     override val testsLiveData = MutableLiveData<List<TestViewData>>()
     override val openTestLiveData = SingleLiveEvent<Int>()
 
@@ -37,6 +43,8 @@ class TestsViewModelImpl : TestsViewModel() {
         name = topicData.name
 
         topicNameLiveData.value = name
+
+        loadTests()
     }
 
     override fun openTest(testId: Int) {
@@ -45,6 +53,18 @@ class TestsViewModelImpl : TestsViewModel() {
 
     override fun addTest() {
         //TODO implement
+    }
+
+    private fun loadTests() {
+        viewModelScope.startLoadingTask(loadingLiveData) {
+            val testsViewData = safeCall {
+                behaviour.getTests(topicId)
+            } ?: return@startLoadingTask
+
+            withMainContext {
+                testsLiveData.value = testsViewData
+            }
+        }
     }
 
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="task_in_progress">#377DFF</color>
+    <color name="task_passed">#38CB89</color>
+    <color name="task_failed">#F26600</color>
+
+</resources>

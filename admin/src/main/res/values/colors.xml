@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="task_draft">#377DFF</color>
+    <color name="task_ready_to_publish">#EB83A0</color>
+    <color name="task_published">#38CB89</color>
+
+</resources>

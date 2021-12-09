@@ -13,4 +13,8 @@ class FakeTextProvider: TextProvider {
     override fun formatName(firstName: String, lastName: String): String {
         return "$firstName $lastName"
     }
+
+    override fun formatPercent(value: String): String {
+        return "$value%"
+    }
 }

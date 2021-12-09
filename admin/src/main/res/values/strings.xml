@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tasks -->
+    <string name="task_draft">Draft</string>
+    <string name="task_ready_to_publish">Ready to publish</string>
+    <string name="task_published">Published</string>
+
+</resources>

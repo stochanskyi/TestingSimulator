@@ -45,9 +45,12 @@
     <!-- Edit profile  -->
     <string name="button_edit_profile_save">Save changes</string>
 
+    <!-- Topics -->
     <string name="topic_enabled_description">Vyo!</string>
     <string name="topic_disabled_description">Skip</string>
-    <string name="profile">Profile</string>
-    <string name="add">Add</string>
+
+    <!-- Tests -->
+    <string name="description_test">%d tasks</string>
+    <string name="button_tests_add">Add</string>
 
 </resources>
