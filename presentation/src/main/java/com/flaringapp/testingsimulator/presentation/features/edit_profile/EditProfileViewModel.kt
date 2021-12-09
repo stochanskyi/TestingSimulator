@@ -3,11 +3,14 @@ package com.flaringapp.testingsimulator.presentation.features.edit_profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.flaringapp.testingsimulator.core.app.common.launchOnIO
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.usecase.validation.ValidateFirstNameUseCase
 import com.flaringapp.testingsimulator.domain.usecase.validation.ValidateLastNameUseCase
+import com.flaringapp.testingsimulator.presentation.features.edit_profile.behaviour.EditProfileBehaviour
+import com.flaringapp.testingsimulator.presentation.features.edit_profile.behaviour.EditProfileBehaviourGetProfileConsumer
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class EditProfileViewModel : BaseViewModel() {
@@ -24,6 +27,8 @@ abstract class EditProfileViewModel : BaseViewModel() {
 
     abstract val invalidFirstNameLiveData: LiveData<Unit>
     abstract val invalidLastNameLiveData: LiveData<Unit>
+
+    abstract val updateFieldsLiveData: LiveData<Unit>
 
     abstract val loadingLiveData: LiveData<Boolean>
 
@@ -43,7 +48,7 @@ class EditProfileViewModelImpl(
     private val behaviour: EditProfileBehaviour,
     private val validateFirstNameUseCase: ValidateFirstNameUseCase,
     private val validateLastNameUseCase: ValidateLastNameUseCase,
-) : EditProfileViewModel() {
+) : EditProfileViewModel(), EditProfileBehaviourGetProfileConsumer {
 
     private var firstName: String = ""
     private var lastName: String = ""
@@ -64,9 +69,35 @@ class EditProfileViewModelImpl(
     override val invalidFirstNameLiveData = SingleLiveEvent<Unit>()
     override val invalidLastNameLiveData = SingleLiveEvent<Unit>()
 
+    override val updateFieldsLiveData = SingleLiveEvent<Unit>()
+
     override val loadingLiveData = MutableLiveData<Boolean>()
 
     override val editSuccessLiveData = SingleLiveEvent<Unit>()
+
+    init {
+        viewModelScope.launchOnIO {
+            safeCall {
+                behaviour.loadProfile(this@EditProfileViewModelImpl)
+            }
+        }
+    }
+
+    override fun handleProfileData(
+        firstName: String,
+        lastName: String,
+        studying: String?,
+        workPlace: String?,
+        role: String?
+    ) {
+        setFirstName(firstName)
+        setLastName(lastName)
+        setStudying(studying ?: "")
+        setWorkPlace(workPlace ?: "")
+        setRole(role ?: "")
+
+        updateFieldsLiveData.call()
+    }
 
     override fun setFirstName(firstName: String) {
         this.firstName = firstName

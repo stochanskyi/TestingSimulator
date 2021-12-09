@@ -2,7 +2,7 @@ package com.flaringapp.testingsimulator.user.app.di
 
 import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginViewBehaviour
 import com.flaringapp.testingsimulator.presentation.features.auth.signup.SignUpViewBehaviour
-import com.flaringapp.testingsimulator.presentation.features.edit_profile.EditProfileBehaviour
+import com.flaringapp.testingsimulator.presentation.features.edit_profile.behaviour.EditProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.profile.navigation.ProfileNavigator
 import com.flaringapp.testingsimulator.presentation.features.topics.navigation.TopicsNavigator
@@ -29,6 +29,6 @@ val PresentationModule = module {
     factory<ProfileNavigator> { UserProfileNavigator() }
     factory<ProfileBehaviour> { UserProfileBehaviour(get(), get()) }
 
-    factory<EditProfileBehaviour> { UserEditProfileBehaviour(get()) }
+    factory<EditProfileBehaviour> { UserEditProfileBehaviour(get(), get()) }
 
 }

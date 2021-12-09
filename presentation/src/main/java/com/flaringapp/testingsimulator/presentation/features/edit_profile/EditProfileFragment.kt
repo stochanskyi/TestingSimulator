@@ -55,6 +55,29 @@ class EditProfileFragment : ModelledFragment(R.layout.fragment_edit_profile) {
             binding.roleInputLayout.isVisible = isEnabled
         }
 
+        invalidFirstNameLiveData.observe(viewLifecycleOwner) {
+            binding.firstNameInputLayout.error = getString(R.string.error_invalid_first_name)
+        }
+        invalidLastNameLiveData.observe(viewLifecycleOwner) {
+            binding.lastNameInputLayout.error = getString(R.string.error_invalid_last_name)
+        }
+
+        observeFields()
+
+        updateFieldsLiveData.observe(viewLifecycleOwner) {
+             observeFields()
+        }
+
+        model.loadingLiveData.observe(viewLifecycleOwner) {
+            //TODO show progress
+        }
+
+        model.editSuccessLiveData.observe(viewLifecycleOwner) {
+            //TODO navigate
+        }
+    }
+
+    private fun observeFields() = with(model) {
         firstNameLiveData.observeOnce(viewLifecycleOwner) { firstName ->
             binding.firstNameInputEditText.setText(firstName)
         }
@@ -69,21 +92,6 @@ class EditProfileFragment : ModelledFragment(R.layout.fragment_edit_profile) {
         }
         roleLiveData.observeOnce(viewLifecycleOwner) { role ->
             binding.roleInputEditText.setText(role)
-        }
-
-        invalidFirstNameLiveData.observe(viewLifecycleOwner) {
-            binding.firstNameInputLayout.error = getString(R.string.error_invalid_first_name)
-        }
-        invalidLastNameLiveData.observe(viewLifecycleOwner) {
-            binding.lastNameInputLayout.error = getString(R.string.error_invalid_last_name)
-        }
-
-        model.loadingLiveData.observe(viewLifecycleOwner) {
-            //TODO show progress
-        }
-
-        model.editSuccessLiveData.observe(viewLifecycleOwner) {
-            //TODO navigate
         }
     }
 
