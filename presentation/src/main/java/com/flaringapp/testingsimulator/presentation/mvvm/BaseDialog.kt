@@ -7,7 +7,7 @@ import android.view.WindowManager
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
-import com.flaringapp.testingsimulator.core.R
+import com.flaringapp.testingsimulator.presentation.R
 
 abstract class BaseDialog : DialogFragment {
 
