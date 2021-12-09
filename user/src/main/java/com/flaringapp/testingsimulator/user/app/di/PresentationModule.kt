@@ -22,6 +22,7 @@ import com.flaringapp.testingsimulator.user.presentation.tests.UserTestsNavigato
 import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.UserTestDetailsViewModel
 import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.UserTestDetailsViewModelImpl
 import com.flaringapp.testingsimulator.user.presentation.topics.UserTopicsNavigator
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val PresentationModule = module {
@@ -43,6 +44,6 @@ val PresentationModule = module {
     factory<TestsFragmentArgsHandler> { UserTestsFragmentArgsHandler() }
     factory<TestsBehaviour> { UserTestsBehaviour(get(), get(), get()) }
 
-    factory<UserTestDetailsViewModel> { UserTestDetailsViewModelImpl(get(), get(), get(), get()) }
+    viewModel<UserTestDetailsViewModel> { UserTestDetailsViewModelImpl(get(), get(), get(), get()) }
 
 }
