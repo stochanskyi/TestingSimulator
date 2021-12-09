@@ -19,7 +19,7 @@ class Preference<T>(
     }
 
     @Suppress("unchecked_cast")
-    private fun <T> findPreference(
+    private fun findPreference(
         name: String,
         default: T
     ): T = with(prefs) {
@@ -34,7 +34,7 @@ class Preference<T>(
         res as T
     }
 
-    private fun <T> putPreference(name: String, value: T) = with(prefs.edit()) {
+    private fun putPreference(name: String, value: T) = with(prefs.edit()) {
         when (value) {
             is Long -> putLong(name, value)
             is String -> putString(name, value)

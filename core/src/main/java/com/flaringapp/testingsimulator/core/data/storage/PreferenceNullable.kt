@@ -20,7 +20,7 @@ class PreferenceNullable<T>(
     }
 
     @Suppress("unchecked_cast")
-    private fun <T> findPreferenceNullable(
+    private fun findPreferenceNullable(
         name: String,
     ): T? = with(prefs) {
         val res: Any? = when (clazz) {
@@ -30,9 +30,9 @@ class PreferenceNullable<T>(
         res as? T
     }
 
-    private fun <T> putPreference(name: String, value: T) = with(prefs.edit()) {
+    private fun putPreference(name: String, value: T?) = with(prefs.edit()) {
         when (value) {
-            is String -> putString(name, value)
+            is String? -> putString(name, value)
             else -> throw IllegalArgumentException("This type cannot be saved into Preferences")
         }.apply()
     }
