@@ -6,6 +6,8 @@ import com.flaringapp.testingsimulator.admin.presentation.edit_profile.AdminEdit
 import com.flaringapp.testingsimulator.admin.presentation.edit_profile.AdminProfileNavigator
 import com.flaringapp.testingsimulator.admin.presentation.navigation.tests.AdminTestsFragmentArgsHandler
 import com.flaringapp.testingsimulator.admin.presentation.profile.AdminProfileBehaviour
+import com.flaringapp.testingsimulator.admin.presentation.test.AdminTestViewModeImpl
+import com.flaringapp.testingsimulator.admin.presentation.test.AdminTestViewModel
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestsBehaviour
 import com.flaringapp.testingsimulator.admin.presentation.topics.AdminTopicsNavigator
 import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginViewBehaviour
@@ -16,6 +18,7 @@ import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.P
 import com.flaringapp.testingsimulator.presentation.features.profile.navigation.ProfileNavigator
 import com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TestsFragmentArgsHandler
 import com.flaringapp.testingsimulator.presentation.features.tests.behaviour.TestsBehaviour
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val PresentationModule = module {
@@ -33,5 +36,7 @@ val PresentationModule = module {
 
     factory<TestsFragmentArgsHandler> { AdminTestsFragmentArgsHandler() }
     factory<TestsBehaviour> { AdminTestsBehaviour(get(), get(), get()) }
+
+    viewModel<AdminTestViewModel> { AdminTestViewModeImpl() }
 
 }
