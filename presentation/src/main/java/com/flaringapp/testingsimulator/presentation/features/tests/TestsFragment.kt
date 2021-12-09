@@ -3,7 +3,6 @@ package com.flaringapp.testingsimulator.presentation.features.tests
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.common.recycler.LineItemDecoration
@@ -39,25 +38,27 @@ class TestsFragment : ModelledFragment(R.layout.fragment_tests) {
     }
 
     override fun observeModel() {
-        model.loadingLiveData.observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it
+        model.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.isVisible = isLoading
         }
 
-        model.testsLiveData.observe(viewLifecycleOwner) {
-            binding.testsRecyclerView.testsAdapter?.setData(it)
+        model.testsLiveData.observe(viewLifecycleOwner) { tests ->
+            adapterAction { it.submitList(tests) }
         }
 
         model.openTestLiveData.observe(viewLifecycleOwner) {
             //TODO navigate to test
         }
 
-        model.topicNameLiveData.observe(viewLifecycleOwner) {
+        model.topicNameLiveData.observe(viewLifecycleOwner) { title ->
             configureAppBarWithLifecycle {
-                title = it
+                this.title = title
             }
         }
     }
 
-    private val RecyclerView.testsAdapter: TestsAdapter?
-        get() = adapter as? TestsAdapter
+    private inline fun <T> adapterAction(action: (TestsAdapter) -> T): T {
+        val adapter = binding.testsRecyclerView.adapter as TestsAdapter
+        return adapter.let(action)
+    }
 }

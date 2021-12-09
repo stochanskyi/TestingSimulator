@@ -1,6 +1,6 @@
 package com.flaringapp.testingsimulator.presentation.features.tests.models
 
-class TestViewData(
+data class TestViewData(
     val id: Int,
     val name: CharSequence,
     val description: CharSequence,
