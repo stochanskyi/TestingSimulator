@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
-import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
-import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableLiveDataList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
@@ -25,7 +23,7 @@ abstract class UserTaskPassingViewModel : BaseViewModel() {
     abstract val taskNameLiveData: LiveData<String>
     abstract val taskNumberLiveData: LiveData<String>
 
-    abstract val blocksLiveData: LiveDataList<UserTaskPassingBlockViewData>
+    abstract val blocksLiveData: LiveData<MutableList<UserTaskPassingBlockViewData>>
 
     abstract val openTestResultLiveData: LiveData<Int>
 
@@ -51,7 +49,7 @@ class UserTaskPassingViewModelImpl(
 
     override val taskNumberLiveData = MutableLiveData<String>()
 
-    override val blocksLiveData = MutableLiveDataList<UserTaskPassingBlockViewData>()
+    override val blocksLiveData = MutableLiveData<MutableList<UserTaskPassingBlockViewData>>()
     override val openTestResultLiveData = SingleLiveEvent<Int>()
 
     private var tasksCount: Int? = null
@@ -117,7 +115,13 @@ class UserTaskPassingViewModelImpl(
             tasksCount ?: 0
         ).toString()
 
-        blocksLiveData.value = task.blocks.map { it.toViewData() }
+        blocksLiveData.value = task.blocks.toViewData()
+    }
+
+    private fun List<UserTaskBlock>.toViewData(): MutableList<UserTaskPassingBlockViewData> {
+        return mapTo(ArrayList(size)) {
+            it.toViewData()
+        }
     }
 
     private fun UserTaskBlock.toViewData(): UserTaskPassingBlockViewData {
