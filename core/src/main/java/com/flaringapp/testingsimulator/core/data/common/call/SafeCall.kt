@@ -27,11 +27,11 @@ suspend fun <D> safeCall(
         val result = action()
         processRequestResult(handler, result)
     } catch (e: Exception) {
+        if (enableLogging) e.printStackTrace()
         val isErrorHandled = withMainContext {
             handler.handleSafeCallError(e)
         }
         if (isErrorHandled) return null
-        if (enableLogging) e.printStackTrace()
         handler.showErrorOnMain(e)
         null
     }
