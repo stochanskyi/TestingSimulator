@@ -1,14 +1,12 @@
 package com.flaringapp.testingsimulator.user.data.repository.tasks
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
-import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.UserTasksDataSource
-import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.StartTestRequest
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.UserTaskAnswerRequest
 import com.flaringapp.testingsimulator.user.data.repository.tasks.mapper.PotentialUserTaskMapper
 import com.flaringapp.testingsimulator.user.data.repository.tasks.mapper.UserTaskMapper
-import com.flaringapp.testingsimulator.user.data.repository.tasks.model.PotentialUserTask
-import com.flaringapp.testingsimulator.user.data.repository.tasks.model.UserTask
+import com.flaringapp.testingsimulator.user.domain.tasks.model.PotentialUserTask
+import com.flaringapp.testingsimulator.user.domain.tasks.model.UserTask
 
 interface UserTasksRepository {
 

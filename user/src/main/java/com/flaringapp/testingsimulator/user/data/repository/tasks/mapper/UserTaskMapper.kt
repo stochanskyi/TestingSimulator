@@ -2,8 +2,8 @@ package com.flaringapp.testingsimulator.user.data.repository.tasks.mapper
 
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.response.UserTaskBlockResponse
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.response.UserTaskResponse
-import com.flaringapp.testingsimulator.user.data.repository.tasks.model.UserTask
-import com.flaringapp.testingsimulator.user.data.repository.tasks.model.UserTaskBlock
+import com.flaringapp.testingsimulator.user.domain.tasks.model.UserTask
+import com.flaringapp.testingsimulator.user.domain.tasks.model.UserTaskBlock
 
 interface UserTaskMapper {
     fun mapUserTask(dto: UserTaskResponse): UserTask

@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.user.data.repository.tasks.model
+package com.flaringapp.testingsimulator.user.domain.tasks.model
 
 import com.flaringapp.testingsimulator.domain.features.task.Task
 
