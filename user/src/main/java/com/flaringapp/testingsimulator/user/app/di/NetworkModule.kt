@@ -4,6 +4,8 @@ import com.flaringapp.testingsimulator.data.BuildConfig
 import com.flaringapp.testingsimulator.user.data.network.UserNetworkAdapter
 import com.flaringapp.testingsimulator.user.data.network.features.auth.UserAuthDataSource
 import com.flaringapp.testingsimulator.user.data.network.features.auth.UserAuthDataSourceImpl
+import com.flaringapp.testingsimulator.user.data.network.features.tasks.UserTasksDataSource
+import com.flaringapp.testingsimulator.user.data.network.features.tasks.UserTasksDataSourceImpl
 import com.flaringapp.testingsimulator.user.data.network.features.tests.UserTestsDataSource
 import com.flaringapp.testingsimulator.user.data.network.features.tests.UserTestsDataSourceImpl
 import org.koin.core.context.GlobalContext
@@ -22,8 +24,12 @@ val NetworkModule = module {
 
     single { adapter.createTestsApi() }
 
+    single { adapter.createTasksApi() }
+
     single<UserAuthDataSource> { UserAuthDataSourceImpl(get()) }
 
     single<UserTestsDataSource> { UserTestsDataSourceImpl(get()) }
+
+    single<UserTasksDataSource> { UserTasksDataSourceImpl(get()) }
 
 }
