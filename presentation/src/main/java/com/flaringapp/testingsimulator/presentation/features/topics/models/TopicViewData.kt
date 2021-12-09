@@ -7,5 +7,5 @@ class TopicViewData(
     val name: String,
     val description: String,
     @DrawableRes val emojiRes: Int,
-    val isEnabled: Boolean
+    val isEnabled: Boolean,
 )

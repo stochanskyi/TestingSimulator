@@ -23,19 +23,30 @@ class TopicsFragment : ModelledFragment(R.layout.fragment_topics) {
 
     private val binding by viewBinding { FragmentTopicsBinding.bind(it) }
 
-    private val topicsNavigator: TopicsNavigator by inject()
+    private val navigator: TopicsNavigator by inject()
 
     override fun initViews() = with(binding) {
-        val topicsAdapter = TopicsAdapter(model::openTopic)
-
         topicsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        topicsRecyclerView.adapter = topicsAdapter
-
+        topicsRecyclerView.adapter = TopicsAdapter(model::openTopic)
         topicsRecyclerView.addItemDecoration(createItemDecoration())
 
         configureAppBarWithLifecycle {
             menuId = R.menu.topics_menu
             itemSelectedListener = this@TopicsFragment::onMenuItemSelected
+        }
+    }
+
+    override fun observeModel() {
+        model.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.isVisible = isLoading
+        }
+
+        model.topicsLiveData.observe(viewLifecycleOwner) { topics ->
+            adapterAction { it.setData(topics) }
+        }
+
+        model.openProfileLiveData.observe(viewLifecycleOwner) {
+            navigator.navigateToProfile(findNavController())
         }
     }
 
@@ -48,30 +59,17 @@ class TopicsFragment : ModelledFragment(R.layout.fragment_topics) {
     }
 
     private fun onMenuItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             R.id.item_profile -> {
                 model.openProfile()
-                true
             }
-            else -> false
+            else -> return false
         }
+        return true
     }
 
-    override fun observeModel() {
-        model.loadingLiveData.observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it
-        }
-
-        model.topicsLiveData.observe(viewLifecycleOwner) {
-            binding.topicsRecyclerView.topicsAdapter?.setData(it)
-        }
-
-        model.openProfileLiveData.observe(viewLifecycleOwner) {
-            topicsNavigator.navigateToProfile(findNavController())
-        }
+    private inline fun <T> adapterAction(action: (TopicsAdapter) -> T): T {
+        val adapter = binding.topicsRecyclerView.adapter as TopicsAdapter
+        return adapter.let(action)
     }
-
-    private val RecyclerView.topicsAdapter: TopicsAdapter?
-        get() = adapter as? TopicsAdapter
-
 }

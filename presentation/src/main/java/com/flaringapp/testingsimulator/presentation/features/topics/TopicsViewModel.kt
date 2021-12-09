@@ -17,10 +17,13 @@ import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 abstract class TopicsViewModel : BaseViewModel() {
 
     abstract val loadingLiveData: LiveData<Boolean>
+
     abstract val topicsLiveData: LiveData<List<TopicViewData>>
+
     abstract val openProfileLiveData: LiveData<Unit>
 
     abstract fun openTopic(topicId: Int)
+
     abstract fun openProfile()
 }
 
@@ -31,15 +34,21 @@ class TopicsViewModelImpl(
 ) : TopicsViewModel() {
 
     override val loadingLiveData = MutableLiveData<Boolean>()
+
     override val topicsLiveData = MutableLiveData<List<TopicViewData>>()
+
     override val openProfileLiveData = SingleLiveEvent<Unit>()
 
     init {
         viewModelScope.startLoadingTask(loadingLiveData) {
-            val topics = safeCall { getTopicsUseCase() } ?: return@startLoadingTask
+            val topics = safeCall {
+                getTopicsUseCase()
+            } ?: return@startLoadingTask
+
+            val viewData = topics.map { it.toViewData() }
 
             withMainContext {
-                topicsLiveData.value = topics.map { it.toViewData() }
+                topicsLiveData.value = viewData
             }
         }
     }
@@ -57,7 +66,7 @@ class TopicsViewModelImpl(
         name = name,
         description = getDescription(),
         emojiRes = emojiProvider.getEmojiOrDefault(emojiId),
-        isEnabled = enabled
+        isEnabled = enabled,
     )
 
     private fun Topic.getDescription(): String {

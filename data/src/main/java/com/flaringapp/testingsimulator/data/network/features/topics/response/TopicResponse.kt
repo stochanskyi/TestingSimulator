@@ -12,5 +12,5 @@ class TopicResponse(
     @Json(name = "enabled")
     val enabled: Boolean,
     @Json(name = "emojiId")
-    val emojiId: Int
+    val emojiId: Int,
 )

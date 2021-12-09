@@ -5,13 +5,17 @@ import com.flaringapp.testingsimulator.domain.features.topics.models.Topic
 
 interface TopicsMapper {
 
-    fun mapTopic(dto: TopicResponse): Topic
-
     fun mapTopics(dto: List<TopicResponse>): List<Topic>
+
+    fun mapTopic(dto: TopicResponse): Topic
 
 }
 
 class TopicsMapperImpl : TopicsMapper {
+
+    override fun mapTopics(dto: List<TopicResponse>): List<Topic> {
+        return dto.map { mapTopic(it) }
+    }
 
     override fun mapTopic(dto: TopicResponse): Topic {
         return Topic(
@@ -21,9 +25,4 @@ class TopicsMapperImpl : TopicsMapper {
             emojiId = dto.emojiId
         )
     }
-
-    override fun mapTopics(dto: List<TopicResponse>): List<Topic> {
-        return dto.map { mapTopic(it) }
-    }
-
 }

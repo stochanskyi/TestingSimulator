@@ -12,26 +12,27 @@ class TopicViewHolder private constructor(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
+        private const val TOPIC_DISABLED_ALPHA = 0.5f
+        private const val TOPIC_ENABLED_ALPHA = 1f
+
         fun create(parent: ViewGroup) = TopicViewHolder(
             ViewHolderTopicBinding.inflate(parent.inflater, parent, false)
         )
-
-        private const val TOPIC_DISABLED_ALPHA = 0.7f
-        private const val TOPIC_ENABLED_ALPHA = 1f
     }
 
     fun bind(
         data: TopicViewData,
         clickBlock: (Int) -> Unit
     ) = with(binding) {
+        binding.root.isEnabled = data.isEnabled
         binding.root.setAlphaTraversable(getAlpha(data.isEnabled))
+        binding.root.setOnClickListener { clickBlock(data.id) }
 
-        titleTextView.text = data.name
-        descriptionTextView.text = data.description
         emojiImageView.setImageResource(data.emojiRes)
 
-        binding.root.setOnClickListener { clickBlock(data.id) }
-        binding.root.isEnabled = data.isEnabled
+        titleTextView.text = data.name
+
+        descriptionTextView.text = data.description
     }
 
     fun clear() {
@@ -39,7 +40,8 @@ class TopicViewHolder private constructor(
     }
 
     private fun getAlpha(isEnabled: Boolean): Float {
-        return if(isEnabled) TOPIC_ENABLED_ALPHA else TOPIC_DISABLED_ALPHA
+        return if (isEnabled) TOPIC_ENABLED_ALPHA
+        else TOPIC_DISABLED_ALPHA
     }
 
 }

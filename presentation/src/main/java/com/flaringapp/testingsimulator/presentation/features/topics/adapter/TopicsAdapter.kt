@@ -17,6 +17,8 @@ class TopicsAdapter(
         notifyItemRangeInserted(0, data.size)
     }
 
+    override fun getItemCount(): Int = data.size
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopicViewHolder {
         return TopicViewHolder.create(parent)
     }
@@ -29,7 +31,5 @@ class TopicsAdapter(
         holder.clear()
         super.onViewRecycled(holder)
     }
-
-    override fun getItemCount(): Int = data.size
 
 }

@@ -7,13 +7,12 @@ import com.flaringapp.testingsimulator.domain.features.topics.models.Topic
 
 class TopicsRepositoryImpl(
     private val topicsDataSource: TopicsDataSource,
-    private val topicsMapper: TopicsMapper
+    private val topicsMapper: TopicsMapper,
 ) : TopicsRepository {
 
     override suspend fun getTopics(): CallResult<List<Topic>> {
-        val result = topicsDataSource.getTopics()
-
-        return result.transform { topicsMapper.mapTopics(this) }
+        return topicsDataSource.getTopics()
+            .transform { topicsMapper.mapTopics(this) }
     }
 
 }
