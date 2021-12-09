@@ -8,8 +8,8 @@ import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
+import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.data.taxonomy.DefaultTaxonomyFormatterConfig
-import com.flaringapp.testingsimulator.presentation.data.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import com.flaringapp.testingsimulator.user.R
 import com.flaringapp.testingsimulator.user.domain.tests.GetUserTestDetailsUseCase
@@ -79,11 +79,20 @@ class UserTestDetailsViewModelImpl(
     private fun updateData(testDetails: UserTestDetails) {
         testNameLiveData.value = testDetails.name
         testStateLiveData.value = testDetails.createStateViewData()
+
+        updateStatistics(testDetails)
     }
 
     private fun updateStatistics(testDetails: UserTestDetails) {
-        val statistics = mapOf("Tasks" to testDetails.tasksCount.toString()) + testDetails.statistics
-        //TODO
+        val statistics = createCustomStatistics(testDetails) + testDetails.statistics
+
+        testStatisticsLiveData.value = taxonomyFormatter.format(statistics)
+    }
+
+    private fun createCustomStatistics(testDetails: UserTestDetails): Map<String, String> {
+        val tasksCount = testDetails.tasksCount.toString()
+
+        return mapOf(textProvider.getString(R.string.statistics_tests_count) to tasksCount)
     }
 
     private fun UserTest.createStateViewData(): UserTestStatusViewData {

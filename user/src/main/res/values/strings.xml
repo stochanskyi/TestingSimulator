@@ -10,4 +10,6 @@
     <string name="button_continue_test">Continue test</string>
     <string name="button_try_again_test">Try again</string>
 
+    <string name="statistics_tests_count">Tasks</string>
+
 </resources>
