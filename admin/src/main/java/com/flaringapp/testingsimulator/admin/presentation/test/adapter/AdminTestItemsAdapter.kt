@@ -9,6 +9,7 @@ import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestL
 import com.flaringapp.testingsimulator.core.app.common.Action
 
 class AdminTestItemsAdapter(
+    private val openTask: (Int) -> Unit,
     private val addTask: Action,
 ) : ListAdapter<AdminTestListItemViewData, AdminTestItemViewHolder>(
     AdminTestItemsDiffCallback()
@@ -44,7 +45,8 @@ class AdminTestItemsAdapter(
                 item as AdminTestHeaderViewData
             )
             is AdminTestTaskViewHolder -> holder.bind(
-                item as AdminTestTaskViewData
+                item as AdminTestTaskViewData,
+                openTask,
             )
             is AdminTestAddTaskViewHolder -> holder.bind(addTask)
         }

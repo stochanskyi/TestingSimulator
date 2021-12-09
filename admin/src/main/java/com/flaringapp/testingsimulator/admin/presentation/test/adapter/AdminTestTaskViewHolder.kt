@@ -15,7 +15,11 @@ class AdminTestTaskViewHolder private constructor(
         )
     }
 
-    fun bind(item: AdminTestTaskViewData) = with(binding) {
+    fun bind(
+        item: AdminTestTaskViewData,
+        onClick: (Int) -> Unit,
+    ) = with(binding) {
         root.text = item.text
+        root.setOnClickListener { onClick(item.id) }
     }
 }

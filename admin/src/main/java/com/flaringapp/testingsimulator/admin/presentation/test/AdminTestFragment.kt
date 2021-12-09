@@ -26,9 +26,10 @@ class AdminTestFragment : ModelledFragment(R.layout.fragment_admin_test) {
 
     override fun initViews() = with(binding) {
         recyclerListItems.layoutManager = LinearLayoutManager(requireContext())
-        recyclerListItems.adapter = AdminTestItemsAdapter {
-            model.createTask()
-        }
+        recyclerListItems.adapter = AdminTestItemsAdapter(
+            openTask = model::openTask,
+            addTask = model::createTask
+        )
         recyclerListItems.addItemDecoration(
             AdminTestItemsTaskSpacingDecoration()
         )

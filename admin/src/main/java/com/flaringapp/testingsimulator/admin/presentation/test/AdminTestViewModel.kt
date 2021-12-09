@@ -32,7 +32,7 @@ abstract class AdminTestViewModel : BaseViewModel() {
         testName: String,
     )
 
-    abstract fun openTask()
+    abstract fun openTask(id: Int)
 
     abstract fun createTask()
 
@@ -57,7 +57,7 @@ class AdminTestViewModeImpl(
         loadTest(testId)
     }
 
-    override fun openTask() {
+    override fun openTask(id: Int) {
         // TODO admin test open task
     }
 
