@@ -22,7 +22,6 @@ class UserTestDetailsFragment : ModelledFragment(R.layout.fragment_user_test_det
 
     override fun initViews() {
         model.init(args.testId, args.testName)
-        super.initViews()
     }
 
     override fun observeModel() {
