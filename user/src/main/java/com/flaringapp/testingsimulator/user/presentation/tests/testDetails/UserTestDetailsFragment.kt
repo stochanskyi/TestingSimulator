@@ -3,6 +3,7 @@ package com.flaringapp.testingsimulator.user.presentation.tests.testDetails
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
+import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.flaringapp.testingsimulator.user.R
 import com.flaringapp.testingsimulator.user.databinding.FragmentUserTestDetailsBinding
@@ -48,11 +49,11 @@ class UserTestDetailsFragment : ModelledFragment(R.layout.fragment_user_test_det
     }
 
     private fun applyTestState(state: UserTestStatusViewData) = with(binding) {
-        stateTextView.isVisible = true
         stateTextView.background.setTint(state.statusColor)
-        stateTextView.text = state.statusName
+        stateTextView.textWithVisibility = state.statusName
+
         emojiImageView.setImageResource(state.statusEmojiRes)
-        testLaunchButton.isVisible = true
-        testLaunchButton.text = state.buttonLabel
+
+        testLaunchButton.textWithVisibility = state.buttonLabel
     }
 }
