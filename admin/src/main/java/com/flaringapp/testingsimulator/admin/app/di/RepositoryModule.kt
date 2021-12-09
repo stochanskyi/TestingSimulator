@@ -10,6 +10,10 @@ import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminEditPr
 import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminEditProfileMapperImpl
 import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminProfileRepository
 import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminProfileRepositoryImpl
+import com.flaringapp.testingsimulator.admin.data.repository.tests.AdminTestMapper
+import com.flaringapp.testingsimulator.admin.data.repository.tests.AdminTestMapperImpl
+import com.flaringapp.testingsimulator.admin.data.repository.tests.AdminTestsRepository
+import com.flaringapp.testingsimulator.admin.data.repository.tests.AdminTestsRepositoryImpl
 import org.koin.dsl.module
 
 val RepositoryModule = module {
@@ -22,4 +26,6 @@ val RepositoryModule = module {
     factory<AdminProfileRepository> { AdminProfileRepositoryImpl(get(), get(), get(), get()) }
     factory<AdminEditProfileMapper> { AdminEditProfileMapperImpl() }
 
+    factory<AdminTestsRepository> { AdminTestsRepositoryImpl(get(), get()) }
+    factory<AdminTestMapper> { AdminTestMapperImpl() }
 }
