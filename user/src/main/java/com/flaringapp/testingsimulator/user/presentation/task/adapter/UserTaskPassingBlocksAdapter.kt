@@ -1,16 +1,19 @@
 package com.flaringapp.testingsimulator.user.presentation.task.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.flaringapp.testingsimulator.user.presentation.task.models.UserTaskPassingBlockViewData
 
 class UserTaskPassingBlocksAdapter(
     private val dragListener: UserTaskPassingBlockTouchDragListener,
     private val onEnabledChanged: (id: Int, isEnabled: Boolean) -> Unit,
     private val onMove: (id: Int, fromPosition: Int, toPosition: Int) -> Unit,
-): ListAdapter<UserTaskPassingBlockViewData, UserTaskPassingBlockViewHolder>(
-    UserTaskPassingBlocksDiffCallback()
-), UserTaskPassingBlocksTouchHelperAdapter {
+): RecyclerView.Adapter<UserTaskPassingBlockViewHolder>(),
+    UserTaskPassingBlocksTouchHelperAdapter {
+
+    private var items: MutableList<UserTaskPassingBlockViewData> = mutableListOf()
+
+    override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -36,7 +39,18 @@ class UserTaskPassingBlocksAdapter(
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
-        val item = getItem(fromPosition)
+        val item = items.removeAt(fromPosition)
+        items.add(toPosition, item)
+        notifyItemMoved(fromPosition, toPosition)
         onMove(item.id, fromPosition, toPosition)
     }
+
+    fun setItems(newItems: MutableList<UserTaskPassingBlockViewData>) {
+        val oldItems = items
+        items = newItems
+        notifyItemRangeRemoved(0, oldItems.size)
+        notifyItemRangeInserted(0, newItems.size)
+    }
+
+    private fun getItem(position: Int) = items[position]
 }
