@@ -7,9 +7,10 @@ import com.flaringapp.testingsimulator.user.data.network.features.tests.UserTest
 
 class UserNetworkAdapter(
     override val delegatedAdapter: NetworkAdapter,
+    apiUrl: String,
 ) : DelegatedNetworkAdapter() {
 
-    private val client = createClient("http://test")
+    private val client = createClient(apiUrl)
 
     fun createAuthApi(): UserAuthApi = client.create(UserAuthApi::class.java)
 

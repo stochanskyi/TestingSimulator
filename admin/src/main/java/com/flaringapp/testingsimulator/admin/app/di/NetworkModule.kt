@@ -5,13 +5,17 @@ import com.flaringapp.testingsimulator.admin.data.network.features.auth.AdminAut
 import com.flaringapp.testingsimulator.admin.data.network.features.auth.AdminAuthDataSourceImpl
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.AdminTestsDataSource
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.AdminTestsDataSourceImpl
+import com.flaringapp.testingsimulator.data.BuildConfig
 import org.koin.core.context.GlobalContext
 import org.koin.dsl.module
 
 val NetworkModule = module {
 
     val adapter : AdminNetworkAdapter by lazy {
-        AdminNetworkAdapter(GlobalContext.get().get())
+        AdminNetworkAdapter(
+            delegatedAdapter = GlobalContext.get().get(),
+            apiUrl = BuildConfig.API_URL,
+        )
     }
 
     single { adapter.createAuthApi() }

@@ -12,7 +12,8 @@ class SharedNetworkAdapter(
     override val delegatedAdapter: NetworkAdapter
 ) : DelegatedNetworkAdapter() {
 
-    private val client = withModifiers(RequestTokenAppender()).createClient("http://test")
+    private val client = withModifiers(RequestTokenAppender())
+        .createClient("http://test")
 
     fun createProfileStatisticsApi(): ProfileStatisticsApi {
         return client.create(ProfileStatisticsApi::class.java)

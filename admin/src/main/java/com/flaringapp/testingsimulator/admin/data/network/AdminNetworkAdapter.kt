@@ -7,9 +7,10 @@ import com.flaringapp.testingsimulator.core.data.network.adapter.NetworkAdapter
 
 class AdminNetworkAdapter(
     override val delegatedAdapter: NetworkAdapter,
+    apiUrl: String,
 ) : DelegatedNetworkAdapter() {
 
-    private val client = createClient("http://test")
+    private val client = createClient(apiUrl)
 
     fun createAuthApi(): AdminAuthApi = client.create(AdminAuthApi::class.java)
 
