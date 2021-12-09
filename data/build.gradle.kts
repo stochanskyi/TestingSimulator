@@ -15,7 +15,7 @@ android {
         testInstrumentationRunner = ConfigData.testInstrumentationRunner
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("String", "API_URL", "\"https://vlpi.azurewebsites.net/\"")
+        buildConfigField("String", "API_URL", "\"https://vlpi.azurewebsites.net/api/\"")
     }
 
     buildTypes {
