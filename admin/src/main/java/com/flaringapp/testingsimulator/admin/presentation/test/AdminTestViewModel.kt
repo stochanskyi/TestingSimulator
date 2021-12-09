@@ -13,6 +13,11 @@ abstract class AdminTestViewModel : BaseViewModel() {
 
     abstract val listItemsLiveData: LiveDataList<AdminTestListItemViewData>
 
+    abstract fun init(
+        testId: Int,
+        testName: String,
+    )
+
     abstract fun openTask()
 
     abstract fun createTask()
@@ -25,11 +30,20 @@ class AdminTestViewModeImpl : AdminTestViewModel() {
 
     override val listItemsLiveData = MutableLiveDataList<AdminTestListItemViewData>()
 
+    override fun init(testId: Int, testName: String) {
+        nameLiveData.value = testName
+        loadTest(testId)
+    }
+
     override fun openTask() {
         // TODO admin test open task
     }
 
     override fun createTask() {
         // TODO admin test create task
+    }
+
+    private fun loadTest(id: Int) {
+        // TODO admin test load data
     }
 }
