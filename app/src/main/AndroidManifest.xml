@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.flaringapp.testingsimulator">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/Theme.Base.Login">
+        android:theme="@style/Theme.Base.Login"
+        tools:replace="android:theme">
 
         <activity
             android:name="com.flaringapp.testingsimulator.presentation.features.auth.AuthActivity"
