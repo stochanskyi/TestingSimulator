@@ -8,13 +8,14 @@ import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLi
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TopicPreliminaryData
 import com.flaringapp.testingsimulator.presentation.features.tests.behaviour.TestsBehaviour
+import com.flaringapp.testingsimulator.presentation.features.tests.models.TestDetailNavArgs
 import com.flaringapp.testingsimulator.presentation.features.tests.models.TestViewData
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class TestsViewModel : BaseViewModel() {
     abstract val loadingLiveData: LiveData<Boolean>
     abstract val testsLiveData: LiveData<List<TestViewData>>
-    abstract val openTestLiveData: LiveData<Int>
+    abstract val openTestLiveData: LiveData<TestDetailNavArgs>
 
     abstract val topicNameLiveData: LiveData<String>
 
@@ -31,7 +32,7 @@ class TestsViewModelImpl(
 
     override val loadingLiveData = MutableLiveData(false)
     override val testsLiveData = MutableLiveData<List<TestViewData>>()
-    override val openTestLiveData = SingleLiveEvent<Int>()
+    override val openTestLiveData = SingleLiveEvent<TestDetailNavArgs>()
 
     override val topicNameLiveData = MutableLiveData<String>()
 
@@ -48,7 +49,8 @@ class TestsViewModelImpl(
     }
 
     override fun openTest(testId: Int) {
-        openTestLiveData.value = testId
+        val test = behaviour.getTest(testId) ?: return
+        openTestLiveData.value = TestDetailNavArgs(test.id, test.name)
     }
 
     override fun addTest() {

@@ -8,6 +8,19 @@ class GetUserTestDetailsUseCase(
     private val testsRepository: UserTestsRepository
 ) {
     suspend operator fun invoke(testId: Int): CallResult<UserTestDetails> {
-        return testsRepository.getTestDetails(testId)
+        //TODO mock
+
+        return CallResult.Success(
+            UserTestDetails(
+                1,
+                "Test 1",
+                12,
+                89,
+                false,
+                0,
+                mapOf("Test data" to "test value")
+            )
+        )
+//        return testsRepository.getTestDetails(testId)
     }
 }

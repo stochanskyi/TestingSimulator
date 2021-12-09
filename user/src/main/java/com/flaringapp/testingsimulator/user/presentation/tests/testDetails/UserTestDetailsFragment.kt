@@ -49,6 +49,7 @@ class UserTestDetailsFragment : ModelledFragment(R.layout.fragment_user_test_det
     }
 
     private fun applyTestState(state: UserTestStatusViewData) = with(binding) {
+        stateTextView.isVisible = true
         stateTextView.background.setTint(state.statusColor)
         stateTextView.text = state.statusName
         emojiImageView.setImageResource(state.statusEmojiRes)

@@ -2,6 +2,7 @@ package com.flaringapp.testingsimulator.presentation.features.tests
 
 import android.os.Bundle
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
 import com.flaringapp.testingsimulator.presentation.R
@@ -9,6 +10,7 @@ import com.flaringapp.testingsimulator.presentation.common.recycler.LineItemDeco
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentTestsBinding
 import com.flaringapp.testingsimulator.presentation.features.tests.adapter.TestsAdapter
 import com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TestsFragmentArgsHandler
+import com.flaringapp.testingsimulator.presentation.features.tests.navigation.TestsNavigator
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.android.ext.android.inject
@@ -21,6 +23,8 @@ class TestsFragment : ModelledFragment(R.layout.fragment_tests) {
     private val binding: FragmentTestsBinding by viewBinding { FragmentTestsBinding.bind(it) }
 
     private val paramsHandler: TestsFragmentArgsHandler by inject()
+
+    private val testsNavigator: TestsNavigator by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,7 @@ class TestsFragment : ModelledFragment(R.layout.fragment_tests) {
         }
 
         model.openTestLiveData.observe(viewLifecycleOwner) {
-            //TODO navigate to test
+            testsNavigator.navigateToTest(findNavController(), it.id, it.name)
         }
 
         model.topicNameLiveData.observe(viewLifecycleOwner) { title ->

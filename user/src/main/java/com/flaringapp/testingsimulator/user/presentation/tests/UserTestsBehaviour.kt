@@ -5,6 +5,7 @@ import com.flaringapp.testingsimulator.core.data.common.call.CallResultList
 import com.flaringapp.testingsimulator.core.data.common.call.transformList
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.domain.features.tests.GetTestsUseCase
+import com.flaringapp.testingsimulator.domain.features.tests.Test
 import com.flaringapp.testingsimulator.presentation.R as PresentationR
 import com.flaringapp.testingsimulator.presentation.features.tests.behaviour.TestsBehaviour
 import com.flaringapp.testingsimulator.presentation.features.tests.models.TestViewData
@@ -17,9 +18,16 @@ class UserTestsBehaviour(
     private val colorProvider: ColorProvider,
 ) : TestsBehaviour {
 
+    private var tests: List<UserTest> = emptyList()
+
     override suspend fun getTests(moduleId: Int): CallResultList<TestViewData> {
         return getTestsUseCase(moduleId)
+            .doOnSuccess { tests = it }
             .transformList { this.toViewData() }
+    }
+
+    override fun getTest(testId: Int): Test? {
+        return tests.firstOrNull { it.id == testId }
     }
 
     private fun UserTest.toViewData() : TestViewData {

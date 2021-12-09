@@ -7,6 +7,7 @@ import com.flaringapp.testingsimulator.presentation.features.edit_profile.behavi
 import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.profile.navigation.ProfileNavigator
 import com.flaringapp.testingsimulator.presentation.features.tests.behaviour.TestsBehaviour
+import com.flaringapp.testingsimulator.presentation.features.tests.navigation.TestsNavigator
 import com.flaringapp.testingsimulator.presentation.features.topics.navigation.TopicsNavigator
 import com.flaringapp.testingsimulator.presentation.navigation.NavigationGraphProvider
 import com.flaringapp.testingsimulator.user.presentation.auth.login.UserLoginViewBehaviour
@@ -17,6 +18,7 @@ import com.flaringapp.testingsimulator.user.presentation.navigation.UserNavigati
 import com.flaringapp.testingsimulator.user.presentation.navigation.tests.UserTestsFragmentArgsHandler
 import com.flaringapp.testingsimulator.user.presentation.profile.UserProfileBehaviour
 import com.flaringapp.testingsimulator.user.presentation.tests.UserTestsBehaviour
+import com.flaringapp.testingsimulator.user.presentation.tests.UserTestsNavigator
 import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.UserTestDetailsViewModel
 import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.UserTestDetailsViewModelImpl
 import com.flaringapp.testingsimulator.user.presentation.topics.UserTopicsNavigator
@@ -37,9 +39,10 @@ val PresentationModule = module {
 
     factory<EditProfileBehaviour> { UserEditProfileBehaviour(get(), get()) }
 
+    factory<TestsNavigator> { UserTestsNavigator() }
     factory<TestsFragmentArgsHandler> { UserTestsFragmentArgsHandler() }
     factory<TestsBehaviour> { UserTestsBehaviour(get(), get(), get()) }
 
-    factory<UserTestDetailsViewModel> { UserTestDetailsViewModelImpl(get(), get(), get()) }
+    factory<UserTestDetailsViewModel> { UserTestDetailsViewModelImpl(get(), get(), get(), get()) }
 
 }
