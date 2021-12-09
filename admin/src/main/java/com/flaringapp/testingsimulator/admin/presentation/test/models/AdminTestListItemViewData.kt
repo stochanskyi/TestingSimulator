@@ -4,8 +4,7 @@ sealed interface AdminTestListItemViewData
 
 data class AdminTestHeaderViewData(
     val name: CharSequence,
-    val status: CharSequence,
-    val statistics: CharSequence,
+    val statusAndStatistics: CharSequence,
 ) : AdminTestListItemViewData
 
 data class AdminTestTaskViewData(

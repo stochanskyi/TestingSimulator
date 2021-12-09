@@ -4,7 +4,7 @@ import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestStatusTransformer
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 
-class AdminTestStatusTransformer(
+class AdminTestStatusNameTransformer(
     private val textProvider: TextProvider,
 ) : AdminTestStatusTransformer<CharSequence> {
 

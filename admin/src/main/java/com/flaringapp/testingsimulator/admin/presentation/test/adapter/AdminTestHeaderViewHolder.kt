@@ -17,6 +17,6 @@ class AdminTestHeaderViewHolder private constructor(
 
     fun bind(item: AdminTestHeaderViewData) = with(binding) {
         textName.text = item.name
-        textStatistics.text = item.statistics
+        textStatistics.text = item.statusAndStatistics
     }
 }

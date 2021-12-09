@@ -13,7 +13,7 @@ import com.flaringapp.testingsimulator.presentation.features.tests.models.TestVi
 class AdminTestsBehaviour(
     private val getTestsUseCase: GetTestsUseCase<AdminTest>,
     private val textProvider: TextProvider,
-    private val testStatusTransformer: AdminTestStatusTransformer,
+    private val testStatusNameTransformer: AdminTestStatusNameTransformer,
     private val testStatusColorTransformer: AdminTestStatusColorTransformer,
 ) : TestsBehaviour {
 
@@ -30,7 +30,7 @@ class AdminTestsBehaviour(
     }
 
     private fun AdminTest.toViewData(): TestViewData {
-        val statusName = status.transform(testStatusTransformer)
+        val statusName = status.transform(testStatusNameTransformer)
         val statusColor = status.transform(testStatusColorTransformer)
 
         return TestViewData(

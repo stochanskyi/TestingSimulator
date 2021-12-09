@@ -3,6 +3,7 @@ package com.flaringapp.testingsimulator.admin.presentation.test
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
 import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestAddTaskViewData
@@ -10,10 +11,11 @@ import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestH
 import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestListItemViewData
 import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestTaskViewData
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusIsEditableTransformer
-import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusTransformer
+import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusNameTransformer
 import com.flaringapp.testingsimulator.core.app.common.launchOnIO
 import com.flaringapp.testingsimulator.core.app.common.tryAdd
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableLiveDataList
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
@@ -38,8 +40,9 @@ abstract class AdminTestViewModel : BaseViewModel() {
 
 class AdminTestViewModeImpl(
     private val getTestDetailedUseCase: GetAdminTestDetailedUseCase,
-    private val testStatusTransformer: AdminTestStatusTransformer,
+    private val testStatusNameTransformer: AdminTestStatusNameTransformer,
     private val testStatusIsEditableTransformer: AdminTestStatusIsEditableTransformer,
+    private val textProvider: TextProvider,
     private val taxonomyFormatter: TaxonomyFormatter,
 ) : AdminTestViewModel() {
 
@@ -95,10 +98,18 @@ class AdminTestViewModeImpl(
     }
 
     private fun composeHeaderViewData(test: AdminTestDetailed): AdminTestHeaderViewData {
+        val statusNameWithStatistics = LinkedHashMap<CharSequence, CharSequence>(
+            test.statistics.size + 1
+        )
+        val statusLabel = textProvider.getText(R.string.task_status)
+        val statusName = test.status.transform(testStatusNameTransformer)
+
+        statusNameWithStatistics[statusLabel] = statusName
+        statusNameWithStatistics.putAll(test.statistics)
+
         return AdminTestHeaderViewData(
             name = test.name,
-            status = test.status.transform(testStatusTransformer),
-            statistics = taxonomyFormatter.format(test.statistics),
+            statusAndStatistics = taxonomyFormatter.format(statusNameWithStatistics)
         )
     }
 
