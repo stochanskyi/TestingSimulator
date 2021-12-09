@@ -9,7 +9,7 @@ import retrofit2.http.POST
 interface EditProfileApi {
 
     // TODO API change route
-    @POST("")
+    @POST("edit_profile")
     suspend fun editProfile(
         @Body request: EditProfileRequest
     ) : ApiResponse<EditProfileResponse>
