@@ -4,6 +4,8 @@ import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginVie
 import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginViewModelImpl
 import com.flaringapp.testingsimulator.presentation.features.auth.signup.SignUpVewModel
 import com.flaringapp.testingsimulator.presentation.features.auth.signup.SignUpVewModelImpl
+import com.flaringapp.testingsimulator.presentation.features.edit_profile.EditProfileViewModel
+import com.flaringapp.testingsimulator.presentation.features.edit_profile.EditProfileViewModelImpl
 import com.flaringapp.testingsimulator.presentation.features.profile.ProfileViewModel
 import com.flaringapp.testingsimulator.presentation.features.profile.ProfileViewModelImpl
 import com.flaringapp.testingsimulator.presentation.features.topics.TopicsViewModel
@@ -18,6 +20,8 @@ val PresentationModule = module {
     viewModel<SignUpVewModel> { SignUpVewModelImpl(get(), get(), get(), get(), get(), get()) }
 
     viewModel<ProfileViewModel> { ProfileViewModelImpl(get(), get(), get(), get(), get()) }
+
+    viewModel<EditProfileViewModel> { EditProfileViewModelImpl(get(), get(), get()) }
 
     viewModel<TopicsViewModel> { TopicsViewModelImpl(get(), get(), get()) }
 
