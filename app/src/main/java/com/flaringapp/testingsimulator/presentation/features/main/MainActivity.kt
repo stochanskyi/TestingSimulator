@@ -11,6 +11,7 @@ import com.flaringapp.testingsimulator.R
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.*
 import com.flaringapp.testingsimulator.presentation.navigation.NavigationGraphProvider
 import org.koin.android.ext.android.inject
+import com.flaringapp.testingsimulator.presentation.R as PresentationR
 
 class MainActivity : AppCompatActivity(),
     AppBarConfigurator, AppBarDisposableHandler {
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        initToolbar()
         initNavigation()
     }
 
@@ -73,12 +74,20 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+    private fun initToolbar() {
+        setSupportActionBar(findViewById(R.id.toolbar))
+    }
+
     private fun initNavigation() {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) ?: return
         val navController = navHost.findNavController()
 
         initNavigationGraph(navController)
         NavigationUI.setupActionBarWithNavController(this, navController)
+
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            supportActionBar?.setHomeAsUpIndicator(PresentationR.drawable.ic_arrow_back)
+        }
     }
 
     private fun initNavigationGraph(navController: NavController) {
