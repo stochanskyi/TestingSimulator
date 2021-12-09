@@ -49,13 +49,15 @@ class TaxonomyFormatterImpl(
         val formattedTaxonomy = Array<CharSequence>(taxonomySize) { "" }
 
         formattedTaxonomy[0] = format(taxonomy.first())
-        taxonomy.drop(1)
-        taxonomy.forEachIndexed { i, item ->
-            formattedTaxonomy[i + 1] = buildSpannedString {
-                appendLine()
-                append(format(item))
+
+        taxonomy
+            .drop(1)
+            .forEachIndexed { i, item ->
+                formattedTaxonomy[i + 1] = buildSpannedString {
+                    appendLine()
+                    append(format(item))
+                }
             }
-        }
 
         return TextUtils.concat(*formattedTaxonomy)
     }
