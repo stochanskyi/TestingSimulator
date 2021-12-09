@@ -31,7 +31,7 @@ class AdminTestItemsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminTestItemViewHolder {
         return when (viewType) {
             VIEW_TYPE_HEADER -> AdminTestHeaderViewHolder.create(parent)
-            VIEW_TYPE_TASK -> AdminTestHeaderViewHolder.create(parent)
+            VIEW_TYPE_TASK -> AdminTestTaskViewHolder.create(parent)
             VIEW_TYPE_ADD_TASK -> AdminTestAddTaskViewHolder.create(parent)
             else -> error("Unsupported view type $viewType")
         }
