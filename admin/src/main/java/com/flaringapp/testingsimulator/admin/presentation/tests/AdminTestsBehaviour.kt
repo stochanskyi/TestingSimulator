@@ -1,9 +1,6 @@
 package com.flaringapp.testingsimulator.admin.presentation.tests
 
-import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
-import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestStatusTransformer
-import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultList
 import com.flaringapp.testingsimulator.core.data.common.call.transformList
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
@@ -16,12 +13,11 @@ import com.flaringapp.testingsimulator.presentation.features.tests.models.TestVi
 class AdminTestsBehaviour(
     private val getTestsUseCase: GetTestsUseCase<AdminTest>,
     private val textProvider: TextProvider,
-    private val colorProvider: ColorProvider,
+    private val testStatusTransformer: AdminTestStatusTransformer,
+    private val testStatusColorTransformer: AdminTestStatusColorTransformer,
 ) : TestsBehaviour {
 
     private var tests: List<AdminTest> = emptyList()
-
-    private val testStatusAndColorTransformer = AdminTestStatusAndColorTransformer()
 
     override suspend fun getTests(moduleId: Int): CallResultList<TestViewData> {
         return getTestsUseCase(moduleId)
@@ -34,33 +30,15 @@ class AdminTestsBehaviour(
     }
 
     private fun AdminTest.toViewData(): TestViewData {
-        val statusAndColor = status.transform(testStatusAndColorTransformer)
+        val statusName = status.transform(testStatusTransformer)
+        val statusColor = status.transform(testStatusColorTransformer)
 
         return TestViewData(
             id = id,
             name = name,
             description = textProvider.getText(PresentationR.string.description_test, tasksCount),
-            status = statusAndColor.first,
-            statusColor = statusAndColor.second,
+            status = statusName,
+            statusColor = statusColor,
         )
-    }
-
-    private inner class AdminTestStatusAndColorTransformer :
-        AdminTestStatusTransformer<Pair<CharSequence, Int>> {
-
-        override fun transformDraftStatus(): Pair<CharSequence, Int> {
-            return textProvider.getString(R.string.task_draft) to
-                colorProvider.getColor(R.color.task_draft)
-        }
-
-        override fun transformReadyToPublishStatus(): Pair<CharSequence, Int> {
-            return textProvider.getString(R.string.task_ready_to_publish) to
-                colorProvider.getColor(R.color.task_ready_to_publish)
-        }
-
-        override fun transformPublishedStatus(): Pair<CharSequence, Int> {
-            return textProvider.getString(R.string.task_published) to
-                colorProvider.getColor(R.color.task_published)
-        }
     }
 }

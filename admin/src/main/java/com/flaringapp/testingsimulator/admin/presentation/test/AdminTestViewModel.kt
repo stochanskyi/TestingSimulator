@@ -2,9 +2,21 @@ package com.flaringapp.testingsimulator.admin.presentation.test
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
+import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
+import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestAddTaskViewData
+import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestHeaderViewData
 import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestListItemViewData
+import com.flaringapp.testingsimulator.admin.presentation.test.models.AdminTestTaskViewData
+import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusIsEditableTransformer
+import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusTransformer
+import com.flaringapp.testingsimulator.core.app.common.launchOnIO
+import com.flaringapp.testingsimulator.core.app.common.tryAdd
+import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableLiveDataList
+import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class AdminTestViewModel : BaseViewModel() {
@@ -24,11 +36,18 @@ abstract class AdminTestViewModel : BaseViewModel() {
 
 }
 
-class AdminTestViewModeImpl : AdminTestViewModel() {
+class AdminTestViewModeImpl(
+    private val getTestDetailedUseCase: GetAdminTestDetailedUseCase,
+    private val testStatusTransformer: AdminTestStatusTransformer,
+    private val testStatusIsEditableTransformer: AdminTestStatusIsEditableTransformer,
+    private val taxonomyFormatter: TaxonomyFormatter,
+) : AdminTestViewModel() {
 
     override val nameLiveData = MutableLiveData<String>()
 
     override val listItemsLiveData = MutableLiveDataList<AdminTestListItemViewData>()
+
+    private var test: AdminTestDetailed? = null
 
     override fun init(testId: Int, testName: String) {
         nameLiveData.value = testName
@@ -44,6 +63,59 @@ class AdminTestViewModeImpl : AdminTestViewModel() {
     }
 
     private fun loadTest(id: Int) {
-        // TODO admin test load data
+        viewModelScope.launchOnIO {
+            val loadedTest = safeCall {
+                getTestDetailedUseCase(id)
+            } ?: return@launchOnIO
+
+            test = loadedTest
+
+            val items = composeListItemsViewData(loadedTest)
+
+            withMainContext {
+                listItemsLiveData.value = items
+            }
+        }
     }
+
+    private fun composeListItemsViewData(
+        test: AdminTestDetailed
+    ): List<AdminTestListItemViewData> {
+        val items = mutableListOf<AdminTestListItemViewData>()
+        items.add(
+            composeHeaderViewData(test)
+        )
+        items.addAll(
+            composeTasksViewData(test)
+        )
+        items.tryAdd(
+            composeAddTaskViewData(test)
+        )
+        return items
+    }
+
+    private fun composeHeaderViewData(test: AdminTestDetailed): AdminTestHeaderViewData {
+        return AdminTestHeaderViewData(
+            name = test.name,
+            status = test.status.transform(testStatusTransformer),
+            statistics = taxonomyFormatter.format(test.statistics),
+        )
+    }
+
+    private fun composeTasksViewData(test: AdminTestDetailed): List<AdminTestTaskViewData> {
+        return test.tasks.map { task ->
+            val difficulty = "I".repeat(task.difficultyLevel)
+            AdminTestTaskViewData(
+                id = task.id,
+                text = taxonomyFormatter.format(task.name, difficulty),
+            )
+        }
+    }
+
+    private fun composeAddTaskViewData(test: AdminTestDetailed): AdminTestAddTaskViewData? {
+        val isEditable = test.status.transform(testStatusIsEditableTransformer)
+        if (!isEditable) return null
+        return AdminTestAddTaskViewData
+    }
+
 }

@@ -8,6 +8,9 @@ import com.flaringapp.testingsimulator.admin.presentation.navigation.tests.Admin
 import com.flaringapp.testingsimulator.admin.presentation.profile.AdminProfileBehaviour
 import com.flaringapp.testingsimulator.admin.presentation.test.AdminTestViewModeImpl
 import com.flaringapp.testingsimulator.admin.presentation.test.AdminTestViewModel
+import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusColorTransformer
+import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusIsEditableTransformer
+import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusTransformer
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestsBehaviour
 import com.flaringapp.testingsimulator.admin.presentation.topics.AdminTopicsNavigator
 import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginViewBehaviour
@@ -35,8 +38,11 @@ val PresentationModule = module {
     factory<EditProfileBehaviour> { AdminEditProfileBehaviour(get(), get()) }
 
     factory<TestsFragmentArgsHandler> { AdminTestsFragmentArgsHandler() }
-    factory<TestsBehaviour> { AdminTestsBehaviour(get(), get(), get()) }
+    factory<TestsBehaviour> { AdminTestsBehaviour(get(), get(), get(), get()) }
+    factory { AdminTestStatusTransformer(get()) }
+    factory { AdminTestStatusColorTransformer(get()) }
 
-    viewModel<AdminTestViewModel> { AdminTestViewModeImpl() }
+    viewModel<AdminTestViewModel> { AdminTestViewModeImpl(get(), get(), get(), get()) }
+    factory { AdminTestStatusIsEditableTransformer() }
 
 }

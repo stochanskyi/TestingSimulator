@@ -7,6 +7,11 @@ fun <T> MutableCollection<T>.clearAndAdd(other: Collection<T>) {
     addAll(other)
 }
 
+fun <T> MutableCollection<T>.tryAdd(item: T?) {
+    if (item == null) return
+    add(item)
+}
+
 fun <T> List<T>.reversedIf(condition: Boolean): List<T> {
     return if (condition) reversed()
     else this
