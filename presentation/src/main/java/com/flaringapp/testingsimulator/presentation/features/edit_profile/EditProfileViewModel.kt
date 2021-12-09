@@ -12,6 +12,10 @@ import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class EditProfileViewModel : BaseViewModel() {
 
+    abstract val isStudyingAtEnabled: LiveData<Boolean>
+    abstract val isWorkPlaceEnabled: LiveData<Boolean>
+    abstract val isRoleEnabled: LiveData<Boolean>
+
     abstract val firstNameLiveData: LiveData<String>
     abstract val lastNameLiveData: LiveData<String>
     abstract val studyingAtLiveData: LiveData<String>
@@ -20,10 +24,6 @@ abstract class EditProfileViewModel : BaseViewModel() {
 
     abstract val invalidFirstNameLiveData: LiveData<Unit>
     abstract val invalidLastNameLiveData: LiveData<Unit>
-
-    abstract val isStudyingAtEnabled: LiveData<Boolean>
-    abstract val isWorkPlaceEnabled: LiveData<Boolean>
-    abstract val isRoleEnabled: LiveData<Boolean>
 
     abstract val loadingLiveData: LiveData<Boolean>
 
@@ -35,7 +35,7 @@ abstract class EditProfileViewModel : BaseViewModel() {
     abstract fun setWorkPlace(workPlace: String)
     abstract fun setRole(role: String)
 
-    abstract fun edit()
+    abstract fun save()
 
 }
 
@@ -51,18 +51,18 @@ class EditProfileViewModelImpl(
     private var workPlace: String = ""
     private var role: String = ""
 
-    override val firstNameLiveData = MutableLiveData("")
-    override val lastNameLiveData = MutableLiveData("")
-    override val studyingAtLiveData = MutableLiveData("")
-    override val workPlaceLiveData = MutableLiveData("")
-    override val roleLiveData = MutableLiveData("")
-
-    override val invalidFirstNameLiveData = SingleLiveEvent<Unit>()
-    override val invalidLastNameLiveData = SingleLiveEvent<Unit>()
-
     override val isStudyingAtEnabled = MutableLiveData(behaviour.isStudyingEnabled)
     override val isWorkPlaceEnabled = MutableLiveData(behaviour.isWorkPlaceEnabled)
     override val isRoleEnabled: LiveData<Boolean> = MutableLiveData(behaviour.isRoleEnabled)
+
+    override val firstNameLiveData = MutableLiveData(firstName)
+    override val lastNameLiveData = MutableLiveData(lastName)
+    override val studyingAtLiveData = MutableLiveData(studyingAt)
+    override val workPlaceLiveData = MutableLiveData(workPlace)
+    override val roleLiveData = MutableLiveData(role)
+
+    override val invalidFirstNameLiveData = SingleLiveEvent<Unit>()
+    override val invalidLastNameLiveData = SingleLiveEvent<Unit>()
 
     override val loadingLiveData = MutableLiveData<Boolean>()
 
@@ -93,7 +93,7 @@ class EditProfileViewModelImpl(
         roleLiveData.value = role
     }
 
-    override fun edit() {
+    override fun save() {
         if (!validateData()) return
 
         viewModelScope.startLoadingTask(loadingLiveData) {
