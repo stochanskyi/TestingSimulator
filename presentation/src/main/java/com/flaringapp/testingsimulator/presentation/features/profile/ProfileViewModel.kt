@@ -12,6 +12,9 @@ import com.flaringapp.testingsimulator.domain.features.emoji.EmojiColorsProvider
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
 import com.flaringapp.testingsimulator.domain.features.profile.ProfileStatistics
 import com.flaringapp.testingsimulator.domain.features.profile_statistics.GetProfileStatisticsUseCase
+import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
+import com.flaringapp.testingsimulator.presentation.R
+import com.flaringapp.testingsimulator.presentation.data.taxonomy.DefaultTaxonomyFormatterConfig
 import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviourGetProfileConsumer
 import com.flaringapp.testingsimulator.presentation.features.profile.models.ProfileStatisticsViewData
@@ -22,10 +25,10 @@ import kotlinx.coroutines.awaitAll
 abstract class ProfileViewModel : BaseViewModel() {
 
     abstract val nameLiveData: LiveData<String>
-    abstract val emailLiveData: LiveData<String>
-    abstract val studyingLiveData: LiveData<String?>
-    abstract val workPlaceLiveData: LiveData<String?>
-    abstract val roleLiveData: LiveData<String?>
+    abstract val emailLiveData: LiveData<CharSequence>
+    abstract val studyingLiveData: LiveData<CharSequence?>
+    abstract val workPlaceLiveData: LiveData<CharSequence?>
+    abstract val roleLiveData: LiveData<CharSequence?>
 
     abstract val statisticsLiveData: LiveDataList<ProfileStatisticsViewData>
 }
@@ -36,16 +39,22 @@ class ProfileViewModelImpl(
     private val emojiProvider: EmojiProvider,
     private val emojiColorsProvider: EmojiColorsProvider,
     private val colorProvider: ColorProvider,
+    private val taxonomyFormatter: TaxonomyFormatter,
 ) : ProfileViewModel(), ProfileBehaviourGetProfileConsumer {
 
     override val nameLiveData = MutableLiveData<String>()
-    override val emailLiveData = MutableLiveData<String>()
-    override val studyingLiveData = MutableLiveData<String?>(null)
-    override val workPlaceLiveData = MutableLiveData<String?>(null)
-    override val roleLiveData = MutableLiveData<String?>(null)
+    override val emailLiveData = MutableLiveData<CharSequence>()
+    override val studyingLiveData = MutableLiveData<CharSequence?>(null)
+    override val workPlaceLiveData = MutableLiveData<CharSequence?>(null)
+    override val roleLiveData = MutableLiveData<CharSequence?>(null)
     override val statisticsLiveData = MutableLiveDataList<ProfileStatisticsViewData>(emptyList())
 
     init {
+        taxonomyFormatter.config = DefaultTaxonomyFormatterConfig.customize(
+            colorProvider = colorProvider,
+            valueTextSize = 14,
+        )
+
         viewModelScope.launchOnIO {
             listOf(
                 async { loadProfileData() },
@@ -62,10 +71,16 @@ class ProfileViewModelImpl(
         role: String?
     ) {
         nameLiveData.value = name
-        emailLiveData.value = email
-        studyingLiveData.value = studying
-        workPlaceLiveData.value = workPlace
-        roleLiveData.value = role
+        emailLiveData.value = taxonomyFormatter.format(R.string.profile_email, email)
+        studyingLiveData.value = studying?.let {
+            taxonomyFormatter.format(R.string.profile_studying, it)
+        }
+        workPlaceLiveData.value = workPlace?.let {
+            taxonomyFormatter.format(R.string.profile_work_place, it)
+        }
+        roleLiveData.value = role?.let {
+            taxonomyFormatter.format(R.string.profile_role, role)
+        }
     }
 
     private suspend fun loadProfileData() {

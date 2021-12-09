@@ -1,12 +1,9 @@
 package com.flaringapp.testingsimulator.presentation.features.profile
 
-import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
-import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentProfileBinding
 import com.flaringapp.testingsimulator.presentation.features.profile.adapter.ProfileStatisticsAdapter
@@ -23,18 +20,6 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
     private val binding: FragmentProfileBinding by viewBinding(FragmentProfileBinding::bind)
 
     private val navigator: ProfileNavigator by inject()
-
-    private var taxonomyFormatter: ProfileTaxonomyFormatter? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        taxonomyFormatter = ProfileTaxonomyFormatter(requireContext())
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onDestroyView() {
-        taxonomyFormatter = null
-        super.onDestroyView()
-    }
 
     override fun initViews() = with(binding) {
         recyclerStatistics.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -54,49 +39,21 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
             binding.textName.text = name
         }
         emailLiveData.observe(viewLifecycleOwner) { email ->
-            setEmail(email)
+            binding.textEmail.text = email
         }
         studyingLiveData.observe(viewLifecycleOwner) { studying ->
-            setStudying(studying)
+            binding.textStudying.text = studying
         }
         workPlaceLiveData.observe(viewLifecycleOwner) { workPlace ->
-            setWorkPlace(workPlace)
+            binding.textWorkPlace.text = workPlace
         }
         roleLiveData.observe(viewLifecycleOwner) { role ->
-            setRole(role)
+            binding.textRole.text = role
         }
 
         statisticsLiveData.observe(viewLifecycleOwner) { statistics ->
             adapterAction { it.submitList(statistics) }
         }
-    }
-
-    private fun setEmail(email: String) {
-        binding.textEmail.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
-            prefixStringRes = R.string.profile_email,
-            content = email,
-        )
-    }
-
-    private fun setStudying(studying: String?) {
-        binding.textStudying.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
-            prefixStringRes = R.string.profile_studying,
-            content = studying,
-        )
-    }
-
-    private fun setWorkPlace(workPlace: String?) {
-        binding.textWorkPlace.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
-            prefixStringRes = R.string.profile_work_place,
-            content = workPlace,
-        )
-    }
-
-    private fun setRole(role: String?) {
-        binding.textRole.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
-            prefixStringRes = R.string.profile_role,
-            content = role,
-        )
     }
 
     private fun onMenuItemSelected(item: MenuItem): Boolean {
