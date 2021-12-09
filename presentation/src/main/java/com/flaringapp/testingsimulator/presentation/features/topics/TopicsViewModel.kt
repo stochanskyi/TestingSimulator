@@ -11,6 +11,7 @@ import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
 import com.flaringapp.testingsimulator.domain.features.topics.GetTopicsUseCase
 import com.flaringapp.testingsimulator.domain.features.topics.models.Topic
 import com.flaringapp.testingsimulator.presentation.R
+import com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TopicPreliminaryData
 import com.flaringapp.testingsimulator.presentation.features.topics.models.TopicViewData
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
@@ -21,6 +22,8 @@ abstract class TopicsViewModel : BaseViewModel() {
     abstract val topicsLiveData: LiveData<List<TopicViewData>>
 
     abstract val openProfileLiveData: LiveData<Unit>
+    
+    abstract val openTestsLiveData: LiveData<TopicPreliminaryData>
 
     abstract fun openTopic(topicId: Int)
 
@@ -38,10 +41,14 @@ class TopicsViewModelImpl(
     override val topicsLiveData = MutableLiveData<List<TopicViewData>>()
 
     override val openProfileLiveData = SingleLiveEvent<Unit>()
+   
+    override val openTestsLiveData = SingleLiveEvent<TopicPreliminaryData>()
+
+    private var topics: List<Topic> = emptyList()
 
     init {
         viewModelScope.startLoadingTask(loadingLiveData) {
-            val topics = safeCall {
+            topics = safeCall {
                 getTopicsUseCase()
             } ?: return@startLoadingTask
 
@@ -54,7 +61,12 @@ class TopicsViewModelImpl(
     }
 
     override fun openTopic(topicId: Int) {
-        //TODO navigate to topics
+        val topic = topics.firstOrNull { it.id == topicId } ?: return
+
+        openTestsLiveData.value = TopicPreliminaryData(
+            id = topic.id,
+            name = topic.name
+        )
     }
 
     override fun openProfile() {

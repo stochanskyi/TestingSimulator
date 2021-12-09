@@ -15,6 +15,22 @@
             android:id="@+id/action_fragmentTopics_to_fragmentProfile"
             app:destination="@id/fragmentProfile" />
 
+        <action
+            android:id="@+id/action_fragmentTopics_to_fragmentTests"
+            app:destination="@id/fragmentTests" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentTests"
+        android:name="com.flaringapp.testingsimulator.presentation.features.tests.TestsFragment"
+        android:label="Tests"
+        tools:layout="@layout/fragment_tests">
+
+        <argument
+            android:name="topicData"
+            app:argType="com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TopicPreliminaryData" />
+
     </fragment>
 
     <fragment

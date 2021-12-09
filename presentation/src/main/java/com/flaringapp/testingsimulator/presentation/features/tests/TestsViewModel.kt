@@ -3,6 +3,7 @@ package com.flaringapp.testingsimulator.presentation.features.tests
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
+import com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TopicPreliminaryData
 import com.flaringapp.testingsimulator.presentation.features.tests.models.TestViewData
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
@@ -11,7 +12,9 @@ abstract class TestsViewModel : BaseViewModel() {
     abstract val testsLiveData: LiveData<List<TestViewData>>
     abstract val openTestLiveData: LiveData<Int>
 
-    abstract fun init(topicId: Int)
+    abstract val topicNameLiveData: LiveData<String>
+
+    abstract fun init(topicData: TopicPreliminaryData)
 
     abstract fun openTest(testId: Int)
 
@@ -24,8 +27,16 @@ class TestsViewModelImpl : TestsViewModel() {
     override val testsLiveData = MutableLiveData<List<TestViewData>>()
     override val openTestLiveData = SingleLiveEvent<Int>()
 
-    override fun init(topicId: Int) {
-        //TODO load topics
+    override val topicNameLiveData = MutableLiveData<String>()
+
+    private var topicId: Int = 0
+    private var name: String = ""
+
+    override fun init(topicData: TopicPreliminaryData) {
+        topicId = topicData.id
+        name = topicData.name
+
+        topicNameLiveData.value = name
     }
 
     override fun openTest(testId: Int) {
@@ -35,6 +46,5 @@ class TestsViewModelImpl : TestsViewModel() {
     override fun addTest() {
         //TODO implement
     }
-
 
 }

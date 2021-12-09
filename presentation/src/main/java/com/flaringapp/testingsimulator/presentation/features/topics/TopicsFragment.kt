@@ -46,6 +46,11 @@ class TopicsFragment : ModelledFragment(R.layout.fragment_topics) {
         model.openProfileLiveData.observe(viewLifecycleOwner) {
             navigator.navigateToProfile(findNavController())
         }
+
+        model.openTestsLiveData.observe(viewLifecycleOwner) { topicData ->
+            navigator.navigateToTests(findNavController(), topicData)
+        }
+
     }
 
     private fun onMenuItemSelected(item: MenuItem): Boolean {
