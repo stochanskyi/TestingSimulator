@@ -43,7 +43,7 @@ class UserTestDetailsViewModelImpl(
 
     private var testDetails: UserTestDetails? = null
 
-    override val loadingLiveData = MutableLiveData<Boolean>(false)
+    override val loadingLiveData = MutableLiveData(false)
     override val testNameLiveData = MutableLiveData("")
     override val testStateLiveData = MutableLiveData<UserTestStatusViewData>()
     override val testStatisticsLiveData = MutableLiveData<CharSequence>()
