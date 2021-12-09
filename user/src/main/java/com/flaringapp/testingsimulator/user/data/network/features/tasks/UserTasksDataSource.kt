@@ -3,7 +3,7 @@ package com.flaringapp.testingsimulator.user.data.network.features.tasks
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.core.data.network.base.validate
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.StartTestRequest
-import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.TaskAnswerRequest
+import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.UserTaskAnswerRequest
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.response.UserTaskResponse
 
 interface UserTasksDataSource {
@@ -12,7 +12,7 @@ interface UserTasksDataSource {
 
     suspend fun getTask(testId: Int): CallResult<UserTaskResponse>
 
-    suspend fun answerTask(request: TaskAnswerRequest): CallResult<UserTaskResponse?>
+    suspend fun answerTask(request: UserTaskAnswerRequest): CallResult<UserTaskResponse?>
 
 }
 
@@ -28,7 +28,7 @@ class UserTasksDataSourceImpl(
         return api.getTask(testId).validate()
     }
 
-    override suspend fun answerTask(request: TaskAnswerRequest): CallResult<UserTaskResponse?> {
+    override suspend fun answerTask(request: UserTaskAnswerRequest): CallResult<UserTaskResponse?> {
         return api.answerTask(request).validate()
     }
 

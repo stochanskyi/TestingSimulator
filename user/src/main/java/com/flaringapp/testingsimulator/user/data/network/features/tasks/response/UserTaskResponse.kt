@@ -10,7 +10,7 @@ class UserTaskResponse(
     @Json(name = "currentOrderNumber")
     val currentOrderNumber: Int,
     @Json(name = "text")
-    val text: String,
+    val name: String,
     @Json(name = "blocks")
     val blocks: List<UserTaskBlockResponse>
 )

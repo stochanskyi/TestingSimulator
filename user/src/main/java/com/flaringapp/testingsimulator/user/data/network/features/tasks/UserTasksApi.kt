@@ -2,7 +2,7 @@ package com.flaringapp.testingsimulator.user.data.network.features.tasks
 
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponse
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.StartTestRequest
-import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.TaskAnswerRequest
+import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.UserTaskAnswerRequest
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.response.UserTaskResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,6 +18,6 @@ interface UserTasksApi {
     suspend fun getTask(@Query("testId") testId: Int): ApiResponse<UserTaskResponse>
 
     @POST("answer")
-    suspend fun answerTask(@Body request: TaskAnswerRequest): ApiResponse<UserTaskResponse?>
+    suspend fun answerTask(@Body request: UserTaskAnswerRequest): ApiResponse<UserTaskResponse?>
 
 }
