@@ -65,6 +65,7 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
         roleLiveData.observe(viewLifecycleOwner) { role ->
             setRole(role)
         }
+
         statisticsLiveData.observe(viewLifecycleOwner) { statistics ->
             adapterAction { it.submitList(statistics) }
         }

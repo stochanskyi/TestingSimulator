@@ -31,7 +31,7 @@ abstract class ProfileViewModel : BaseViewModel() {
 }
 
 class ProfileViewModelImpl(
-    private val profileBehaviour: ProfileBehaviour,
+    private val behaviour: ProfileBehaviour,
     private val getStatisticsUseCase: GetProfileStatisticsUseCase,
     private val emojiProvider: EmojiProvider,
     private val emojiColorsProvider: EmojiColorsProvider,
@@ -70,7 +70,7 @@ class ProfileViewModelImpl(
 
     private suspend fun loadProfileData() {
         safeCall {
-            profileBehaviour.loadProfile(this@ProfileViewModelImpl)
+            behaviour.loadProfile(this@ProfileViewModelImpl)
         }
     }
 
