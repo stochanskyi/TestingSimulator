@@ -18,12 +18,6 @@ class UserLoginUseCase(
         password: String,
         rememberMe: Boolean,
     ): CallResultNothing {
-        //TODO remember me
-
-        //TODO remove mocked answer
-
-        return CallResult.Success(Unit)
-
         return authRepository.login(
             email = email,
             password = password
