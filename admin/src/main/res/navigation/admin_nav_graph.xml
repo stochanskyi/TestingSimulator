@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_nav_graph"
+    app:startDestination="@id/fragmentTopics">
+
+    <fragment
+        android:id="@+id/fragmentTopics"
+        android:name="com.flaringapp.testingsimulator.presentation.features.topics.TopicsFragment"
+        android:label="Topics"
+        tools:layout="@layout/fragment_topics">
+
+        <action
+            android:id="@+id/action_fragmentTopics_to_fragmentProfile"
+            app:destination="@id/fragmentProfile" />
+
+        <action
+            android:id="@+id/action_fragmentTopics_to_fragmentTests"
+            app:destination="@id/fragmentTests" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentTests"
+        android:name="com.flaringapp.testingsimulator.presentation.features.tests.TestsFragment"
+        android:label="Tests"
+        tools:layout="@layout/fragment_tests">
+
+        <argument
+            android:name="topicData"
+            app:argType="com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TopicPreliminaryData" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.flaringapp.testingsimulator.presentation.features.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentEditProfile"
+            app:destination="@id/fragmentEditProfile" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentEditProfile"
+        android:name="com.flaringapp.testingsimulator.presentation.features.edit_profile.EditProfileFragment"
+        android:label="Edit profile"
+        tools:layout="@layout/fragment_edit_profile" />
+
+</navigation>
