@@ -1,14 +1,19 @@
 package com.flaringapp.testingsimulator.presentation.features.profile
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
 import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentProfileBinding
 import com.flaringapp.testingsimulator.presentation.features.profile.adapter.ProfileStatisticsAdapter
+import com.flaringapp.testingsimulator.presentation.features.profile.navigation.ProfileNavigator
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
@@ -16,6 +21,8 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
     override val model: ProfileViewModel by viewModel()
 
     private val binding: FragmentProfileBinding by viewBinding(FragmentProfileBinding::bind)
+
+    private val navigator: ProfileNavigator by inject()
 
     private var taxonomyFormatter: ProfileTaxonomyFormatter? = null
 
@@ -35,6 +42,11 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
         recyclerStatistics.addItemDecoration(
             ProfileStatisticsItemDecoration()
         )
+
+        configureAppBarWithLifecycle {
+            menuId = R.menu.profile
+            itemSelectedListener = ::onMenuItemSelected
+        }
     }
 
     override fun observeModel() = with(model) {
@@ -86,9 +98,22 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
         )
     }
 
+    private fun onMenuItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_edit_profile -> {
+                openEditProfile()
+            }
+            else -> return false
+        }
+        return true
+    }
+
+    private fun openEditProfile() {
+        navigator.navigateToEditProfile(findNavController())
+    }
+
     private inline fun <reified T> adapterAction(action: (ProfileStatisticsAdapter) -> T): T {
         val adapter = binding.recyclerStatistics.adapter as ProfileStatisticsAdapter
         return action(adapter)
     }
-
 }

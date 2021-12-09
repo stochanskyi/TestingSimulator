@@ -21,6 +21,19 @@
         android:id="@+id/fragmentProfile"
         android:name="com.flaringapp.testingsimulator.presentation.features.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentEditProfile"
+            app:destination="@id/fragmentEditProfile" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragmentEditProfile"
+        android:name="com.flaringapp.testingsimulator.presentation.features.edit_profile.EditProfileFragment"
+        android:label="Edit profile"
+        tools:layout="@layout/fragment_edit_profile" />
 
 </navigation>

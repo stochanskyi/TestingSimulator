@@ -40,6 +40,7 @@
     <string name="profile_studying">Studying at</string>
     <string name="profile_work_place">Workplace</string>
     <string name="profile_role">Role</string>
+    <string name="button_edit_profile">Edit profile</string>
 
     <!-- Edit profile  -->
     <string name="button_edit_profile_save">Save changes</string>
