@@ -51,7 +51,6 @@ private suspend fun <D> processRequestResult(handler: SafeCallHandler, result: C
 }
 
 private suspend fun SafeCallHandler.showErrorOnMain(error: Throwable?) {
-    if (error == null) return
     withMainContext {
         showError(error)
     }

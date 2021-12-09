@@ -26,7 +26,7 @@ fun safeCallHandler(
         return handleSafeCallError?.invoke(error) == true
     }
 
-    override fun showError(error: Throwable) {
+    override fun showError(error: Throwable?) {
         showError?.invoke(error)
     }
 }

@@ -28,16 +28,21 @@ fun Throwable.isServerUnavailableError(): Boolean {
 }
 
 fun Fragment.handleErrorInternal(
-    error: Throwable,
+    error: Throwable?,
     tag: String? = null
 ) {
     childFragmentManager.handleErrorInternal(error, tag)
 }
 
 fun FragmentManager.handleErrorInternal(
-    error: Throwable,
+    error: Throwable?,
     tag: String? = null
 ) {
+    if (error == null) {
+        showUnknownErrorDialog(tag)
+        return
+    }
+
     if (ignoreException(error)) return
 
     if (error.isInternetError()) {

@@ -6,6 +6,6 @@ interface SafeCallHandler {
 
     fun handleSafeCallError(error: Throwable): Boolean
 
-    fun showError(error: Throwable)
+    fun showError(error: Throwable?)
 
 }

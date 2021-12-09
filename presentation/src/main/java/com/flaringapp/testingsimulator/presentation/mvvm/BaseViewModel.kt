@@ -8,7 +8,7 @@ import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLi
 
 abstract class BaseViewModel : ViewModel(), BaseViewModelContract, SafeCallHandler {
 
-    override val errorData = SingleLiveEvent<Throwable>()
+    override val errorData = SingleLiveEvent<Throwable?>()
 
     protected suspend fun <D> safeCall(action: suspend () -> CallResult<D>): D? {
         return safeCall(this, action)
@@ -22,7 +22,7 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelContract, SafeCallHandl
         return false
     }
 
-    override fun showError(error: Throwable) {
+    override fun showError(error: Throwable?) {
         errorData.value = error
     }
 
