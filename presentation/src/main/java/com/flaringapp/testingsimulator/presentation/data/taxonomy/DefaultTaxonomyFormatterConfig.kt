@@ -1,7 +1,6 @@
 package com.flaringapp.testingsimulator.presentation.data.taxonomy
 
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
-import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatterConfig
 import com.flaringapp.testingsimulator.presentation.R
 
 class DefaultTaxonomyFormatterConfig(

@@ -12,7 +12,7 @@ import com.flaringapp.testingsimulator.domain.features.emoji.EmojiColorsProvider
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
 import com.flaringapp.testingsimulator.domain.features.profile.ProfileStatistics
 import com.flaringapp.testingsimulator.domain.features.profile_statistics.GetProfileStatisticsUseCase
-import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
+import com.flaringapp.testingsimulator.presentation.data.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.data.taxonomy.DefaultTaxonomyFormatterConfig
 import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviour

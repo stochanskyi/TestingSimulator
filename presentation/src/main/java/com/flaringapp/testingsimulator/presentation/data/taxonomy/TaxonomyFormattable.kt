@@ -1,4 +1,4 @@
-package com.flaringapp.testingsimulator.domain.features.taxonomy
+package com.flaringapp.testingsimulator.presentation.data.taxonomy
 
 interface TaxonomyFormattable {
     val label: CharSequence

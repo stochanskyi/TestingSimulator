@@ -10,9 +10,6 @@ import androidx.core.text.inSpans
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.span.CustomTypefaceSpan
-import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormattable
-import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
-import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatterConfig
 
 class TaxonomyFormatterImpl(
     private val textProvider: TextProvider,
