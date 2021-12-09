@@ -11,7 +11,7 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import java.net.HttpURLConnection.HTTP_NO_CONTENT
 
-private const val STATUS_SUCCESS = "OK"
+private const val STATUS_SUCCESS = "Ok"
 
 private val errorResponseAdapter: JsonAdapter<ErrorResponse> by lazy {
     Moshi.Builder()
