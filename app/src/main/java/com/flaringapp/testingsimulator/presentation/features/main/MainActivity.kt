@@ -39,6 +39,10 @@ class MainActivity : AppCompatActivity(),
         return listener.invoke(item)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController().navigateUp()
+    }
+
     override fun configureAppBar(
         configure: AppBarConfigurationChange.() -> Unit
     ): AppBarConfigurationDisposable {
@@ -79,8 +83,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun initNavigation() {
-        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) ?: return
-        val navController = navHost.findNavController()
+        val navController = findNavController()
 
         initNavigationGraph(navController)
         NavigationUI.setupActionBarWithNavController(this, navController)
@@ -93,6 +96,11 @@ class MainActivity : AppCompatActivity(),
     private fun initNavigationGraph(navController: NavController) {
         val graphId = navigationGraphProvider.provideGraphId()
         navController.setGraph(graphId)
+    }
+
+    private fun findNavController(): NavController {
+        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)!!
+        return navHost.findNavController()
     }
 
     private fun updateAppBar(action: () -> Unit) {
