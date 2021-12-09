@@ -3,6 +3,8 @@ package com.flaringapp.testingsimulator.presentation.features.auth.login
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import com.flaringapp.testingsimulator.core.presentation.utils.doOnDoneClicked
+import com.flaringapp.testingsimulator.core.presentation.utils.hideKeyboardAndClearCurrentFocus
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.presentation.features.auth.launcher.ScreenLauncher
 import com.flaringapp.testingsimulator.presentation.R
@@ -29,12 +31,22 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
             model.setPassword(it.toString())
             binding.passwordInputLayout.error = null
         }
+        passwordInputEditText.doOnDoneClicked {
+            signInButton.performClick()
+        }
+
         rememberMeCheckBox.setOnCheckedChangeListener { _, checked ->
             model.setRememberMe(checked)
         }
 
-        signInButton.setOnClickListener { model.login() }
-        signUpTextView.setOnClickListener { model.signUp() }
+        signInButton.setOnClickListener {
+            hideKeyboardAndClearCurrentFocus()
+            model.login()
+        }
+
+        signUpTextView.setOnClickListener {
+            model.signUp()
+        }
     }
 
     override fun observeModel() = with(model) {

@@ -5,8 +5,7 @@
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
     android:clipToPadding="false"
-    android:gravity="center_vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/emoji_image_view"
@@ -33,8 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:hint="@string/email"
-        android:nextFocusDown="@id/password_input_layout">
+        android:hint="@string/email">
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/Input"
@@ -42,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
-            android:maxLength="@integer/email_max_length" />
+            android:maxLength="@integer/email_max_length"
+            android:nextFocusDown="@id/password_input_edit_text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,9 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="@string/password"
-        android:nextFocusDown="@id/sign_in_button"
-        app:endIconMode="password_toggle">
+        android:hint="@string/password">
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/Input"
@@ -62,7 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
-            android:maxLength="@integer/password_max_length" />
+            android:maxLength="@integer/password_max_length"
+            android:imeOptions="actionDone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
