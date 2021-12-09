@@ -10,8 +10,11 @@ import com.flaringapp.testingsimulator.user.domain.profile.EditUserProfileUseCas
 import com.flaringapp.testingsimulator.user.domain.signup.UserSignUpUseCase
 import com.flaringapp.testingsimulator.user.domain.profile.GetUserProfileUseCase
 import com.flaringapp.testingsimulator.user.domain.profile.UserProfile
+import com.flaringapp.testingsimulator.user.domain.tasks.AnswerUserTaskUseCase
+import com.flaringapp.testingsimulator.user.domain.tasks.GetUserTaskUseCase
 import com.flaringapp.testingsimulator.user.domain.tests.GetUserTestDetailsUseCase
 import com.flaringapp.testingsimulator.user.domain.tests.GetUserTestsUseCase
+import com.flaringapp.testingsimulator.user.domain.tests.StartTestUseCase
 import com.flaringapp.testingsimulator.user.domain.tests.models.UserTest
 import org.koin.dsl.module
 
@@ -27,4 +30,10 @@ val UseCaseModule = module {
     factory<GetTestsUseCase<UserTest>> { GetUserTestsUseCase(get()) }
 
     factory { GetUserTestDetailsUseCase(get()) }
+
+    factory { StartTestUseCase(get()) }
+
+    factory { GetUserTaskUseCase(get()) }
+    factory { AnswerUserTaskUseCase(get()) }
+
 }
