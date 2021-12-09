@@ -1,7 +1,8 @@
-package com.flaringapp.testingsimulator.user.data.repository.tests
+package com.flaringapp.testingsimulator.user.data.repository.tests.mappers
 
 import com.flaringapp.testingsimulator.user.data.network.features.tests.response.UserTestResponse
-import com.flaringapp.testingsimulator.user.domain.tests.UserTest
+import com.flaringapp.testingsimulator.user.domain.tests.models.SimpleUserTest
+import com.flaringapp.testingsimulator.user.domain.tests.models.UserTest
 
 interface UserTestMapper {
     fun mapTests(dto: List<UserTestResponse>): List<UserTest>
@@ -14,7 +15,7 @@ class UserTestMapperImpl : UserTestMapper {
     }
 
     override fun mapTest(dto: UserTestResponse): UserTest {
-        return UserTest(
+        return SimpleUserTest(
             id = dto.id,
             name = dto.name,
             tasksCount = dto.tasksCount,

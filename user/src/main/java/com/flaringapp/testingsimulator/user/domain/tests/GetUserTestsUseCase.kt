@@ -4,6 +4,8 @@ import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultList
 import com.flaringapp.testingsimulator.domain.features.tests.GetTestsUseCase
 import com.flaringapp.testingsimulator.user.data.repository.tests.UserTestsRepository
+import com.flaringapp.testingsimulator.user.domain.tests.models.SimpleUserTest
+import com.flaringapp.testingsimulator.user.domain.tests.models.UserTest
 
 class GetUserTestsUseCase(
     private val userTestsRepository: UserTestsRepository
@@ -14,9 +16,9 @@ class GetUserTestsUseCase(
 //        return userTestsRepository.getTests(topicId)
 
         return CallResult.Success(listOf(
-            UserTest(1, "Test 1", 12, 67, false),
-            UserTest(2, "Test 2", 13, 90, false),
-            UserTest(3, "Test 3", 2, 11, true),
+            SimpleUserTest(1, "Test 1", 12, 67, false),
+            SimpleUserTest(2, "Test 2", 13, 90, false),
+            SimpleUserTest(3, "Test 3", 2, 11, true),
 
             ))
     }

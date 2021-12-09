@@ -9,7 +9,7 @@ import com.flaringapp.testingsimulator.presentation.R as PresentationR
 import com.flaringapp.testingsimulator.presentation.features.tests.behaviour.TestsBehaviour
 import com.flaringapp.testingsimulator.presentation.features.tests.models.TestViewData
 import com.flaringapp.testingsimulator.user.R
-import com.flaringapp.testingsimulator.user.domain.tests.UserTest
+import com.flaringapp.testingsimulator.user.domain.tests.models.UserTest
 
 class UserTestsBehaviour(
     private val getTestsUseCase: GetTestsUseCase<UserTest>,
