@@ -1,7 +1,9 @@
 package com.flaringapp.testingsimulator.admin.domain.tests.models
 
+import com.flaringapp.testingsimulator.domain.features.task.Task
+
 class AdminTestTask(
-    val id: Int,
-    val name: String,
+    override val id: Int,
+    override val name: String,
     val difficultyLevel: Int,
-)
+) : Task
