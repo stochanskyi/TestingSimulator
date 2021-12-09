@@ -2,7 +2,6 @@ package com.flaringapp.testingsimulator.user.app.di
 
 import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginViewBehaviour
 import com.flaringapp.testingsimulator.presentation.features.auth.signup.SignUpViewBehaviour
-import com.flaringapp.testingsimulator.presentation.features.profile.ProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.tests.adapter.args.TestsFragmentArgsHandler
 import com.flaringapp.testingsimulator.presentation.features.edit_profile.behaviour.EditProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviour
