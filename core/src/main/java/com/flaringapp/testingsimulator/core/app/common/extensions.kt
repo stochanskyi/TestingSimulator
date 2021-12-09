@@ -26,6 +26,10 @@ fun <K, V> MutableMap<K, V>.clearAndPut(other: Map<K, V>) {
     putAll(other)
 }
 
+fun <T> Sequence<T>.isEmpty() = !iterator().hasNext()
+
+fun <T> Sequence<T>.isNotEmpty() = iterator().hasNext()
+
 fun String.takeIfNotEmpty() = takeIf { it.isNotEmpty() }
 
 infix fun String.orIfEmpty(other: String): String {

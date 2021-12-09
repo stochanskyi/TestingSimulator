@@ -7,9 +7,11 @@ import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
+import com.flaringapp.testingsimulator.core.app.common.isEmpty
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.span.CustomTypefaceSpan
+import com.flaringapp.testingsimulator.domain.features.taxonomy.SimpleTaxonomyFormattable
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormattable
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatterConfig
@@ -29,15 +31,28 @@ class TaxonomyFormatterImpl(
     override var config: TaxonomyFormatterConfig = DefaultTaxonomyFormatterConfig
         .withDefaultColors(colorProvider)
 
+    override fun format(taxonomy: Map<out CharSequence, CharSequence>): CharSequence {
+        val taxonomySequence = taxonomy.asSequence().map { (label, value) ->
+            SimpleTaxonomyFormattable(label, value)
+        }
+        return format(taxonomySequence)
+    }
+
     override fun format(taxonomy: List<TaxonomyFormattable>): CharSequence {
+        return format(taxonomy.asSequence())
+    }
+
+    override fun format(taxonomy: Sequence<TaxonomyFormattable>): CharSequence {
         if (taxonomy.isEmpty()) return ""
 
-        val formattedTaxonomy = Array<CharSequence>(taxonomy.size) { "" }
+        val taxonomySize = taxonomy.count()
+        val formattedTaxonomy = Array<CharSequence>(taxonomySize) { "" }
 
         formattedTaxonomy[0] = format(taxonomy.first())
-        for (i in 1 until taxonomy.size) {
-            formattedTaxonomy[i] = buildSpannedString {
-                append(format(taxonomy[i]))
+        taxonomy.drop(1)
+        taxonomy.forEachIndexed { i, item ->
+            formattedTaxonomy[i + 1] = buildSpannedString {
+                append(format(item))
                 appendLine()
             }
         }
@@ -95,5 +110,4 @@ class TaxonomyFormatterImpl(
         return if (isBold) boldTypeface
         else regularTypeface
     }
-
 }
