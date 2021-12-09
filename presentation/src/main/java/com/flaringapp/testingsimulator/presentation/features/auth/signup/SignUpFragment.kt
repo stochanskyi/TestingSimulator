@@ -34,9 +34,9 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
             model.setLastName(it.toString())
             lastNameInputLayout.error = null
         }
-        studyingAtInputEditText.doAfterTextChanged {
-            model.setStudyingAt(it.toString())
-            studyingAtInputLayout.error = null
+        studyingInputEditText.doAfterTextChanged {
+            model.setStudying(it.toString())
+            studyingInputLayout.error = null
         }
         workPlaceInputEditText.doAfterTextChanged {
             model.setWorkPlace(it.toString())
@@ -65,8 +65,8 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
     }
 
     override fun observeModel() = with(model) {
-        isStudyingAtEnabled.observe(viewLifecycleOwner) { isEnabled ->
-            binding.studyingAtInputLayout.isVisible = isEnabled
+        isStudyingEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            binding.studyingInputLayout.isVisible = isEnabled
         }
         isWorkPlaceEnabled.observe(viewLifecycleOwner) { isEnabled ->
             binding.workPlaceInputLayout.isVisible = isEnabled
@@ -84,8 +84,8 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
         lastNameLiveData.observeOnce(viewLifecycleOwner) { lastName ->
             binding.lastNameInputEditText.setText(lastName)
         }
-        studyingAtLiveData.observeOnce(viewLifecycleOwner) { studyingAt ->
-            binding.studyingAtInputEditText.setText(studyingAt)
+        studyingLiveData.observeOnce(viewLifecycleOwner) { studying ->
+            binding.studyingInputEditText.setText(studying)
         }
         workPlaceLiveData.observeOnce(viewLifecycleOwner) { workPlace ->
             binding.workPlaceInputEditText.setText(workPlace)

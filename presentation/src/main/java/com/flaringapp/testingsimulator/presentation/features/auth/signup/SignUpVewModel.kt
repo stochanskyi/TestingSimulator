@@ -11,14 +11,14 @@ import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class SignUpVewModel : BaseViewModel() {
 
-    abstract val isStudyingAtEnabled: LiveData<Boolean>
+    abstract val isStudyingEnabled: LiveData<Boolean>
     abstract val isWorkPlaceEnabled: LiveData<Boolean>
     abstract val isRoleEnabled: LiveData<Boolean>
 
     abstract val emailLiveData: LiveData<String>
     abstract val firstNameLiveData: LiveData<String>
     abstract val lastNameLiveData: LiveData<String>
-    abstract val studyingAtLiveData: LiveData<String>
+    abstract val studyingLiveData: LiveData<String>
     abstract val workPlaceLiveData: LiveData<String>
     abstract val roleLiveData: LiveData<String>
     abstract val passwordLiveData: LiveData<String>
@@ -37,7 +37,7 @@ abstract class SignUpVewModel : BaseViewModel() {
     abstract fun setEmail(email: String)
     abstract fun setFirstName(firstName: String)
     abstract fun setLastName(lastName: String)
-    abstract fun setStudyingAt(studyingAt: String)
+    abstract fun setStudying(studying: String)
     abstract fun setWorkPlace(workPlace: String)
     abstract fun setRole(role: String)
     abstract fun setPassword(password: String)
@@ -58,20 +58,20 @@ class SignUpVewModelImpl(
     private var email: String = ""
     private var firstName: String = ""
     private var lastName: String = ""
-    private var studyingAt: String = ""
+    private var studying: String = ""
     private var workPlace: String = ""
     private var role: String = ""
     private var password: String = ""
     private var confirmPassword: String = ""
 
-    override val isStudyingAtEnabled = MutableLiveData(behaviour.isStudyingAtEnabled)
+    override val isStudyingEnabled = MutableLiveData(behaviour.isStudyingEnabled)
     override val isWorkPlaceEnabled = MutableLiveData(behaviour.isWorkPlaceEnabled)
     override val isRoleEnabled: LiveData<Boolean> = MutableLiveData(behaviour.isRoleEnabled)
 
     override val emailLiveData = MutableLiveData(email)
     override val firstNameLiveData = MutableLiveData(firstName)
     override val lastNameLiveData = MutableLiveData(lastName)
-    override val studyingAtLiveData = MutableLiveData(studyingAt)
+    override val studyingLiveData = MutableLiveData(studying)
     override val workPlaceLiveData = MutableLiveData(workPlace)
     override val roleLiveData = MutableLiveData(role)
     override val passwordLiveData = MutableLiveData(password)
@@ -102,9 +102,9 @@ class SignUpVewModelImpl(
         lastNameLiveData.value = lastName
     }
 
-    override fun setStudyingAt(studyingAt: String) {
-        this.studyingAt = studyingAt
-        studyingAtLiveData.value = studyingAt
+    override fun setStudying(studying: String) {
+        this.studying = studying
+        studyingLiveData.value = studying
     }
 
     override fun setWorkPlace(workPlace: String) {
@@ -136,7 +136,7 @@ class SignUpVewModelImpl(
                     email = email,
                     firstName = firstName,
                     lastName = lastName,
-                    studyingAt = studyingAt,
+                    studying = studying,
                     workPlace = workPlace,
                     role = role,
                     password = password,

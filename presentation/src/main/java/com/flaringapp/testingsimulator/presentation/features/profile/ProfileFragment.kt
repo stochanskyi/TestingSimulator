@@ -45,7 +45,7 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
             setEmail(email)
         }
         studyingLiveData.observe(viewLifecycleOwner) { studying ->
-            setStudyingAt(studying)
+            setStudying(studying)
         }
         workPlaceLiveData.observe(viewLifecycleOwner) { workPlace ->
             setWorkPlace(workPlace)
@@ -65,8 +65,8 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
         )
     }
 
-    private fun setStudyingAt(studying: String?) {
-        binding.textStudyingAt.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
+    private fun setStudying(studying: String?) {
+        binding.textStudying.textWithVisibility = taxonomyFormatter?.formatTaxonomyText(
             prefixStringRes = R.string.profile_studying,
             content = studying,
         )

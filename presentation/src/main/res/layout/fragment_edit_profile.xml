@@ -55,20 +55,20 @@
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     android:maxLength="@integer/name_max_length"
-                    android:nextFocusDown="@id/studying_at_input_edit_text" />
+                    android:nextFocusDown="@id/studying_input_edit_text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/InputLayout.WithError"
-                android:id="@+id/studying_at_input_layout"
+                android:id="@+id/studying_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="@string/studying_at">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/studying_at_input_edit_text"
+                    android:id="@+id/studying_input_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text|textCapSentences"

@@ -25,9 +25,9 @@ class EditProfileFragment : ModelledFragment(R.layout.fragment_edit_profile) {
             model.setLastName(it.toString())
             lastNameInputLayout.error = null
         }
-        studyingAtInputEditText.doAfterTextChanged {
-            model.setStudyingAt(it.toString())
-            studyingAtInputLayout.error = null
+        studyingInputEditText.doAfterTextChanged {
+            model.setStudying(it.toString())
+            studyingInputLayout.error = null
         }
         workPlaceInputEditText.doAfterTextChanged {
             model.setWorkPlace(it.toString())
@@ -45,8 +45,8 @@ class EditProfileFragment : ModelledFragment(R.layout.fragment_edit_profile) {
     }
 
     override fun observeModel() = with(model) {
-        isStudyingAtEnabled.observe(viewLifecycleOwner) { isEnabled ->
-            binding.studyingAtInputLayout.isVisible = isEnabled
+        isStudyingEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            binding.studyingInputLayout.isVisible = isEnabled
         }
         isWorkPlaceEnabled.observe(viewLifecycleOwner) { isEnabled ->
             binding.workPlaceInputLayout.isVisible = isEnabled
@@ -61,8 +61,8 @@ class EditProfileFragment : ModelledFragment(R.layout.fragment_edit_profile) {
         lastNameLiveData.observeOnce(viewLifecycleOwner) { lastName ->
             binding.lastNameInputEditText.setText(lastName)
         }
-        studyingAtLiveData.observeOnce(viewLifecycleOwner) { studyingAt ->
-            binding.studyingAtInputEditText.setText(studyingAt)
+        studyingLiveData.observeOnce(viewLifecycleOwner) { studying ->
+            binding.studyingInputEditText.setText(studying)
         }
         workPlaceLiveData.observeOnce(viewLifecycleOwner) { workPlace ->
             binding.workPlaceInputEditText.setText(workPlace)

@@ -4,7 +4,7 @@ import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 
 interface SignUpViewBehaviour {
 
-    val isStudyingAtEnabled: Boolean get() = true
+    val isStudyingEnabled: Boolean get() = true
 
     val isWorkPlaceEnabled: Boolean get() = true
 
@@ -14,7 +14,7 @@ interface SignUpViewBehaviour {
         email: String,
         firstName: String,
         lastName: String,
-        studyingAt: String,
+        studying: String,
         workPlace: String,
         role: String,
         password: String,

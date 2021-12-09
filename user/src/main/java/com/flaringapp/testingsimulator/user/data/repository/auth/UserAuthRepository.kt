@@ -43,7 +43,7 @@ class UserAuthRepositoryImpl(
             email = registrationData.email,
             firstName = registrationData.firstName,
             lastName = registrationData.lastName,
-            studying = registrationData.studyingAt,
+            studying = registrationData.studying,
             workPlace = registrationData.workPlace,
             role = registrationData.role,
             password = registrationData.password,
