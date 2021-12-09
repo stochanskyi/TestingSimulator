@@ -25,7 +25,8 @@
     <FrameLayout
         android:id="@+id/layout_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_blocks"
@@ -47,5 +48,15 @@
             android:layout_gravity="center" />
 
     </FrameLayout>
+
+    <Button
+        style="@style/Button"
+        android:id="@+id/proceed_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center"
+        tools:text="@string/button_task_passing_next" />
 
 </LinearLayout>

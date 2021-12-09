@@ -13,8 +13,9 @@
     <string name="statistics_tests_count">Tasks</string>
     
     <!-- Task passing -->
-    <string name="button_task_passing_drag_block">Reorder block</string>
-
     <string name="task_passing_number">Task %1$d/%2$d</string>
+    <string name="button_task_passing_drag_block">Reorder block</string>
+    <string name="button_task_passing_next">Next</string>
+    <string name="button_task_passing_finish">Finish</string>
 
 </resources>
