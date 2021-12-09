@@ -119,8 +119,8 @@ class UserTaskPassingViewModelImpl(
     }
 
     private fun List<UserTaskBlock>.toViewData(): MutableList<UserTaskPassingBlockViewData> {
-        return mapTo(ArrayList(size)) {
-            it.toViewData()
+        return mapTo(ArrayList(size)) { block ->
+            block.toViewData()
         }
     }
 
