@@ -13,7 +13,7 @@ class AdminTestItemsTaskSpacingDecoration : RecyclerView.ItemDecoration() {
 
         private val taskViewTypes = listOf(
             AdminTestItemsAdapter.VIEW_TYPE_TASK,
-            AdminTestItemsAdapter.VIEW_TYPE_TASK
+            AdminTestItemsAdapter.VIEW_TYPE_ADD_TASK,
         )
     }
 
