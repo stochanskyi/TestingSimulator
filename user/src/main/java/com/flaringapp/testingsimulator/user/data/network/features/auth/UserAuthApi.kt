@@ -10,13 +10,13 @@ import retrofit2.http.POST
 interface UserAuthApi {
 
     //TODO change route
-    @POST("login")
+    @POST("User")
     suspend fun login(
         @Body request: UserLoginRequest
     ): ApiResponse<UserProfileWithTokenResponse>
 
     //TODO change route
-    @POST("signUp")
+    @POST("User")
     suspend fun createAccount(
         @Body request: UserSignUpRequest
     ): ApiResponse<UserProfileWithTokenResponse>
