@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_button_stroke_secondary_filled"
+    android:gravity="center_vertical">
+
+    <TextView
+        style="@style/Text"
+        android:id="@+id/textBlock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginVertical="16dp"
+        android:layout_marginStart="8dp"
+        tools:text="Some block with some name 2" />
+
+    <FrameLayout
+        android:id="@+id/layoutBlockEnabled"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <CheckBox
+            android:id="@+id/checkboxBlockEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:duplicateParentState="true"
+            android:minWidth="0dp"
+            android:gravity="center" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/buttonDrag"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:src="@drawable/ic_drag_indicator"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/button_task_passing_drag_block" />
+
+</LinearLayout>

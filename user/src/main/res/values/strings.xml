@@ -11,5 +11,8 @@
     <string name="button_try_again_test">Try again</string>
 
     <string name="statistics_tests_count">Tasks</string>
+    
+    <!-- Task passing -->
+    <string name="button_task_passing_drag_block">Reorder block</string>
 
 </resources>
