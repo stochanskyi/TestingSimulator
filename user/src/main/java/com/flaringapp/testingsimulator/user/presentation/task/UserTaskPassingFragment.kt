@@ -1,5 +1,7 @@
 package com.flaringapp.testingsimulator.user.presentation.task
 
+import android.os.Bundle
+import androidx.navigation.fragment.navArgs
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -22,6 +24,13 @@ class UserTaskPassingFragment : ModelledFragment(R.layout.fragment_user_task_pas
     private val binding: FragmentUserTaskPassingBinding by viewBinding(
         FragmentUserTaskPassingBinding::bind
     )
+
+    private val arguments: UserTaskPassingFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        model.init(arguments.testId, arguments.tasksCount)
+    }
 
     override fun initViews() = with(binding) {
         recyclerBlocks.layoutManager = LinearLayoutManager(requireContext())

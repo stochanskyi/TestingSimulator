@@ -1,6 +1,7 @@
 package com.flaringapp.testingsimulator.user.presentation.tests.testDetails
 
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
 import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
@@ -23,6 +24,8 @@ class UserTestDetailsFragment : ModelledFragment(R.layout.fragment_user_test_det
 
     override fun initViews() {
         model.init(args.testId, args.testName)
+
+        binding.testLaunchButton.setOnClickListener { model.launchTest() }
     }
 
     override fun observeModel() {
@@ -44,7 +47,10 @@ class UserTestDetailsFragment : ModelledFragment(R.layout.fragment_user_test_det
         }
 
         model.openTasksLiveData.observe(viewLifecycleOwner) {
-            //TODO implement
+            val action = UserTestDetailsFragmentDirections
+                .actionFragmentUserTestDetailsToFragmentUserTaskPassing(it.testId, it.tasksCount)
+
+            findNavController().navigate(action)
         }
     }
 

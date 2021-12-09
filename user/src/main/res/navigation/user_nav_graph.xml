@@ -69,6 +69,25 @@
             app:argType="string"
             android:name="testName" />
 
+        <action
+            android:id="@+id/action_fragmentUserTestDetails_to_fragmentUserTaskPassing"
+            app:destination="@id/fragmentUserTaskPassing" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentUserTaskPassing"
+        android:name="com.flaringapp.testingsimulator.user.presentation.task.UserTaskPassingFragment"
+        tools:layout="@layout/fragment_user_task_passing">
+
+        <argument
+            app:argType="integer"
+            android:name="testId" />
+
+        <argument
+            app:argType="integer"
+            android:name="tasksCount" />
+
     </fragment>
 
 </navigation>

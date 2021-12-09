@@ -10,11 +10,13 @@ import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLi
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.data.taxonomy.DefaultTaxonomyFormatterConfig
+import com.flaringapp.testingsimulator.presentation.features.tests.models.TestDetailNavArgs
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import com.flaringapp.testingsimulator.user.R
 import com.flaringapp.testingsimulator.user.domain.tests.GetUserTestDetailsUseCase
 import com.flaringapp.testingsimulator.user.domain.tests.models.UserTest
 import com.flaringapp.testingsimulator.user.domain.tests.models.UserTestDetails
+import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.models.TaskPassingNavArgs
 import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.models.UserTestStatusViewData
 
 abstract class UserTestDetailsViewModel : BaseViewModel() {
@@ -26,7 +28,7 @@ abstract class UserTestDetailsViewModel : BaseViewModel() {
 
     abstract val testStatisticsLiveData: LiveData<CharSequence>
 
-    abstract val openTasksLiveData: LiveData<Int>
+    abstract val openTasksLiveData: LiveData<TaskPassingNavArgs>
 
     abstract fun init(testId: Int, name: String)
 
@@ -47,7 +49,7 @@ class UserTestDetailsViewModelImpl(
     override val testNameLiveData = MutableLiveData("")
     override val testStateLiveData = MutableLiveData<UserTestStatusViewData>()
     override val testStatisticsLiveData = MutableLiveData<CharSequence>()
-    override val openTasksLiveData = SingleLiveEvent<Int>()
+    override val openTasksLiveData = SingleLiveEvent<TaskPassingNavArgs>()
 
     init {
         taxonomyFormatter.config = DefaultTaxonomyFormatterConfig.customize(
@@ -62,7 +64,9 @@ class UserTestDetailsViewModelImpl(
     }
 
     override fun launchTest() {
-        openTasksLiveData.value = testDetails?.id ?: return
+        val testId = testDetails?.id ?: return
+        val tasksCount = testDetails?.tasksCount ?: return
+        openTasksLiveData.value = TaskPassingNavArgs(testId, tasksCount)
     }
 
     private fun loadTestDetails(testId: Int) {
