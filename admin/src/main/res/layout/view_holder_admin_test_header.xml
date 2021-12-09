@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="16dp"
+    android:clipToPadding="false"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Text.Medium"
+        android:id="@+id/textName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:text="Test 1" />
+
+    <View
+        android:id="@+id/separatorName"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_separator" />
+
+    <TextView
+        style="@style/Text"
+        android:id="@+id/textStatistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:lineSpacingExtra="16dp"
+        tools:text="Status:  test\nStatus 2:  test 2" />
+
+    <View
+        android:id="@+id/separatorStatistics"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_separator" />
+
+    <TextView
+        style="@style/Text.Medium"
+        android:id="@+id/titleTasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/title_admin_task_add_test"
+        android:textSize="18sp" />
+
+</LinearLayout>

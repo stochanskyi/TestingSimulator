@@ -6,4 +6,8 @@
     <string name="task_ready_to_publish">Ready to publish</string>
     <string name="task_published">Published</string>
 
+    <!-- Task -->
+    <string name="button_admin_task_add_test">+ New task</string>
+    <string name="title_admin_task_add_test">Tasks</string>
+
 </resources>
