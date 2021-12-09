@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:padding="8dp">
 
-        <CheckBox
+        <com.flaringapp.testingsimulator.core.presentation.views.bettercheckbox.BetterCheckBox
             android:id="@+id/checkboxBlockEnabled"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
