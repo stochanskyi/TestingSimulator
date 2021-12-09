@@ -42,7 +42,7 @@ class TopicsFragment : ModelledFragment(R.layout.fragment_topics) {
         }
 
         model.topicsLiveData.observe(viewLifecycleOwner) { topics ->
-            adapterAction { it.setData(topics) }
+            adapterAction { it.submitList(topics) }
         }
 
         model.openProfileLiveData.observe(viewLifecycleOwner) {
