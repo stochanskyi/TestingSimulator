@@ -7,12 +7,20 @@ import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.TextView
 import androidx.core.view.children
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 
 var TextView.textWithVisibility: CharSequence?
     get() = text
     set(value) {
         isVisible = value?.isNotEmpty() == true
+        text = value
+    }
+
+var TextView.textWithInvisibility: CharSequence?
+    get() = text
+    set(value) {
+        isInvisible = value?.isNotEmpty() == false
         text = value
     }
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.updateAppBarConfiguration
+import com.flaringapp.testingsimulator.core.presentation.utils.textWithInvisibility
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.flaringapp.testingsimulator.user.R
 import com.flaringapp.testingsimulator.user.databinding.FragmentUserTaskPassingBinding
@@ -49,6 +50,10 @@ class UserTaskPassingFragment : ModelledFragment(R.layout.fragment_user_task_pas
         recyclerBlocks.adapter = adapter
         touchCallback.attach(adapter)
         itemTouchHelper.attachToRecyclerView(recyclerBlocks)
+
+        proceedButton.setOnClickListener {
+            model.submitAnswer()
+        }
     }
 
     override fun observeModel() = with(model) {
@@ -62,6 +67,9 @@ class UserTaskPassingFragment : ModelledFragment(R.layout.fragment_user_task_pas
             updateAppBarConfiguration {
                 title = taskNumber
             }
+        }
+        proceedLiveData.observe(viewLifecycleOwner) { proceed ->
+            binding.proceedButton.textWithInvisibility = proceed
         }
         blocksLiveData.observe(viewLifecycleOwner) { blocks ->
             adapterAction { it.setItems(blocks) }

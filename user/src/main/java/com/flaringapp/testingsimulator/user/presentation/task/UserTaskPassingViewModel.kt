@@ -23,6 +23,8 @@ abstract class UserTaskPassingViewModel : BaseViewModel() {
     abstract val taskNameLiveData: LiveData<String>
     abstract val taskNumberLiveData: LiveData<String>
 
+    abstract val proceedLiveData: LiveData<String?>
+
     abstract val blocksLiveData: LiveData<MutableList<UserTaskPassingBlockViewData>>
 
     abstract val openTestResultLiveData: LiveData<Int>
@@ -49,6 +51,8 @@ class UserTaskPassingViewModelImpl(
 
     override val taskNumberLiveData = MutableLiveData<String>()
 
+    override val proceedLiveData = MutableLiveData<String?>(null)
+
     override val blocksLiveData = MutableLiveData<MutableList<UserTaskPassingBlockViewData>>()
     override val openTestResultLiveData = SingleLiveEvent<Int>()
 
@@ -59,6 +63,7 @@ class UserTaskPassingViewModelImpl(
     override fun init(testId: Int, tasksCount: Int) {
         this.tasksCount = tasksCount
         this.testId = testId
+
         loadTask(testId)
     }
 
@@ -115,6 +120,12 @@ class UserTaskPassingViewModelImpl(
             tasksCount ?: 0
         ).toString()
 
+        proceedLiveData.value = textProvider.getString(
+            if (task.orderNumber == tasksCount) R.string.button_task_passing_finish
+            else R.string.button_task_passing_next
+        )
+
+        // TODO improve data mapping - move to background thread
         blocksLiveData.value = task.blocks.toViewData()
     }
 
