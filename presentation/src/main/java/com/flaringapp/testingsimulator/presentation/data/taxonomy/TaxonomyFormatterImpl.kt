@@ -52,8 +52,8 @@ class TaxonomyFormatterImpl(
         taxonomy.drop(1)
         taxonomy.forEachIndexed { i, item ->
             formattedTaxonomy[i + 1] = buildSpannedString {
-                append(format(item))
                 appendLine()
+                append(format(item))
             }
         }
 
