@@ -1,8 +1,11 @@
 package com.flaringapp.testingsimulator.user.domain.profile
 
+import com.flaringapp.testingsimulator.domain.features.profile.EditProfile
+
 class EditUserProfile(
-    val firstName: String,
-    val lastName: String,
+    override val firstName: String,
+    override val lastName: String,
+    val studying: String?,
     val workPlace: String?,
     val role: String?,
-)
+) : EditProfile

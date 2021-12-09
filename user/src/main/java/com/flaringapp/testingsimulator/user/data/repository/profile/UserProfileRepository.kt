@@ -70,6 +70,7 @@ class UserProfileRepositoryImpl(
         return EditProfileRequest(
             firstName = firstName,
             lastName = lastName,
+            studying = studying,
             workPlace = workPlace,
             role = role
         )

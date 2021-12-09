@@ -5,13 +5,13 @@ import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 interface EditProfileBehaviour {
 
     val isStudyingEnabled: Boolean
-        get() = true
+        get() = false
 
     val isWorkPlaceEnabled: Boolean
-        get() = true
+        get() = false
 
     val isRoleEnabled: Boolean
-        get() = true
+        get() = false
 
     suspend fun editProfile(
         firstName: String,
