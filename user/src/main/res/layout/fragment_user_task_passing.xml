@@ -34,6 +34,6 @@
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:orientation="vertical"
         tools:itemCount="6"
-        tools:listitem="" />
+        tools:listitem="@layout/view_holder_user_task_passing_block" />
 
 </LinearLayout>
