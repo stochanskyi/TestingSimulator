@@ -3,6 +3,7 @@
 
     <!-- Common -->
     <string name="ok">OK</string>
+    <string name="hello">Hello</string>
 
     <!-- Errors -->
     <string name="error_unknown">We\'ve faced an issue and will fix it soon</string>
@@ -10,26 +11,29 @@
     <string name="error_server_access">You don\'t have enough permissions to perform this operation</string>
     <string name="error_no_internet_connection">Please check your internet connection</string>
 
-    <!-- Login -->
-    <string name="sign_in">Sign In</string>
+    <!-- Credentials -->
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="hello">Hello</string>
-    <string name="remember_me">Remember me</string>
-    <string name="or">or</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="sign_up_underlined"><u>Sign Up</u></string>
+    <string name="confirm_password">Confirm password</string>
     <string name="error_invalid_email">Email is not valid</string>
     <string name="error_invalid_password">Password is not valid</string>
-    <string name="error_invalid_first_name">First name should not be empty</string>
-    <string name="error_invalid_last_name">Last name should not be empty</string>
     <string name="error_passwords_not_equal">Confirm password doesn\'t equal pasword</string>
+
+    <!-- Profile -->
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="studying_at">Studying at (optional)</string>
     <string name="role">Role (optional)</string>
     <string name="work_place">Work place (optional)</string>
-    <string name="confirm_password">Confirm password</string>
+    <string name="error_invalid_first_name">First name should not be empty</string>
+    <string name="error_invalid_last_name">Last name should not be empty</string>
+
+    <!-- Login -->
+    <string name="sign_in">Sign In</string>
+    <string name="remember_me">Remember me</string>
+    <string name="or">or</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_underlined"><u>Sign Up</u></string>
 
     <!-- Profile -->
     <string name="profile_email">Email</string>
