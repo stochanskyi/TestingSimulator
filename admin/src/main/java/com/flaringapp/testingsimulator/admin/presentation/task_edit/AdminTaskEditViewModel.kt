@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger
 abstract class AdminTaskEditViewModel : BaseViewModel() {
 
     abstract val taskNameLiveData: LiveData<String>
+    abstract val updateNameLiveData: LiveData<Unit>
 
     abstract val loadingLiveData: LiveData<Boolean>
 
@@ -75,6 +76,7 @@ class AdminTaskEditViewModelImpl(
     private var proceedJob: Job? = null
 
     override val taskNameLiveData = MutableLiveData(name)
+    override val updateNameLiveData = SingleLiveEvent<Unit>()
 
     override val loadingLiveData = MutableLiveData<Boolean>()
 
@@ -100,6 +102,7 @@ class AdminTaskEditViewModelImpl(
     override fun setName(name: String) {
         this.name = name
         taskNameLiveData.value = name
+        updateNameLiveData.call()
     }
 
     override fun createBlock() {
@@ -197,6 +200,7 @@ class AdminTaskEditViewModelImpl(
 
     private fun updateTaskViewData(task: AdminTaskDetailed) {
         taskNameLiveData.value = task.name
+        updateNameLiveData.call()
         blocksLiveData.value = task.blocks.toViewData()
     }
 

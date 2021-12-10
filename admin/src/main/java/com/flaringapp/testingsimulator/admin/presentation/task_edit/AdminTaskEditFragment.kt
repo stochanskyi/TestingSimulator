@@ -70,23 +70,8 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
         }
     }
 
-    private fun createTouchDragListener(
-        itemTouchHelper: ItemTouchHelper
-    ): TouchDragListener {
-        return object : TouchDragListener {
-            override fun beginTouchDrag(holder: RecyclerView.ViewHolder): Boolean {
-                itemTouchHelper.startDrag(holder)
-                return true
-            }
-        }
-    }
-
-    private fun <T> adapterAction(action: (AdminTaskEditBlocksAdapter) -> T): T {
-        val adapter = binding.recyclerBlocks.adapter as AdminTaskEditBlocksAdapter
-        return adapter.let(action)
-    }
-
     override fun observeModel() {
+        observeName()
 
         model.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isVisible = isLoading
@@ -104,10 +89,6 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
             }
         }
 
-        model.taskNameLiveData.observeOnce(viewLifecycleOwner) { name ->
-            binding.nameEditText.setText(name)
-        }
-
         model.removeBlockAtPositionLiveData.observe(viewLifecycleOwner) { position ->
             adapterAction {
                 it.removeItemAtPosition(position)
@@ -117,5 +98,27 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
         model.openTestScreen.observe(viewLifecycleOwner) {
             findNavController().popBackStack()
         }
+    }
+
+    private fun createTouchDragListener(
+        itemTouchHelper: ItemTouchHelper
+    ): TouchDragListener {
+        return object : TouchDragListener {
+            override fun beginTouchDrag(holder: RecyclerView.ViewHolder): Boolean {
+                itemTouchHelper.startDrag(holder)
+                return true
+            }
+        }
+    }
+
+    private fun observeName() {
+        model.taskNameLiveData.observeOnce(viewLifecycleOwner) { name ->
+            binding.nameEditText.setText(name)
+        }
+    }
+
+    private fun <T> adapterAction(action: (AdminTaskEditBlocksAdapter) -> T): T {
+        val adapter = binding.recyclerBlocks.adapter as AdminTaskEditBlocksAdapter
+        return adapter.let(action)
     }
 }
