@@ -59,6 +59,7 @@ class UserTaskPassingFragment : ModelledFragment(R.layout.fragment_user_task_pas
     override fun observeModel() = with(model) {
         loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isVisible = isLoading
+            binding.proceedButton.isEnabled = !isLoading
         }
         taskNameLiveData.observe(viewLifecycleOwner) { taskName ->
             binding.nameTextView.text = taskName
