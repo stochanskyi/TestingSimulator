@@ -16,6 +16,7 @@ class UserSignUpUseCase(
         return authRepository.signUp(userRegistrationData)
             .doOnSuccess {
                 dataRepository.token = it.token
+                dataRepository.remember = true
             }
             .doOnSuccessSuspend {
                 profileRepository.saveProfile(it.profile)
