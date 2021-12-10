@@ -17,6 +17,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="error_invalid_email">Email is not valid</string>
     <string name="error_invalid_password">Password is not valid</string>
+    <string name="error_password_empty">Please enter a password</string>
     <string name="error_passwords_not_equal">Confirm password doesn\'t equal pasword</string>
 
     <!-- Profile -->

@@ -12,6 +12,8 @@ val UseCaseModule = module {
 
     factory<ValidatePasswordUseCase> { ValidatePasswordUseCaseImpl(get()) }
 
+    factory<ValidatePasswordEmptyUseCase> { ValidatePasswordEmptyUseCaseImpl(get()) }
+
     factory<ValidateFirstNameUseCase> { ValidateFirstNameUseCaseImpl(get()) }
     factory<ValidateLastNameUseCase> { ValidateLastNameUseCaseImpl(get()) }
 

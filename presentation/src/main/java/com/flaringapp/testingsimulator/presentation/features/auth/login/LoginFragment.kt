@@ -72,8 +72,8 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
             binding.emailInputLayout.error = getString(R.string.error_invalid_email)
         }
 
-        invalidPasswordLiveData.observe(viewLifecycleOwner) {
-            binding.passwordInputLayout.error = getString(R.string.error_invalid_password)
+        passwordEmptyLiveData.observe(viewLifecycleOwner) {
+            binding.passwordInputLayout.error = getString(R.string.error_password_empty)
         }
 
         loadingLiveData.observe(viewLifecycleOwner) { isLoading ->

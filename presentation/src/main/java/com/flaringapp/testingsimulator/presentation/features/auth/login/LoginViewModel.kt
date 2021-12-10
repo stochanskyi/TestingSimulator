@@ -9,7 +9,7 @@ import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLi
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
 import com.flaringapp.testingsimulator.domain.usecase.validation.ValidateEmailUseCase
-import com.flaringapp.testingsimulator.domain.usecase.validation.ValidatePasswordUseCase
+import com.flaringapp.testingsimulator.domain.usecase.validation.ValidatePasswordEmptyUseCase
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import kotlinx.coroutines.Job
 
@@ -22,7 +22,7 @@ abstract class LoginViewModel : BaseViewModel() {
     abstract val rememberMeLiveData: LiveData<Boolean>
 
     abstract val invalidEmailLiveData: LiveData<Unit>
-    abstract val invalidPasswordLiveData: LiveData<Unit>
+    abstract val passwordEmptyLiveData: LiveData<Unit>
 
     abstract val loadingLiveData: LiveData<Boolean>
 
@@ -40,7 +40,7 @@ abstract class LoginViewModel : BaseViewModel() {
 
 class LoginViewModelImpl(
     private val validateEmailUseCase: ValidateEmailUseCase,
-    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val validatePasswordEmptyUseCase: ValidatePasswordEmptyUseCase,
     private val loginUseCase: LoginUseCase,
     loginViewBehaviour: LoginViewBehaviour
 ) : LoginViewModel() {
@@ -52,7 +52,7 @@ class LoginViewModelImpl(
     override val rememberMeLiveData = MutableLiveData(false)
 
     override val invalidEmailLiveData = SingleLiveEvent<Unit>()
-    override val invalidPasswordLiveData = SingleLiveEvent<Unit>()
+    override val passwordEmptyLiveData = SingleLiveEvent<Unit>()
 
     override val loadingLiveData = MutableLiveData(false)
 
@@ -114,8 +114,8 @@ class LoginViewModelImpl(
             invalidEmailLiveData.call()
             credentialsValid = false
         }
-        if (!isPasswordValid(password)) {
-            invalidPasswordLiveData.call()
+        if (!isPasswordNotEmpty(password)) {
+            passwordEmptyLiveData.call()
             credentialsValid = false
         }
 
@@ -126,8 +126,8 @@ class LoginViewModelImpl(
         return validateEmailUseCase(email)
     }
 
-    private fun isPasswordValid(password: String): Boolean {
-        return validatePasswordUseCase(password)
+    private fun isPasswordNotEmpty(password: String): Boolean {
+        return validatePasswordEmptyUseCase(password)
     }
 
 }
