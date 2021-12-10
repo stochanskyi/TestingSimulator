@@ -20,9 +20,9 @@ abstract class TestsViewModel : BaseViewModel() {
 
     abstract val testsLiveData: LiveData<List<TestViewData>>
 
-    abstract val openTestLiveData: LiveData<TestDetailNavArgs>
-
     abstract val topicNameLiveData: LiveData<String>
+
+    abstract val openTestLiveData: LiveData<TestDetailNavArgs>
 
     abstract fun init(topicData: TopicPreliminaryData)
 
