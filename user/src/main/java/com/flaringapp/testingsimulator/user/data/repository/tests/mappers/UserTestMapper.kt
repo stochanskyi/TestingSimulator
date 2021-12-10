@@ -23,5 +23,4 @@ class UserTestMapperImpl : UserTestMapper {
             isInProgress = dto.isInProgress
         )
     }
-
 }

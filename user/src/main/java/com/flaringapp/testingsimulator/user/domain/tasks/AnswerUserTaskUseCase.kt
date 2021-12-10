@@ -11,5 +11,4 @@ class AnswerUserTaskUseCase(
     suspend operator fun invoke(taskId: Int, answerBlockIds: List<Int>): CallResult<PotentialUserTask> {
         return userTasksRepository.answerTask(taskId, answerBlockIds)
     }
-
 }

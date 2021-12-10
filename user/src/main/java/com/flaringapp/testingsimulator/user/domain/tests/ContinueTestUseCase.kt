@@ -5,13 +5,13 @@ import com.flaringapp.testingsimulator.user.data.repository.tasks.UserTasksRepos
 import com.flaringapp.testingsimulator.user.data.repository.tests.UserTestsRepository
 import com.flaringapp.testingsimulator.user.domain.tasks.model.UserTask
 
-class StartTestUseCase(
+class ContinueTestUseCase(
     private val testsRepository: UserTestsRepository,
     private val tasksRepository: UserTasksRepository,
 ) {
 
     suspend operator fun invoke(testId: Int): CallResult<UserTask> {
-        return testsRepository.startTest(testId)
+        return testsRepository.continueTest(testId)
             .doOnSuccessSuspend { tasksRepository.saveTask(it) }
     }
 }

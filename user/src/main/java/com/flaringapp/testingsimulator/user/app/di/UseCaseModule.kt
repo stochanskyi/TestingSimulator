@@ -12,7 +12,9 @@ import com.flaringapp.testingsimulator.user.domain.login.UserLoginUseCase
 import com.flaringapp.testingsimulator.user.domain.profile.*
 import com.flaringapp.testingsimulator.user.domain.signup.UserSignUpUseCase
 import com.flaringapp.testingsimulator.user.domain.tasks.AnswerUserTaskUseCase
+import com.flaringapp.testingsimulator.user.domain.tasks.GetTaskOrContinueTestUseCase
 import com.flaringapp.testingsimulator.user.domain.tasks.GetUserTaskUseCase
+import com.flaringapp.testingsimulator.user.domain.tests.ContinueTestUseCase
 import com.flaringapp.testingsimulator.user.domain.tests.GetUserTestDetailsUseCase
 import com.flaringapp.testingsimulator.user.domain.tests.GetUserTestsUseCase
 import com.flaringapp.testingsimulator.user.domain.tests.StartTestUseCase
@@ -37,9 +39,11 @@ val UseCaseModule = module {
 
     factory { GetUserTestDetailsUseCase(get()) }
 
-    factory { StartTestUseCase(get()) }
+    factory { StartTestUseCase(get(), get()) }
+    factory { ContinueTestUseCase(get(), get()) }
 
     factory { GetUserTaskUseCase(get()) }
+    factory { GetTaskOrContinueTestUseCase(get(), get()) }
     factory { AnswerUserTaskUseCase(get()) }
 
 }

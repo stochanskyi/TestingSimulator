@@ -21,5 +21,4 @@ class UserTestDetailsMapperImpl : UserTestDetailsMapper {
             statistics = dto.statistics
         )
     }
-
 }

@@ -86,6 +86,42 @@ sealed class CallResult<D> {
         }
     }
 
+    fun onErrorReturn(
+        provider: () -> D
+    ): Success<D> {
+        return when(this) {
+            is Success -> this
+            is Error -> Success(provider())
+        }
+    }
+
+    suspend fun onErrorReturnSuspend(
+        provider: suspend () -> D
+    ): Success<D> {
+        return when(this) {
+            is Success -> this
+            is Error -> Success(provider())
+        }
+    }
+
+    fun onErrorSwitch(
+        provider: () -> CallResult<D>
+    ): CallResult<D> {
+        return when(this) {
+            is Success -> this
+            is Error -> provider()
+        }
+    }
+
+    suspend fun onErrorSwitchSuspend(
+        provider: suspend () -> CallResult<D>
+    ): CallResult<D> {
+        return when(this) {
+            is Success -> this
+            is Error -> provider()
+        }
+    }
+
     fun ignoreData(): CallResultNothing {
         return when (this) {
             is Success -> Success(Unit)

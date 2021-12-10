@@ -10,18 +10,20 @@ import com.flaringapp.testingsimulator.user.data.network.features.tests.response
 import com.flaringapp.testingsimulator.user.data.network.features.tests.response.UserTestResponse
 
 interface UserTestsDataSource {
-    suspend fun startTest(request: StartTestRequest): CallResult<UserTaskResponse>
+
     suspend fun getTests(topicId: Int): CallResultList<UserTestResponse>
+
     suspend fun getTestDetails(testId: Int): CallResult<UserTestDetailsResponse>
+
+    suspend fun startTest(request: StartTestRequest): CallResult<UserTaskResponse>
+
+    suspend fun continueTest(testId: Int): CallResult<UserTaskResponse>
+
 }
 
 class UserTestsDataSourceImpl(
     private val testsApi: UserTestsApi
 ) : UserTestsDataSource {
-
-    override suspend fun startTest(request: StartTestRequest): CallResult<UserTaskResponse> {
-        return testsApi.startTest(request).validate()
-    }
 
     override suspend fun getTests(topicId: Int): CallResultList<UserTestResponse> {
         return testsApi.getTests(topicId).validateList()
@@ -31,4 +33,11 @@ class UserTestsDataSourceImpl(
         return testsApi.getTestDetails(testId).validate()
     }
 
+    override suspend fun startTest(request: StartTestRequest): CallResult<UserTaskResponse> {
+        return testsApi.startTest(request).validate()
+    }
+
+    override suspend fun continueTest(testId: Int): CallResult<UserTaskResponse> {
+        return testsApi.continueTest(testId).validate()
+    }
 }

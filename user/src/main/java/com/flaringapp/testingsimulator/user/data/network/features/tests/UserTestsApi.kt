@@ -23,9 +23,14 @@ interface UserTestsApi {
         @Path("testId") testId: Int
     ): ApiResponse<UserTestDetailsResponse>
 
-    @POST("start_test")
+    @POST("Test/start-test")
     suspend fun startTest(
         @Body request: StartTestRequest
+    ): ApiResponse<UserTaskResponse>
+
+    @GET("Test/continue-test/{testId}")
+    suspend fun continueTest(
+        @Path("testId") testId: Int
     ): ApiResponse<UserTaskResponse>
 
 }
