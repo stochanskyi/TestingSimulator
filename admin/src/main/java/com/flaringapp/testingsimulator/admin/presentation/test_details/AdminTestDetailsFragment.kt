@@ -22,12 +22,8 @@ class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_d
 
     private val args: AdminTestDetailsFragmentArgs by navArgs()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        model.init(args.testId, args.testName)
-    }
-
     override fun initViews() = with(binding) {
+        model.init(args.testId, args.testName)
         recyclerListItems.layoutManager = LinearLayoutManager(requireContext())
         recyclerListItems.adapter = AdminTestDetailsItemsAdapter(
             openTask = model::openTask,
