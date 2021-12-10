@@ -62,7 +62,7 @@ class AdminTaskEditBlockViewHolder private constructor(
     }
 
     fun setIsLinked(isLinked: Boolean) {
-        binding.buttonLink.isSelected = true
+        binding.buttonLink.isSelected = isLinked
     }
 
 }
