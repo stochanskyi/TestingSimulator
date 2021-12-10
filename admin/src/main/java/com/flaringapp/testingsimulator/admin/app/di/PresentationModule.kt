@@ -50,6 +50,6 @@ val PresentationModule = module {
 
     viewModel<AdminTaskEditViewModel> { AdminTaskEditViewModelImpl(get(), get(), get()) }
 
-    viewModel<AdminViewTaskViewModel> { AdminViewTaskViewModelImpl() }
+    viewModel<AdminViewTaskViewModel> { AdminViewTaskViewModelImpl(get()) }
 
 }
