@@ -3,6 +3,7 @@ package com.flaringapp.testingsimulator.presentation.features.edit_profile
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.fragment.findNavController
 import com.flaringapp.testingsimulator.core.presentation.utils.hideKeyboardAndClearCurrentFocus
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.presentation.R
@@ -75,7 +76,7 @@ class EditProfileFragment : ModelledFragment(R.layout.fragment_edit_profile) {
         }
 
         model.editSuccessLiveData.observe(viewLifecycleOwner) {
-            //TODO navigate
+            findNavController().popBackStack()
         }
     }
 
