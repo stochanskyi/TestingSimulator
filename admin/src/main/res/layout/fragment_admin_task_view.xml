@@ -14,7 +14,7 @@
         android:clipToPadding="false"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="5"
-        tools:listitem="@layout/view_holder_admin_task_block_view" />
+        tools:listitem="@layout/view_holder_admin_task_view_block" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

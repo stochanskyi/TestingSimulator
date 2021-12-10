@@ -13,15 +13,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginVertical="16dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginVertical="12dp"
+        android:layout_marginHorizontal="16dp"
         tools:text="Some block with some name 2" />
 
     <ImageView
-        android:id="@+id/buttonLink"
+        android:id="@+id/imageLink"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:padding="8dp"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/selector_admin_block_link"
         android:scaleType="fitCenter"
         android:contentDescription="@string/button_admin_task_edit_link" />

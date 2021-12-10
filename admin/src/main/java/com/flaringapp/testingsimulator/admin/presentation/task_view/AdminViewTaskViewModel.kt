@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.admin.domain.tasks.GetAdminTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskBlock
 import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskDetailed
-import com.flaringapp.testingsimulator.admin.presentation.task_view.models.AdminTaskViewBlockViewData
+import com.flaringapp.testingsimulator.admin.presentation.task_view.models.AdminViewTaskBlockViewData
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableLiveDataList
@@ -19,7 +19,7 @@ abstract class AdminViewTaskViewModel : BaseViewModel() {
 
     abstract val loadingLiveData: LiveData<Boolean>
 
-    abstract val blocksLiveData: LiveDataList<AdminTaskViewBlockViewData>
+    abstract val blocksLiveData: LiveDataList<AdminViewTaskBlockViewData>
 
     abstract fun init(taskId: Int, taskName: String)
 
@@ -33,7 +33,7 @@ class AdminViewTaskViewModelImpl(
 
     override val loadingLiveData = MutableLiveData(false)
 
-    override val blocksLiveData = MutableLiveDataList<AdminTaskViewBlockViewData>(emptyList())
+    override val blocksLiveData = MutableLiveDataList<AdminViewTaskBlockViewData>(emptyList())
 
     private var taskId: Int? = null
     private var taskName: String? = null
@@ -62,12 +62,12 @@ class AdminViewTaskViewModelImpl(
         }
     }
 
-    private fun AdminTaskDetailed.toViewData(): List<AdminTaskViewBlockViewData> {
+    private fun AdminTaskDetailed.toViewData(): List<AdminViewTaskBlockViewData> {
         return blocks.map { it.toViewData() }
     }
 
-    private fun AdminTaskBlock.toViewData() : AdminTaskViewBlockViewData {
-        return AdminTaskViewBlockViewData(
+    private fun AdminTaskBlock.toViewData() : AdminViewTaskBlockViewData {
+        return AdminViewTaskBlockViewData(
             text = text,
             isEnabled = isEnabled,
             isLinked = linkedBlockId != null,
