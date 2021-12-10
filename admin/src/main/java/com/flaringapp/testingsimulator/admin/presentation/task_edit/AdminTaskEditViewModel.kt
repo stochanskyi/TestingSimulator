@@ -6,20 +6,40 @@ import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.admin.domain.tasks.CreateTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.EditTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.GetAdminTaskUseCase
+import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminBlockCreation
 import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskBlock
 import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskDetailed
+import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskEdition
+import com.flaringapp.testingsimulator.admin.presentation.task_edit.models.AddBlockViewData
+import com.flaringapp.testingsimulator.admin.presentation.task_edit.models.AdminTaskEditBlockViewData
 import com.flaringapp.testingsimulator.core.app.common.clearAndAdd
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.presentation.utils.isRunning
+import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import kotlinx.coroutines.Job
-import java.lang.RuntimeException
+import java.util.concurrent.atomic.AtomicInteger
 
 abstract class AdminTaskEditViewModel : BaseViewModel() {
 
     abstract val loadingLiveData: LiveData<Boolean>
 
+    abstract val addNewBlockLiveData: LiveData<AddBlockViewData>
+
+    abstract val blocksLiveData: LiveData<List<AdminTaskEditBlockViewData>>
+
+    abstract val taskNameLiveData: LiveData<String>
+
+    abstract val removeBlockAtPositionLiveData: LiveData<Int>
+
+    abstract val openTestScreen: LiveData<Unit>
+
     abstract fun init(testId: Int, taskId: Int?)
+
+    abstract fun createBlock()
+
+    abstract fun setName(name: String)
 
     abstract fun setBlockText(id: Int, text: String)
 
@@ -44,6 +64,8 @@ class AdminTaskEditViewModelImpl(
     private var testId: Int? = null
     private var taskId: Int? = null
 
+    private var name: String = ""
+
     private var currentTask: AdminTaskDetailed? = null
 
     private val orderedBlocks: MutableList<AdminTaskBlock> = mutableListOf()
@@ -53,6 +75,13 @@ class AdminTaskEditViewModelImpl(
     private var proceedJob: Job? = null
 
     override val loadingLiveData = MutableLiveData<Boolean>()
+    override val addNewBlockLiveData = SingleLiveEvent<AddBlockViewData>()
+    override val blocksLiveData = MutableLiveData<List<AdminTaskEditBlockViewData>>()
+    override val taskNameLiveData = MutableLiveData<String>()
+    override val removeBlockAtPositionLiveData = SingleLiveEvent<Int>()
+    override val openTestScreen = SingleLiveEvent<Unit>()
+
+    private val taskIds = AtomicInteger(0)
 
     override fun init(testId: Int, taskId: Int?) {
         this.testId = testId
@@ -63,16 +92,40 @@ class AdminTaskEditViewModelImpl(
         }
     }
 
+    override fun createBlock() {
+        // TODO improvement calculate block position
+        val newBlock = AdminTaskBlock(
+            taskIds.incrementAndGet(),
+            "",
+            false,
+            null
+        )
+        val position = orderedBlocks.size
+
+        orderedBlocks.add(newBlock)
+        addNewBlockLiveData.value = AddBlockViewData(position, newBlock.toViewData())
+    }
+
+    override fun setName(name: String) {
+        this.name = name
+        taskNameLiveData.value = name
+    }
+
     override fun setBlockText(id: Int, text: String) {
-        // TODO impl
+        changeBlock(id) {
+            it.copy(text = text)
+        }
     }
 
     override fun setBlockEnabled(id: Int, active: Boolean) {
-        // TODO impl
+        changeBlock(id) {
+            it.copy(isEnabled = active)
+        }
     }
 
     override fun changeBlockPosition(id: Int, oldPosition: Int, newPosition: Int) {
-        // TODO impl
+        val item = orderedBlocks.removeAt(oldPosition)
+        orderedBlocks.add(newPosition, item)
     }
 
     override fun linkBlock(id: Int) {
@@ -80,11 +133,45 @@ class AdminTaskEditViewModelImpl(
     }
 
     override fun removeBlock(id: Int) {
-        // TODO impl
+        val position = orderedBlocks.indexOfFirst { it.id == id }
+
+        orderedBlocks.removeAt(position)
+        removeBlockAtPositionLiveData.value = position
     }
 
     override fun saveChanges() {
-        // TODO impl
+        taskId?.let { editTask(it) } ?: createTask()
+    }
+
+    private fun editTask(taskId: Int) {
+        if (proceedJob.isRunning) return
+        proceedJob = viewModelScope.startLoadingTask(loadingLiveData) {
+            val task = AdminTaskEdition(
+                taskId,
+                name,
+                orderedBlocks.map { it.asAdminBlockCreation() }
+            )
+
+            safeCall { editTaskUseCase(task) } ?: return@startLoadingTask
+
+            openTestScreen.call()
+        }
+    }
+
+    private fun createTask() {
+        if (proceedJob.isRunning) return
+        proceedJob = viewModelScope.startLoadingTask(loadingLiveData) {
+            val safeTestId = testId ?: return@startLoadingTask
+            safeCall {
+                createTaskUseCase(
+                    safeTestId,
+                    name,
+                    orderedBlocks.map { it.asAdminBlockCreation() }
+                )
+            } ?: return@startLoadingTask
+
+            openTestScreen.call()
+        }
     }
 
     private fun loadTask(taskId: Int) {
@@ -99,6 +186,13 @@ class AdminTaskEditViewModelImpl(
         currentTask = task
         orderedBlocks.clearAndAdd(task.blocks)
         disabledBlocks.clearAndAdd(getDisabledBlocks(task))
+
+        updateTaskViewData(task)
+    }
+
+    private fun updateTaskViewData(task: AdminTaskDetailed) {
+        taskNameLiveData.value = task.name
+        blocksLiveData.value = task.blocks.toViewData()
     }
 
     private fun getDisabledBlocks(task: AdminTaskDetailed): Set<Int> {
@@ -107,6 +201,30 @@ class AdminTaskEditViewModelImpl(
             .filter { !it.isEnabled }
             .map { it.id }
             .toSet()
+    }
+
+    private fun List<AdminTaskBlock>.toViewData(): List<AdminTaskEditBlockViewData> {
+        return map { it.toViewData() }
+    }
+
+    private fun AdminTaskBlock.toViewData(): AdminTaskEditBlockViewData {
+        return AdminTaskEditBlockViewData(
+            id = id,
+            text = text,
+            isBlockActive = isEnabled,
+            isLinked = linkedBlockId != null
+        )
+    }
+
+    private inline fun changeBlock(id: Int, action: (AdminTaskBlock) -> AdminTaskBlock) {
+        val position = orderedBlocks.indexOfFirst { it.id == id }.takeIf { it >= 0 } ?: return
+        val newItem = action(orderedBlocks[position])
+
+        orderedBlocks[position] = newItem
+    }
+
+    private fun AdminTaskBlock.asAdminBlockCreation(): AdminBlockCreation {
+        return AdminBlockCreation(name, isEnabled, linkedBlockId)
     }
 
 }
