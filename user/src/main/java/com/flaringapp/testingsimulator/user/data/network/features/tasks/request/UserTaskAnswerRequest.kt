@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class UserTaskAnswerRequest(
-    @Json(name = "taskId")
+    @Json(name = "id")
     val taskId: Int,
     @Json(name = "blocks")
     val blocks: List<Int>
