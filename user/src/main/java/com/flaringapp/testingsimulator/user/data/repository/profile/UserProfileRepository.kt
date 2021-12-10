@@ -19,8 +19,6 @@ interface UserProfileRepository {
 
     suspend fun getLastEmail(): CallResult<String>
 
-    fun isLoggedIn(): Boolean
-
     suspend fun logout(): CallResultNothing
 
 }
@@ -53,10 +51,6 @@ class UserProfileRepositoryImpl(
     override suspend fun getLastEmail(): CallResult<String> {
         val email = profileDataStorage.email ?: ""
         return CallResult.Success(email)
-    }
-
-    override fun isLoggedIn(): Boolean {
-        return dataStorage.token != null && dataStorage.userId != -1
     }
 
     override suspend fun logout(): CallResultNothing {
