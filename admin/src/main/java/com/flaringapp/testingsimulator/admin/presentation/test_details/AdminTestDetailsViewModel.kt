@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
-import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsAddTaskViewData
-import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsHeaderViewData
-import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsItemViewData
-import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsTaskViewData
+import com.flaringapp.testingsimulator.admin.presentation.test_details.models.*
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusIsEditableTransformer
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusNameTransformer
 import com.flaringapp.testingsimulator.core.app.common.tryAdd
@@ -17,6 +14,7 @@ import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableLiveDataList
+import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
@@ -28,6 +26,8 @@ abstract class AdminTestDetailsViewModel : BaseViewModel() {
     abstract val loadingLiveData: LiveData<Boolean>
 
     abstract val listItemsLiveData: LiveDataList<AdminTestDetailsItemViewData>
+
+    abstract val openViewTaskLiveData: LiveData<AdminTestDetailsOpenViewTaskViewData>
 
     abstract fun init(
         testId: Int,
@@ -54,6 +54,8 @@ class AdminTestDetailsViewModeImpl(
 
     override val listItemsLiveData = MutableLiveDataList<AdminTestDetailsItemViewData>()
 
+    override val openViewTaskLiveData = SingleLiveEvent<AdminTestDetailsOpenViewTaskViewData>()
+
     private var test: AdminTestDetailed? = null
 
     override fun init(testId: Int, testName: String) {
@@ -62,7 +64,13 @@ class AdminTestDetailsViewModeImpl(
     }
 
     override fun openTask(id: Int) {
-        // TODO admin test open task
+        val test = test ?: return
+        val task = test.tasks.find { it.id == id } ?: return
+
+        openViewTaskLiveData.value = AdminTestDetailsOpenViewTaskViewData(
+            taskId = task.id,
+            taskName = task.name,
+        )
     }
 
     override fun createTask() {

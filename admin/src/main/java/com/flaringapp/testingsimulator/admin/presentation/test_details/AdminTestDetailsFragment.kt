@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.databinding.FragmentAdminTestDetailsBinding
 import com.flaringapp.testingsimulator.admin.presentation.test_details.adapter.AdminTestDetailsItemsAdapter
+import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsOpenViewTaskViewData
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.updateAppBarConfiguration
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -45,6 +46,16 @@ class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_d
         listItemsLiveData.observe(viewLifecycleOwner) { items ->
             adapterAction { it.submitList(items) }
         }
+        openViewTaskLiveData.observe(viewLifecycleOwner) { data ->
+            openViewTask(data)
+        }
+    }
+
+    private fun openViewTask(data: AdminTestDetailsOpenViewTaskViewData) {
+        AdminTestDetailsFragmentDirections.actionFragmentAdminTestToFragmentAdminViewTask(
+            taskId = data.taskId,
+            taskName = data.taskName,
+        )
     }
 
     private fun <T> adapterAction(action: (AdminTestDetailsItemsAdapter) -> T): T {
