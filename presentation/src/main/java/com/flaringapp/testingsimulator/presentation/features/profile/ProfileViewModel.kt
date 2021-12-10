@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.launchOnIO
+import com.flaringapp.testingsimulator.core.app.common.takeIfNotEmpty
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
@@ -72,13 +73,13 @@ class ProfileViewModelImpl(
     ) {
         nameLiveData.value = name
         emailLiveData.value = taxonomyFormatter.format(R.string.profile_email, email)
-        studyingLiveData.value = studying?.let {
+        studyingLiveData.value = studying?.takeIfNotEmpty()?.let {
             taxonomyFormatter.format(R.string.profile_studying, it)
         }
-        workPlaceLiveData.value = workPlace?.let {
+        workPlaceLiveData.value = workPlace?.takeIfNotEmpty()?.let {
             taxonomyFormatter.format(R.string.profile_work_place, it)
         }
-        roleLiveData.value = role?.let {
+        roleLiveData.value = role?.takeIfNotEmpty()?.let {
             taxonomyFormatter.format(R.string.profile_role, role)
         }
     }
