@@ -13,6 +13,8 @@ class EmojiDefinitionImpl : EmojiDefinition {
         6 to R.drawable.img_emoji_design_disabled, // Design disabled
         7 to R.drawable.img_emoji_project_management_enabled, // PM enabled
         8 to R.drawable.img_emoji_project_management_disabled, // PM disabled
+        14 to R.drawable.img_emoji_requirements_enabled, // Requirements enabled
+        15 to R.drawable.img_emoji_requirements_disabled, // Requirements disabled
         9 to R.drawable.img_emoji_brain, // Passed tasks for user, Success rate for admin
         10 to R.drawable.img_emoji_eyes, // Task tries for user, Attempts for admin
         11 to R.drawable.img_emoji_note, // Tests taken for user, Tests published for admin
