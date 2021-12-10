@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="32dp"
-    android:paddingBottom="16dp"
-    android:layout_marginHorizontal="16dp"
-    android:clipToPadding="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="24dp">
 
     <TextView
         style="@style/Text.Medium"
         android:id="@+id/name_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:textSize="20sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintVertical_bias="1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/header_barrier"
@@ -30,6 +31,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="12dp"
         android:paddingVertical="6dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/bg_test_state"
         android:textColor="@color/white"
         android:maxLines="1"
@@ -54,8 +56,9 @@
         android:id="@+id/header_separator_view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/bg_separator"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
         app:layout_constraintTop_toBottomOf="@id/header_barrier" />
 
     <TextView
@@ -64,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
         android:lineSpacingExtra="16dp"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/header_separator_view"
@@ -97,6 +101,8 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="64dp"
         android:layout_marginTop="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_gravity="center"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
