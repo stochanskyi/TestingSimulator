@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
+import com.flaringapp.testingsimulator.core.presentation.utils.textWithInvisibility
 import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.flaringapp.testingsimulator.user.R
@@ -60,7 +61,7 @@ class UserTestDetailsFragment : ModelledFragment(R.layout.fragment_user_test_det
 
     private fun applyTestState(state: UserTestStatusViewData) = with(binding) {
         stateTextView.background.setTint(state.statusColor)
-        stateTextView.textWithVisibility = state.statusName
+        stateTextView.textWithInvisibility = state.statusName
 
         emojiImageView.setImageResource(state.statusEmojiRes)
 
