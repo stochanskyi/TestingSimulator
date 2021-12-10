@@ -33,7 +33,7 @@ class AdminProfileRepositoryImpl(
     }
 
     override suspend fun saveProfile(profile: AdminProfile) {
-        profile.saveIntoStorage()
+        saveIntoStorage(profile)
     }
 
     override suspend fun editProfile(profile: EditAdminProfile): CallResult<AdminProfile> {
@@ -53,14 +53,14 @@ class AdminProfileRepositoryImpl(
         )
     }
 
-    private fun AdminProfile.saveIntoStorage() {
-        dataStorage.userId = id
+    private fun saveIntoStorage(profile: AdminProfile) {
+        dataStorage.userId = profile.id
         with(profileDataStorage) {
-            firstName = firstName
-            lastName = lastName
-            email = email
-            workPlace = workPlace
-            role = role
+            firstName = profile.firstName
+            lastName = profile.lastName
+            email = profile.email
+            workPlace = profile.workPlace
+            role = profile.role
         }
     }
 
