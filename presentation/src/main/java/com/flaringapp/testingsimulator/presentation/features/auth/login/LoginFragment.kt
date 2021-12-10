@@ -1,5 +1,6 @@
 package com.flaringapp.testingsimulator.presentation.features.auth.login
 
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
@@ -75,8 +76,8 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
             binding.passwordInputLayout.error = getString(R.string.error_invalid_password)
         }
 
-        loadingLiveData.observe(viewLifecycleOwner) {
-            //TODO login add progress
+        loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.isInvisible = !isLoading
         }
 
         openSignUpLiveData.observe(viewLifecycleOwner) {

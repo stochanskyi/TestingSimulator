@@ -54,7 +54,7 @@ class LoginViewModelImpl(
     override val invalidEmailLiveData = SingleLiveEvent<Unit>()
     override val invalidPasswordLiveData = SingleLiveEvent<Unit>()
 
-    override val loadingLiveData = MutableLiveData<Boolean>()
+    override val loadingLiveData = MutableLiveData(false)
 
     override val openSignUpLiveData = SingleLiveEvent<Unit>()
 
