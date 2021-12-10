@@ -84,6 +84,6 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
         android:layout_gravity="center"
-        tools:text="@string/button_admin_task_edit_save_changes" />
+        android:text="@string/button_admin_task_edit_save_changes" />
 
 </LinearLayout>
