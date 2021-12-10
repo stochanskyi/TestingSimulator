@@ -3,6 +3,7 @@ package com.flaringapp.testingsimulator.admin.presentation.task_edit
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +27,14 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
         FragmentAdminTaskEditBinding::bind
     )
 
+    private val args: AdminTaskEditFragmentArgs by navArgs()
+
     override fun initViews() = with(binding) {
+        model.init(
+            testId = args.testId,
+            taskId = args.taskId
+        )
+
         nameEditText.doAfterTextChanged {
             model.setName(it.toString())
         }

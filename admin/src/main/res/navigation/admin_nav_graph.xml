@@ -87,6 +87,26 @@
             app:argType="string"
             android:name="taskName" />
 
+        <action
+            android:id="@+id/action_fragmentAdminViewTask_to_fragmentAdminTaskEdit"
+            app:destination="@id/fragmentAdminTaskEdit" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAdminTaskEdit"
+        android:name="com.flaringapp.testingsimulator.admin.presentation.task_edit.AdminTaskEditFragment"
+        tools:layout="@layout/fragment_admin_task_edit">
+
+        <argument
+            app:argType="integer"
+            android:name="testId" />
+
+        <argument
+            app:argType="integer"
+            android:name="taskId"
+            android:defaultValue="-1" />
+
     </fragment>
 
 </navigation>
