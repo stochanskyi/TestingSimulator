@@ -26,6 +26,24 @@ class AdminTaskEditBlocksAdapter(
         return AdminTaskEditBlockViewHolder.create(parent)
     }
 
+    override fun onBindViewHolder(
+        holder: AdminTaskEditBlockViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+            return
+        }
+
+        val item = getItem(position)
+        payloads.forEach { payload ->
+            when (payload) {
+                LINKED_CHANGED -> holder.setIsLinked(item.isLinked)
+            }
+        }
+    }
+
     override fun onBindViewHolder(holder: AdminTaskEditBlockViewHolder, position: Int) {
         holder.bind(
             dragListener = dragListener,
@@ -67,7 +85,7 @@ class AdminTaskEditBlocksAdapter(
     fun changeItemIsLinked(position: Int, isLinked: Boolean) {
         val item = items[position]
         item.isLinked = isLinked
-        notifyItemChanged(position)
+        notifyItemChanged(position, LINKED_CHANGED)
     }
 
     private fun onBlockActiveChange(
@@ -95,4 +113,8 @@ class AdminTaskEditBlocksAdapter(
     }
 
     private fun getItem(position: Int) = items[position]
+
+    companion object {
+        private const val LINKED_CHANGED = "linked_changed"
+    }
 }

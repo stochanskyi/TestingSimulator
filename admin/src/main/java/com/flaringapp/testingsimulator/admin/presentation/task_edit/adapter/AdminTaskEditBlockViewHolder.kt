@@ -46,6 +46,7 @@ class AdminTaskEditBlockViewHolder private constructor(
             onBlockActiveChanged(item.id, !isChecked)
         }
 
+        setIsLinked(item.isLinked)
         buttonLink.setOnClickListener {
             onLinkClicked(item.id)
         }
@@ -58,6 +59,10 @@ class AdminTaskEditBlockViewHolder private constructor(
         layoutBlockDisabled.setOnClickListener(null)
         checkboxBlockDisabled.setOnCheckedChangeListener(null)
         buttonDrag.setOnTouchListener(null)
+    }
+
+    fun setIsLinked(isLinked: Boolean) {
+        binding.buttonLink.isSelected = true
     }
 
 }
