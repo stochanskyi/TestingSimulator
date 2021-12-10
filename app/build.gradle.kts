@@ -37,10 +37,12 @@ android {
     productFlavors {
         create("user") {
             dimension = "appType"
+            applicationIdSuffix = ".user"
             versionNameSuffix = "-user"
         }
         create("admin") {
             dimension = "appType"
+            applicationIdSuffix = ".admin"
             versionNameSuffix = "-admin"
         }
     }
