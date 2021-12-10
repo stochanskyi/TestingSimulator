@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class EditTaskRequest(
+class EditAdminTaskRequest(
     @Json(name = "taskId")
-    val testId: Int,
+    val taskId: Int,
     @Json(name = "name")
     val name: String,
     @Json(name = "blocks")

@@ -8,7 +8,7 @@ class AddBlockRequest(
     @Json(name = "text")
     val text: String,
     @Json(name = "isEnabled")
-    isEnabled: Boolean,
+    val isEnabled: Boolean,
     @Json(name = "linkedBlockPosition")
-    linkedBlockPosition: Int?,
+    val linkedBlockPosition: Int?,
 )

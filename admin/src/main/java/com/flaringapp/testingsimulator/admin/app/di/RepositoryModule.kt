@@ -10,6 +10,9 @@ import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminEditPr
 import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminEditProfileMapperImpl
 import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminProfileRepository
 import com.flaringapp.testingsimulator.admin.data.repository.profile.AdminProfileRepositoryImpl
+import com.flaringapp.testingsimulator.admin.data.repository.tasks.AdminTasksRepository
+import com.flaringapp.testingsimulator.admin.data.repository.tasks.AdminTasksRepositoryImpl
+import com.flaringapp.testingsimulator.admin.data.repository.tasks.mappers.*
 import com.flaringapp.testingsimulator.admin.data.repository.tests.AdminTestMapper
 import com.flaringapp.testingsimulator.admin.data.repository.tests.AdminTestMapperImpl
 import com.flaringapp.testingsimulator.admin.data.repository.tests.AdminTestsRepository
@@ -28,4 +31,9 @@ val RepositoryModule = module {
 
     factory<AdminTestsRepository> { AdminTestsRepositoryImpl(get(), get()) }
     factory<AdminTestMapper> { AdminTestMapperImpl() }
+
+    factory<AdminTaskDetailedMapper> { AdminTaskDetailedMapperImpl() }
+    factory<AdminAddBlockMapper> { AdminAddBlockMapperImpl() }
+    factory<AdminTaskEditionMapper> { AdminTaskEditionMapperImpl(get()) }
+    factory<AdminTasksRepository> { AdminTasksRepositoryImpl(get(), get(), get(), get()) }
 }
