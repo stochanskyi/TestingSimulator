@@ -5,18 +5,19 @@ import com.flaringapp.testingsimulator.admin.data.network.features.tests.respons
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponse
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponseList
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AdminTestsApi {
 
-    @GET("tests")
+    @GET("Test/by-topic-id/{topicId}")
     suspend fun getTests(
-        @Query("topicId") topicId: Int
+        @Path("topicId") topicId: Int
     ): ApiResponseList<AdminTestResponse>
 
-    @GET("test")
+    @GET("Test/{testId}")
     suspend fun getTest(
-        @Query("testId") testId: Int
+        @Path("testId") testId: Int
     ): ApiResponse<AdminTestWithStatisticsModel>
 
 }
