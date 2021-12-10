@@ -9,11 +9,11 @@ class UserTestResponse(
     val id: Int,
     @Json(name = "name")
     val name: String,
-    @Json(name = "tasksCount")
+    @Json(name = "taskCount")
     val tasksCount: Int,
-    @Json(name = "isInProgress")
+    @Json(name = "isInProgres")
     val isInProgress: Boolean,
-    @Json(name = "tasksPassed")
+    @Json(name = "taskPassed")
     val tasksPassed: Int,
     @Json(name = "bestScore")
     val bestScore: Int? = null,
