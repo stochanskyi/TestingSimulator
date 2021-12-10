@@ -46,9 +46,13 @@ class UserTestDetailsFragment : ModelledFragment(R.layout.fragment_user_test_det
             binding.statisticsTextView.text = it
         }
 
-        model.openTasksLiveData.observe(viewLifecycleOwner) {
+        model.openTasksLiveData.observe(viewLifecycleOwner) { args ->
             val action = UserTestDetailsFragmentDirections
-                .actionFragmentUserTestDetailsToFragmentUserTaskPassing(it.testId, it.tasksCount)
+                .actionFragmentUserTestDetailsToFragmentUserTaskPassing(
+                    testId = args.testId,
+                    tasksCount = args.tasksCount,
+                    taskId = args.taskId ?: -1,
+                )
 
             findNavController().navigate(action)
         }

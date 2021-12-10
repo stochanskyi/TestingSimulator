@@ -9,7 +9,11 @@ class GetTaskOrContinueTestUseCase(
     private val continueTestUseCase: ContinueTestUseCase,
 ) {
 
-    suspend operator fun invoke(testId: Int, taskId: Int): CallResult<UserTask> {
+    suspend operator fun invoke(testId: Int, taskId: Int?): CallResult<UserTask> {
+        if (taskId == null) {
+            return continueTestUseCase(testId)
+        }
+
         return getTaskUseCase(taskId)
             .onErrorSwitchSuspend { continueTestUseCase(testId) }
     }

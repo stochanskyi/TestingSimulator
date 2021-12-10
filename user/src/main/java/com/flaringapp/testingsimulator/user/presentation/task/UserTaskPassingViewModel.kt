@@ -11,7 +11,7 @@ import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import com.flaringapp.testingsimulator.user.R
 import com.flaringapp.testingsimulator.user.domain.tasks.AnswerUserTaskUseCase
-import com.flaringapp.testingsimulator.user.domain.tasks.GetUserTaskUseCase
+import com.flaringapp.testingsimulator.user.domain.tasks.GetTaskOrContinueTestUseCase
 import com.flaringapp.testingsimulator.user.domain.tasks.model.PotentialUserTask
 import com.flaringapp.testingsimulator.user.domain.tasks.model.UserTask
 import com.flaringapp.testingsimulator.user.domain.tasks.model.UserTaskBlock
@@ -31,7 +31,11 @@ abstract class UserTaskPassingViewModel : BaseViewModel() {
 
     abstract val openTestResultLiveData: LiveData<Int>
 
-    abstract fun init(testId: Int, tasksCount: Int)
+    abstract fun init(
+        testId: Int,
+        tasksCount: Int,
+        taskId: Int?,
+    )
 
     abstract fun setBlockEnabled(blockId: Int, isEnabled: Boolean)
 
@@ -42,10 +46,10 @@ abstract class UserTaskPassingViewModel : BaseViewModel() {
 }
 
 class UserTaskPassingViewModelImpl(
-    private val getUserTaskUseCase: GetUserTaskUseCase,
+    private val getOrContinueTaskUseCase: GetTaskOrContinueTestUseCase,
     private val answerUserTaskUseCase: AnswerUserTaskUseCase,
     private val textProvider: TextProvider
-): UserTaskPassingViewModel() {
+) : UserTaskPassingViewModel() {
 
     override val loadingLiveData = MutableLiveData(false)
 
@@ -58,9 +62,9 @@ class UserTaskPassingViewModelImpl(
     override val blocksLiveData = MutableLiveData<MutableList<UserTaskPassingBlockViewData>>()
     override val openTestResultLiveData = SingleLiveEvent<Int>()
 
-    private var tasksCount: Int? = null
-
     private var testId: Int? = null
+    private var tasksCount: Int? = null
+    private var taskId: Int? = null
 
     private var currentTask: UserTask? = null
 
@@ -69,11 +73,12 @@ class UserTaskPassingViewModelImpl(
 
     private var proceedJob: Job? = null
 
-    override fun init(testId: Int, tasksCount: Int) {
-        this.tasksCount = tasksCount
+    override fun init(testId: Int, tasksCount: Int, taskId: Int?) {
         this.testId = testId
+        this.tasksCount = tasksCount
+        this.taskId = taskId
 
-        loadTask(testId)
+        loadTask()
     }
 
     override fun setBlockEnabled(blockId: Int, isEnabled: Boolean) {
@@ -114,9 +119,14 @@ class UserTaskPassingViewModelImpl(
         }
     }
 
-    private fun loadTask(testId: Int) {
+    private fun loadTask() {
+        val testId = testId ?: return
+        val taskId = taskId
+
         viewModelScope.startLoadingTask(loadingLiveData) {
-            val task = safeCall { getUserTaskUseCase(testId) } ?: return@startLoadingTask
+            val task = safeCall {
+                getOrContinueTaskUseCase(testId, taskId)
+            } ?: return@startLoadingTask
 
             withMainContext {
                 processNewTask(task)
@@ -125,6 +135,7 @@ class UserTaskPassingViewModelImpl(
     }
 
     private fun processNewTask(task: UserTask) {
+        taskId = task.id
         currentTask = task
         orderedBlocks.addAll(task.blocks)
         updateTaskViewData(task)

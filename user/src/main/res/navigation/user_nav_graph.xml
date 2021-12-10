@@ -88,6 +88,11 @@
             app:argType="integer"
             android:name="tasksCount" />
 
+        <argument
+            app:argType="integer"
+            android:name="taskId"
+            android:defaultValue="-1" />
+
     </fragment>
 
 </navigation>

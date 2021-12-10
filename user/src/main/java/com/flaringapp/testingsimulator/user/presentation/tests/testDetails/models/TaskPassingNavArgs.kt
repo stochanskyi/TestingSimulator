@@ -2,5 +2,6 @@ package com.flaringapp.testingsimulator.user.presentation.tests.testDetails.mode
 
 class TaskPassingNavArgs(
     val testId: Int,
-    val tasksCount: Int
+    val tasksCount: Int,
+    val taskId: Int?,
 )

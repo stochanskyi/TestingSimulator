@@ -30,7 +30,11 @@ class UserTaskPassingFragment : ModelledFragment(R.layout.fragment_user_task_pas
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model.init(arguments.testId, arguments.tasksCount)
+        model.init(
+            testId = arguments.testId,
+            tasksCount = arguments.tasksCount,
+            taskId = arguments.taskId.takeIf { it != -1 },
+        )
     }
 
     override fun initViews() = with(binding) {

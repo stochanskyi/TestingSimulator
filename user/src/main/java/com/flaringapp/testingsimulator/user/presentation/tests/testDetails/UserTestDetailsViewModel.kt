@@ -95,20 +95,21 @@ class UserTestDetailsViewModelImpl(
         if (startTestJob.isRunning) return
 
         startTestJob = viewModelScope.startLoadingTask(loadingLiveData) {
-            safeCall {
+            val firstTask = safeCall {
                 startTestUseCase(test.id)
             } ?: return@startLoadingTask
 
             withMainContext {
-                openTest(test)
+                openTest(test, firstTask.id)
             }
         }
     }
 
-    private fun openTest(test: UserTestDetails) {
+    private fun openTest(test: UserTestDetails, taskId: Int? = null) {
         openTasksLiveData.value = TaskPassingNavArgs(
             testId = test.id,
             tasksCount = test.tasksCount,
+            taskId = taskId,
         )
     }
 
