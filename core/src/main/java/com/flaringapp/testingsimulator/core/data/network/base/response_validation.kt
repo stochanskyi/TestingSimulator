@@ -23,7 +23,7 @@ fun <T> Response<out ValidateableResponse<List<T>>>.validateList(): CallResult<L
     return when {
         !isSuccessful -> null
         code() == HTTP_NO_CONTENT -> CallResult.Success(emptyList())
-        else -> body().parseResult {
+        else -> body().parseBody {
             if (it == null) CallResult.Success(emptyList())
             else CallResult.Success(it)
         }
@@ -31,47 +31,50 @@ fun <T> Response<out ValidateableResponse<List<T>>>.validateList(): CallResult<L
 }
 
 fun <T> Response<out ValidateableResponse<T>>.validate(): CallResult<T> {
-    return validateAny { CallResult.Success(it!!) }
+    return validateAny { data ->
+        if (data == null) return@validateAny null
+        CallResult.Success(data)
+    }
 }
 
 fun Response<BaseResponseSuccess>.validateNoData(): CallResultNothing {
-    return validateAny { CallResult.Success(it!!) }
+    return validateAny {
+        CallResult.Success(it)
+    }
 }
 
 private inline fun <T> Response<out ValidateableResponse<out T>>.validateAny(
-    collector: (T?) -> CallResult<T>
+    collector: (T?) -> CallResult<T>?
 ): CallResult<T> {
     return when {
         !isSuccessful -> null
         code() == HTTP_NO_CONTENT -> noContentErrorResult()
-        else -> body().parseResult(collector)
+        else -> body().parseBody(collector)
     } ?: classifyError()
 }
 
-private inline fun <T> ValidateableResponse<out T>?.parseResult(
+private inline fun <T> ValidateableResponse<out T>?.parseBody(
     collector: (T?) -> CallResult<T>?
 ): CallResult<T>? {
     return when {
         this == null -> collector(null)
-        status != STATUS_SUCCESS -> null
+        status != STATUS_SUCCESS -> parseBodyError()
         else -> collector(data)
     }
 }
 
-private fun <T> Response<out ValidateableResponse<out T>>.classifyError() : CallResult.Error<T> {
-    return body()?.parseErrorResult()
-        ?: errorBody()?.parseErrorResult()
-        ?: unknownError()
-}
-
-private fun <T> ValidateableResponse<out T>.parseErrorResult(): CallResult.Error<T> {
+private fun <T> ValidateableResponse<out T>.parseBodyError(): CallResult.Error<T> {
     return CallResult.Error(
         exception = ApiException(message),
         errorType = errorType?.parseErrorType(),
     )
 }
 
-private fun <T> ResponseBody.parseErrorResult(): CallResult.Error<T>? {
+private fun <T> Response<out ValidateableResponse<out T>>.classifyError(): CallResult.Error<T> {
+    return errorBody()?.parseErrorBody() ?: unknownError()
+}
+
+private fun <T> ResponseBody.parseErrorBody(): CallResult.Error<T>? {
     return convertErrorBody()?.toCallResult()
 }
 
