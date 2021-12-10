@@ -98,6 +98,10 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
         model.openTestScreen.observe(viewLifecycleOwner) {
             findNavController().popBackStack()
         }
+
+        model.updateNameLiveData.observe(viewLifecycleOwner) {
+            observeName()
+        }
     }
 
     private fun createTouchDragListener(
