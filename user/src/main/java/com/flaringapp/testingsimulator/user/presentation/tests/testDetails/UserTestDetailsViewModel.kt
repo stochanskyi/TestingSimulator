@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
+import com.flaringapp.testingsimulator.core.presentation.utils.isRunning
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
@@ -13,10 +14,12 @@ import com.flaringapp.testingsimulator.presentation.data.taxonomy.DefaultTaxonom
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import com.flaringapp.testingsimulator.user.R
 import com.flaringapp.testingsimulator.user.domain.tests.GetUserTestDetailsUseCase
+import com.flaringapp.testingsimulator.user.domain.tests.StartTestUseCase
 import com.flaringapp.testingsimulator.user.domain.tests.models.UserTest
 import com.flaringapp.testingsimulator.user.domain.tests.models.UserTestDetails
 import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.models.TaskPassingNavArgs
 import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.models.UserTestStatusViewData
+import kotlinx.coroutines.Job
 
 abstract class UserTestDetailsViewModel : BaseViewModel() {
 
@@ -33,10 +36,12 @@ abstract class UserTestDetailsViewModel : BaseViewModel() {
     abstract fun init(testId: Int, name: String)
 
     abstract fun launchTest()
+
 }
 
 class UserTestDetailsViewModelImpl(
     private val getUserTestDetailsUseCase: GetUserTestDetailsUseCase,
+    private val startTestUseCase: StartTestUseCase,
     private val textProvider: TextProvider,
     private val colorProvider: ColorProvider,
     private val taxonomyFormatter: TaxonomyFormatter,
@@ -49,6 +54,8 @@ class UserTestDetailsViewModelImpl(
     override val testStateLiveData = MutableLiveData<UserTestStatusViewData>()
     override val testStatisticsLiveData = MutableLiveData<CharSequence>()
     override val openTasksLiveData = SingleLiveEvent<TaskPassingNavArgs>()
+
+    private var startTestJob: Job? = null
 
     init {
         taxonomyFormatter.config = DefaultTaxonomyFormatterConfig.customize(
@@ -63,9 +70,14 @@ class UserTestDetailsViewModelImpl(
     }
 
     override fun launchTest() {
-        val testId = testDetails?.id ?: return
-        val tasksCount = testDetails?.tasksCount ?: return
-        openTasksLiveData.value = TaskPassingNavArgs(testId, tasksCount)
+        val test = testDetails ?: return
+
+        if (!test.isInProgress) {
+            startAndOpenTest(test)
+            return
+        }
+
+        openTest(test)
     }
 
     private fun loadTestDetails(testId: Int) {
@@ -77,6 +89,27 @@ class UserTestDetailsViewModelImpl(
                 updateData(result)
             }
         }
+    }
+
+    private fun startAndOpenTest(test: UserTestDetails) {
+        if (startTestJob.isRunning) return
+
+        startTestJob = viewModelScope.startLoadingTask(loadingLiveData) {
+            safeCall {
+                startTestUseCase(test.id)
+            } ?: return@startLoadingTask
+
+            withMainContext {
+                openTest(test)
+            }
+        }
+    }
+
+    private fun openTest(test: UserTestDetails) {
+        openTasksLiveData.value = TaskPassingNavArgs(
+            testId = test.id,
+            tasksCount = test.tasksCount,
+        )
     }
 
     private fun updateData(testDetails: UserTestDetails) {

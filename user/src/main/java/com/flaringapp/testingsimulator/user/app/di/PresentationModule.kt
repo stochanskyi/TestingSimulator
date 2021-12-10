@@ -46,7 +46,9 @@ val PresentationModule = module {
     factory<TestsFragmentArgsHandler> { UserTestsFragmentArgsHandler() }
     factory<TestsBehaviour> { UserTestsBehaviour(get(), get(), get()) }
 
-    viewModel<UserTestDetailsViewModel> { UserTestDetailsViewModelImpl(get(), get(), get(), get()) }
+    viewModel<UserTestDetailsViewModel> {
+        UserTestDetailsViewModelImpl(get(), get(), get(), get(), get())
+    }
 
     viewModel<UserTaskPassingViewModel> { UserTaskPassingViewModelImpl(get(), get(), get()) }
 
