@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.launchOnIO
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.presentation.utils.isRunning
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.usecase.validation.ValidateFirstNameUseCase
@@ -12,6 +13,7 @@ import com.flaringapp.testingsimulator.domain.usecase.validation.ValidateLastNam
 import com.flaringapp.testingsimulator.presentation.features.edit_profile.behaviour.EditProfileBehaviour
 import com.flaringapp.testingsimulator.presentation.features.edit_profile.behaviour.EditProfileBehaviourGetProfileConsumer
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
+import kotlinx.coroutines.Job
 
 abstract class EditProfileViewModel : BaseViewModel() {
 
@@ -75,6 +77,8 @@ class EditProfileViewModelImpl(
 
     override val editSuccessLiveData = SingleLiveEvent<Unit>()
 
+    private var editProfileJob: Job? = null
+
     init {
         viewModelScope.launchOnIO {
             safeCall {
@@ -125,9 +129,10 @@ class EditProfileViewModelImpl(
     }
 
     override fun save() {
+        if (editProfileJob.isRunning) return
         if (!validateData()) return
 
-        viewModelScope.startLoadingTask(loadingLiveData) {
+        editProfileJob = viewModelScope.startLoadingTask(loadingLiveData) {
             safeCall {
                 behaviour.editProfile(
                     firstName = firstName,
