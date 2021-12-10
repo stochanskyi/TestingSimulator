@@ -13,7 +13,6 @@ import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestStatus
     }
 
     override fun transformPublishedStatus(): Boolean {
-        return true
-
+        return false
     }
 }

@@ -69,7 +69,7 @@ class AdminViewTaskViewModelImpl(
     private fun AdminTaskBlock.toViewData() : AdminViewTaskBlockViewData {
         return AdminViewTaskBlockViewData(
             text = text,
-            isEnabled = isEnabled,
+            isEnabled = !isEnabled,
             isLinked = linkedBlockId != null,
         )
     }

@@ -56,10 +56,12 @@ class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_d
     }
 
     private fun openViewTask(data: AdminTestDetailsOpenViewTaskViewData) {
-        AdminTestDetailsFragmentDirections.actionFragmentAdminTestToFragmentAdminViewTask(
+        val action = AdminTestDetailsFragmentDirections.actionFragmentAdminTestToFragmentAdminViewTask(
             taskId = data.taskId,
             taskName = data.taskName,
         )
+
+        findNavController().navigate(action)
     }
 
     private fun openEditTask(data: AdminTestDetailsOpenEditTaskViewData) {

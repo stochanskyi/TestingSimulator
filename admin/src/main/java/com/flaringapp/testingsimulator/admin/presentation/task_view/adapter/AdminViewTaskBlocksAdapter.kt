@@ -10,10 +10,6 @@ class AdminViewTaskBlocksAdapter : ListAdapter<
     AdminTestViewBlocksDiffCallback()
 ) {
 
-    private var items: MutableList<AdminViewTaskBlockViewData> = mutableListOf()
-
-    override fun getItemCount(): Int = items.size
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
