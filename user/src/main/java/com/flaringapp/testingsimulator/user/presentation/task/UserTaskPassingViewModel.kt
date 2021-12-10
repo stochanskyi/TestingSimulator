@@ -60,6 +60,11 @@ class UserTaskPassingViewModelImpl(
 
     private var testId: Int? = null
 
+    private var currentTask: UserTask? = null
+
+    private val orderedBlocks: MutableList<UserTaskBlock> = mutableListOf()
+    private val disabledBlocks: MutableSet<Int> = hashSetOf()
+
     override fun init(testId: Int, tasksCount: Int) {
         this.tasksCount = tasksCount
         this.testId = testId
@@ -67,14 +72,17 @@ class UserTaskPassingViewModelImpl(
         loadTask(testId)
     }
 
-    private var currentTask: UserTask? = null
-
     override fun setBlockEnabled(blockId: Int, isEnabled: Boolean) {
-        //TODO implement
+        if (isEnabled) {
+            disabledBlocks.remove(blockId)
+        } else {
+            disabledBlocks.add(blockId)
+        }
     }
 
     override fun changeBlockPosition(blockId: Int, oldPosition: Int, newPosition: Int) {
-        //TODO implement
+        val item = orderedBlocks.removeAt(oldPosition)
+        orderedBlocks.add(newPosition, item)
     }
 
     override fun submitAnswer() {
@@ -87,7 +95,6 @@ class UserTaskPassingViewModelImpl(
     }
 
     private fun processPotentialUserTask(potentialTask: PotentialUserTask) {
-
         if (potentialTask.userTask == null) {
             val currentTestId = testId ?: return
             openTestResultLiveData.value = currentTestId
@@ -108,6 +115,7 @@ class UserTaskPassingViewModelImpl(
 
     private fun processNewTask(task: UserTask) {
         currentTask = task
+        orderedBlocks.addAll(task.blocks)
         updateTaskViewData(task)
     }
 
