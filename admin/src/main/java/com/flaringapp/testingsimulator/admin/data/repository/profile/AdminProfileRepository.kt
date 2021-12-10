@@ -40,6 +40,7 @@ class AdminProfileRepositoryImpl(
         val request = profile.createEditProfileRequest()
         return editProfileDataSource.editProfile(request)
             .transform { editProfileMapper.map(this) }
+            .doOnSuccess { saveIntoStorage(it) }
     }
 
     private fun createProfileFromStorage(): AdminProfile? {
