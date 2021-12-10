@@ -16,7 +16,7 @@ class UserEditProfileMapperImpl : UserEditProfileMapper {
             id = dto.id,
             firstName = dto.firstName,
             lastName = dto.lastName,
-            email = dto.lastName,
+            email = dto.email,
             studying = dto.studying,
             workPlace = dto.workplace,
             role = dto.role,
