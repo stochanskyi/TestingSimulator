@@ -4,6 +4,7 @@ import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
+import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentProfileBinding
 import com.flaringapp.testingsimulator.presentation.features.profile.adapter.ProfileStatisticsAdapter
@@ -42,13 +43,13 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
             binding.textEmail.text = email
         }
         studyingLiveData.observe(viewLifecycleOwner) { studying ->
-            binding.textStudying.text = studying
+            binding.textStudying.textWithVisibility = studying
         }
         workPlaceLiveData.observe(viewLifecycleOwner) { workPlace ->
-            binding.textWorkPlace.text = workPlace
+            binding.textWorkPlace.textWithVisibility = workPlace
         }
         roleLiveData.observe(viewLifecycleOwner) { role ->
-            binding.textRole.text = role
+            binding.textRole.textWithVisibility = role
         }
 
         statisticsLiveData.observe(viewLifecycleOwner) { statistics ->
