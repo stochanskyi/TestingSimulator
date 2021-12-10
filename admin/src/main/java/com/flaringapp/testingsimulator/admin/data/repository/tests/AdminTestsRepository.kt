@@ -10,6 +10,8 @@ interface AdminTestsRepository {
 
     suspend fun getTests(topicId: Int): CallResultList<AdminTest>
 
+    suspend fun createTest(topicId: Int): CallResult<AdminTestDetailed>
+
     suspend fun getTestDetailed(testId: Int): CallResult<AdminTestDetailed>
 
 }
@@ -22,6 +24,10 @@ class AdminTestsRepositoryImpl(
     override suspend fun getTests(topicId: Int): CallResultList<AdminTest> {
         return adminTestsDataSource.getTests(topicId)
             .transform { adminTestMapper.mapTests(this) }
+    }
+
+    override suspend fun createTest(topicId: Int): CallResult<AdminTestDetailed> {
+        return CallResult.Error("")
     }
 
     override suspend fun getTestDetailed(testId: Int): CallResult<AdminTestDetailed> {

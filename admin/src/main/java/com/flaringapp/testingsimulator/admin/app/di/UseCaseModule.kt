@@ -5,6 +5,7 @@ import com.flaringapp.testingsimulator.admin.domain.profile.AdminProfile
 import com.flaringapp.testingsimulator.admin.domain.profile.EditAdminProfile
 import com.flaringapp.testingsimulator.admin.domain.profile.EditAdminProfileUseCase
 import com.flaringapp.testingsimulator.admin.domain.profile.GetAdminProfileUseCase
+import com.flaringapp.testingsimulator.admin.domain.tests.AdminCreateTestUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestsUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
@@ -23,7 +24,7 @@ val UseCaseModule = module {
     factory<EditProfileUseCase<EditAdminProfile, AdminProfile>> { EditAdminProfileUseCase(get()) }
 
     factory<GetTestsUseCase<AdminTest>> { GetAdminTestsUseCase(get()) }
-
+    factory { AdminCreateTestUseCase(get()) }
     factory { GetAdminTestDetailedUseCase(get()) }
 
 }
