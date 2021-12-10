@@ -34,7 +34,7 @@
     </style>
 
     <style name="Text.Header">
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">20sp</item>
     </style>
 
