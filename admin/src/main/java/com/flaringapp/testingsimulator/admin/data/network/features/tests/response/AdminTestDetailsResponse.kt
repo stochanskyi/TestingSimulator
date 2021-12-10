@@ -9,7 +9,7 @@ class AdminTestDetailsResponse(
     val id: Int,
     @Json(name = "name")
     val name: String,
-    @Json(name = "tasksCount")
+    @Json(name = "taskCount")
     val tasksCount: Int,
     @Json(name = "status")
     val status: Int,
