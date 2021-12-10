@@ -8,7 +8,7 @@ class UserTaskPassingBlocksAdapter(
     private val dragListener: UserTaskPassingBlockTouchDragListener,
     private val onBlockActiveChanged: (id: Int, isActive: Boolean) -> Unit,
     private val onMove: (id: Int, fromPosition: Int, toPosition: Int) -> Unit,
-): RecyclerView.Adapter<UserTaskPassingBlockViewHolder>(),
+) : RecyclerView.Adapter<UserTaskPassingBlockViewHolder>(),
     UserTaskPassingBlocksTouchHelperAdapter {
 
     private var items: MutableList<UserTaskPassingBlockViewData> = mutableListOf()
@@ -26,7 +26,7 @@ class UserTaskPassingBlocksAdapter(
         holder.bind(
             dragListener = dragListener,
             item = getItem(position),
-            onBlockActiveChanged = onBlockActiveChanged,
+            onBlockActiveChanged = { id, isActive -> onBlockActiveChange(holder, id, isActive) },
         )
     }
 
@@ -43,6 +43,30 @@ class UserTaskPassingBlocksAdapter(
         items.add(toPosition, item)
         notifyItemMoved(fromPosition, toPosition)
         onMove(item.id, fromPosition, toPosition)
+    }
+
+    private fun onBlockActiveChange(
+        viewHolder: UserTaskPassingBlockViewHolder,
+        id: Int,
+        isActive: Boolean
+    ) {
+        val oldPosition = viewHolder.adapterPosition
+        val newPosition = getNewPosition(isActive)
+
+        items[oldPosition].isBlockActive = isActive
+        onBlockActiveChanged(id, isActive)
+
+        if (oldPosition == newPosition) return
+
+        onItemMove(oldPosition, newPosition)
+    }
+
+    private fun getNewPosition(isActive: Boolean): Int {
+        return if (isActive) {
+            (items.indexOfLast { it.isBlockActive }.takeIf { it > 0 } ?: -1) + 1
+        } else {
+            items.size - 1
+        }
     }
 
     fun setItems(newItems: MutableList<UserTaskPassingBlockViewData>) {
