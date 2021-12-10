@@ -71,7 +71,7 @@
 
     <Button
         style="@style/Button"
-        android:id="@+id/proceed_button"
+        android:id="@+id/save_changes_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
