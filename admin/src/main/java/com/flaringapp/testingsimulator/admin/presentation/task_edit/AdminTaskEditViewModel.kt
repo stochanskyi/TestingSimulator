@@ -27,7 +27,7 @@ abstract class AdminTaskEditViewModel : BaseViewModel() {
 
     abstract val addNewBlockLiveData: LiveData<AddBlockViewData>
 
-    abstract val blocksLiveData: LiveData<List<AdminTaskEditBlockViewData>>
+    abstract val blocksLiveData: LiveData<MutableList<AdminTaskEditBlockViewData>>
 
     abstract val taskNameLiveData: LiveData<String>
 
@@ -76,7 +76,7 @@ class AdminTaskEditViewModelImpl(
 
     override val loadingLiveData = MutableLiveData<Boolean>()
     override val addNewBlockLiveData = SingleLiveEvent<AddBlockViewData>()
-    override val blocksLiveData = MutableLiveData<List<AdminTaskEditBlockViewData>>()
+    override val blocksLiveData = MutableLiveData<MutableList<AdminTaskEditBlockViewData>>()
     override val taskNameLiveData = MutableLiveData<String>()
     override val removeBlockAtPositionLiveData = SingleLiveEvent<Int>()
     override val openTestScreen = SingleLiveEvent<Unit>()
@@ -203,8 +203,8 @@ class AdminTaskEditViewModelImpl(
             .toSet()
     }
 
-    private fun List<AdminTaskBlock>.toViewData(): List<AdminTaskEditBlockViewData> {
-        return map { it.toViewData() }
+    private fun List<AdminTaskBlock>.toViewData(): MutableList<AdminTaskEditBlockViewData> {
+        return mapTo(ArrayList()) { it.toViewData() }
     }
 
     private fun AdminTaskBlock.toViewData(): AdminTaskEditBlockViewData {

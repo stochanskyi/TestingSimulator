@@ -1,5 +1,6 @@
 package com.flaringapp.testingsimulator.admin.presentation.task_edit
 
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,7 @@ import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.databinding.FragmentAdminTaskEditBinding
 import com.flaringapp.testingsimulator.admin.presentation.task_edit.adapter.AdminTaskEditBlockTouchCallback
 import com.flaringapp.testingsimulator.admin.presentation.task_edit.adapter.AdminTaskEditBlocksAdapter
+import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.presentation.common.recycler.drag.TouchDragListener
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -60,5 +62,38 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
     private fun <T> adapterAction(action: (AdminTaskEditBlocksAdapter) -> T): T {
         val adapter = binding.recyclerBlocks.adapter as AdminTaskEditBlocksAdapter
         return adapter.let(action)
+    }
+
+    override fun observeModel() {
+
+        model.loadingLiveData.observe(viewLifecycleOwner) {
+            // TODO
+        }
+
+        model.addNewBlockLiveData.observe(viewLifecycleOwner) { data ->
+            adapterAction {
+                it.addItemAt(data.block, data.position)
+            }
+        }
+
+        model.blocksLiveData.observeOnce(viewLifecycleOwner) { data ->
+            adapterAction {
+                it.setItems(data)
+            }
+        }
+
+        model.taskNameLiveData.observe(viewLifecycleOwner) { data ->
+            //TODO
+        }
+
+        model.removeBlockAtPositionLiveData.observe(viewLifecycleOwner) { position ->
+            adapterAction {
+                it.removeItemAtPosition(position)
+            }
+        }
+
+        model.openTestScreen.observe(viewLifecycleOwner) {
+            findNavController().popBackStack()
+        }
     }
 }

@@ -70,11 +70,16 @@ class AdminTaskEditBlocksAdapter(
         onMove(item.id, fromPosition, toPosition)
     }
 
-    fun setItems(newItems: MutableList<AdminTaskEditBlockViewData>) {
+        fun setItems(newItems: MutableList<AdminTaskEditBlockViewData>) {
         val oldItems = items
         items = newItems
         notifyItemRangeRemoved(0, oldItems.size)
         notifyItemRangeInserted(0, newItems.size)
+    }
+
+    fun addItemAt(item: AdminTaskEditBlockViewData, positionId: Int) {
+        items[positionId] = item
+        notifyItemInserted(positionId)
     }
 
     fun removeItemAtPosition(position: Int) {
