@@ -9,7 +9,7 @@ class TopicResponse(
     val id: Int,
     @Json(name = "name")
     val name: String,
-    @Json(name = "enabled")
+    @Json(name = "isEnabled")
     val enabled: Boolean,
     @Json(name = "emojiId")
     val emojiId: Int,

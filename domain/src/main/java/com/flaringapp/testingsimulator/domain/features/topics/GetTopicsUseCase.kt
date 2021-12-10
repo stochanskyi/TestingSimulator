@@ -8,14 +8,13 @@ class GetTopicsUseCase(
 ) {
 
     suspend operator fun invoke(): CallResult<List<Topic>> {
-        //TODO mock
-//        return topicsRepository.getTopics()
+        return topicsRepository.getTopics()
 
-        return CallResult.Success(
-            listOf(
-                Topic(1, "Testing", true, 2),
-                Topic(2, "Design", true, 1)
-            )
-        )
+//        return CallResult.Success(
+//            listOf(
+//                Topic(1, "Testing", true, 2),
+//                Topic(2, "Design", true, 1)
+//            )
+//        )
     }
 }

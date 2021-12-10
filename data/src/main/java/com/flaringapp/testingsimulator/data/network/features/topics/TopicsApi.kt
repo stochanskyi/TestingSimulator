@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface TopicsApi {
 
-    @GET("topics")
+    @GET("Module")
     suspend fun getTopics(): ApiResponse<List<TopicResponse>>
 
 }
