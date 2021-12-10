@@ -1,6 +1,9 @@
 package com.flaringapp.testingsimulator.admin.presentation.task_edit
 
+import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskBlock
+import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestTask
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
+import kotlinx.coroutines.Job
 
 abstract class AdminTaskEditViewModel : BaseViewModel() {
 
@@ -19,6 +22,17 @@ abstract class AdminTaskEditViewModel : BaseViewModel() {
 }
 
 class AdminTaskEditViewModelImpl : AdminTaskEditViewModel() {
+
+    private var testId: Int? = null
+    private var taskId: Int? = null
+
+    private var currentTask: AdminTestTask? = null
+
+    private val orderedBlocks: MutableList<AdminTaskBlock> = mutableListOf()
+    private val disabledBlocks: MutableSet<Int> = hashSetOf()
+    private val linkedBlock: MutableMap<Int, Int> = mutableMapOf()
+
+    private var proceedJob: Job? = null
 
     override fun setBlockText(id: Int, text: String) {
         // TODO impl
