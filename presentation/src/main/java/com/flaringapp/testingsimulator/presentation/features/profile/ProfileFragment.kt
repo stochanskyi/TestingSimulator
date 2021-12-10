@@ -7,6 +7,7 @@ import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.co
 import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentProfileBinding
+import com.flaringapp.testingsimulator.presentation.features.auth.launcher.ScreenLauncher
 import com.flaringapp.testingsimulator.presentation.features.profile.adapter.ProfileStatisticsAdapter
 import com.flaringapp.testingsimulator.presentation.features.profile.navigation.ProfileNavigator
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
@@ -22,6 +23,8 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
 
     private val navigator: ProfileNavigator by inject()
 
+    private val screenLauncher: ScreenLauncher by inject()
+
     override fun initViews() = with(binding) {
         model.refreshData()
 
@@ -30,6 +33,10 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
         recyclerStatistics.addItemDecoration(
             ProfileStatisticsItemDecoration()
         )
+
+        buttonLogout.setOnClickListener {
+            model.logout()
+        }
 
         configureAppBarWithLifecycle {
             menuId = R.menu.profile
@@ -56,6 +63,11 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
 
         statisticsLiveData.observe(viewLifecycleOwner) { statistics ->
             adapterAction { it.submitList(statistics) }
+        }
+
+        openLoginLiveData.observe(viewLifecycleOwner) {
+            screenLauncher.launchLoginScreen(requireContext())
+            activity?.finish()
         }
     }
 
