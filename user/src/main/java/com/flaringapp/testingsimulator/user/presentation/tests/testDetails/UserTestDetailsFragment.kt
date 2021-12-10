@@ -65,6 +65,7 @@ class UserTestDetailsFragment : ModelledFragment(R.layout.fragment_user_test_det
 
         emojiImageView.setImageResource(state.statusEmojiRes)
 
-        testLaunchButton.textWithVisibility = state.buttonLabel
+        testLaunchButton.textWithInvisibility = state.buttonLabel
+        testLaunchButton.isEnabled = testLaunchButton.isVisible
     }
 }
