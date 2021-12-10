@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.presentation.utils.isRunning
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.usecase.validation.*
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
+import kotlinx.coroutines.Job
 
 abstract class SignUpVewModel : BaseViewModel() {
 
@@ -87,6 +89,8 @@ class SignUpVewModelImpl(
 
     override val authSuccessLiveData = SingleLiveEvent<Unit>()
 
+    private var signUpJob: Job? = null
+
     override fun setEmail(email: String) {
         this.email = email
         emailLiveData.value = email
@@ -128,9 +132,10 @@ class SignUpVewModelImpl(
     }
 
     override fun signUp() {
+        if (signUpJob.isRunning) return
         if (!validateData()) return
 
-        viewModelScope.startLoadingTask(loadingLiveData) {
+        signUpJob = viewModelScope.startLoadingTask(loadingLiveData) {
             safeCall {
                 behaviour.createAccount(
                     email = email,

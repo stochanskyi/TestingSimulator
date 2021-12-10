@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.presentation.utils.isRunning
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
 import com.flaringapp.testingsimulator.domain.usecase.validation.ValidateEmailUseCase
 import com.flaringapp.testingsimulator.domain.usecase.validation.ValidatePasswordUseCase
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
+import kotlinx.coroutines.Job
 
 abstract class LoginViewModel : BaseViewModel() {
 
@@ -62,6 +64,8 @@ class LoginViewModelImpl(
     private var password: String = ""
     private var rememberMe: Boolean = false
 
+    private var loginJob: Job? = null
+
     override fun login() {
         if (!validateCredentials()) return
         performLogin()
@@ -87,7 +91,8 @@ class LoginViewModelImpl(
     }
 
     private fun performLogin() {
-        viewModelScope.startLoadingTask(loadingLiveData) {
+        if (loginJob.isRunning) return
+        loginJob = viewModelScope.startLoadingTask(loadingLiveData) {
             safeCall {
                 loginUseCase(
                     email = email,
