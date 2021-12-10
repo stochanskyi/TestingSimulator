@@ -44,8 +44,8 @@ class UserTaskPassingFragment : ModelledFragment(R.layout.fragment_user_task_pas
 
         val adapter = UserTaskPassingBlocksAdapter(
             dragListener = createTouchDragListener(itemTouchHelper),
-            onBlockActiveChanged = { _, _ -> },
-            onMove = { _, _, _ -> },
+            onBlockActiveChanged = { id, isActive -> model.setBlockEnabled(id, isActive) },
+            onMove = { id, oldPosition, newPosition -> model.changeBlockPosition(id, oldPosition, newPosition) },
         )
         recyclerBlocks.adapter = adapter
         touchCallback.attach(adapter)

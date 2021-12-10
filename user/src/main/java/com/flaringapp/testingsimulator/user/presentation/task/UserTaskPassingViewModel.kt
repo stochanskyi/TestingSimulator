@@ -88,7 +88,8 @@ class UserTaskPassingViewModelImpl(
     override fun submitAnswer() {
         val taskId = currentTask?.id ?: return
         viewModelScope.startLoadingTask(loadingLiveData) {
-            val result = safeCall { answerUserTaskUseCase(taskId, emptyList()) } ?: return@startLoadingTask
+            val blockIds = orderedBlocks.filter { !disabledBlocks.contains(it.id) }.map { it.id }
+            val result = safeCall { answerUserTaskUseCase(taskId, blockIds) } ?: return@startLoadingTask
 
             withMainContext { processPotentialUserTask(result) }
         }
