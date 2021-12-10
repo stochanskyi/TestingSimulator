@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class CreateTestRequest(
     @Json(name = "moduleId")
-    val moduleId: Int
+    val topicId: Int
 )

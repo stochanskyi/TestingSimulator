@@ -1,6 +1,7 @@
 package com.flaringapp.testingsimulator.admin.data.repository.tests
 
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.AdminTestsDataSource
+import com.flaringapp.testingsimulator.admin.data.network.features.tests.request.CreateTestRequest
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
@@ -27,7 +28,10 @@ class AdminTestsRepositoryImpl(
     }
 
     override suspend fun createTest(topicId: Int): CallResult<AdminTestDetailed> {
-        return CallResult.Error("")
+        val request = CreateTestRequest(topicId)
+
+        return adminTestsDataSource.createTest(request)
+            .transform { adminTestMapper.mapTestWithStatistics(this) }
     }
 
     override suspend fun getTestDetailed(testId: Int): CallResult<AdminTestDetailed> {
