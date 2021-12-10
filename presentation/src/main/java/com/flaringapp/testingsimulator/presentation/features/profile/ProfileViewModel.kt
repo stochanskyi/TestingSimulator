@@ -7,10 +7,13 @@ import com.flaringapp.testingsimulator.core.app.common.launchOnIO
 import com.flaringapp.testingsimulator.core.app.common.takeIfNotEmpty
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
+import com.flaringapp.testingsimulator.core.presentation.utils.isRunning
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableLiveDataList
+import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiColorsProvider
 import com.flaringapp.testingsimulator.domain.features.emoji.EmojiProvider
+import com.flaringapp.testingsimulator.domain.features.profile.LogoutUseCase
 import com.flaringapp.testingsimulator.domain.features.profile.ProfileStatistics
 import com.flaringapp.testingsimulator.domain.features.profile_statistics.GetProfileStatisticsUseCase
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
@@ -20,6 +23,7 @@ import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.P
 import com.flaringapp.testingsimulator.presentation.features.profile.behaviour.ProfileBehaviourGetProfileConsumer
 import com.flaringapp.testingsimulator.presentation.features.profile.models.ProfileStatisticsViewData
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 
@@ -33,12 +37,17 @@ abstract class ProfileViewModel : BaseViewModel() {
 
     abstract val statisticsLiveData: LiveDataList<ProfileStatisticsViewData>
 
+    abstract val openLoginLiveData: LiveData<Unit>
+
     abstract fun refreshData()
+
+    abstract fun logout()
 }
 
 class ProfileViewModelImpl(
     private val behaviour: ProfileBehaviour,
     private val getStatisticsUseCase: GetProfileStatisticsUseCase,
+    private val logoutUseCase: LogoutUseCase,
     private val emojiProvider: EmojiProvider,
     private val emojiColorsProvider: EmojiColorsProvider,
     private val colorProvider: ColorProvider,
@@ -52,9 +61,9 @@ class ProfileViewModelImpl(
     override val roleLiveData = MutableLiveData<CharSequence?>(null)
     override val statisticsLiveData = MutableLiveDataList<ProfileStatisticsViewData>(emptyList())
 
-    override fun refreshData() {
-        loadProfile()
-    }
+    override val openLoginLiveData = SingleLiveEvent<Unit>()
+
+    private var logoutJob: Job? = null
 
     init {
         taxonomyFormatter.config = DefaultTaxonomyFormatterConfig.customize(
@@ -63,6 +72,22 @@ class ProfileViewModelImpl(
         )
 
         loadProfile()
+    }
+
+    override fun refreshData() {
+        loadProfile()
+    }
+
+    override fun logout() {
+        if (logoutJob.isRunning) return
+
+        logoutJob = viewModelScope.launchOnIO {
+            logoutUseCase()
+
+            withMainContext {
+                openLoginLiveData.call()
+            }
+        }
     }
 
     override fun handleProfileData(
