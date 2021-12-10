@@ -1,6 +1,5 @@
 package com.flaringapp.testingsimulator.admin.presentation.test_details
 
-import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
