@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
+import com.flaringapp.testingsimulator.core.presentation.utils.isRunning
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
@@ -15,6 +16,7 @@ import com.flaringapp.testingsimulator.user.domain.tasks.model.PotentialUserTask
 import com.flaringapp.testingsimulator.user.domain.tasks.model.UserTask
 import com.flaringapp.testingsimulator.user.domain.tasks.model.UserTaskBlock
 import com.flaringapp.testingsimulator.user.presentation.task.models.UserTaskPassingBlockViewData
+import kotlinx.coroutines.Job
 
 abstract class UserTaskPassingViewModel : BaseViewModel() {
 
@@ -65,6 +67,8 @@ class UserTaskPassingViewModelImpl(
     private val orderedBlocks: MutableList<UserTaskBlock> = mutableListOf()
     private val disabledBlocks: MutableSet<Int> = hashSetOf()
 
+    private var proceedJob: Job? = null
+
     override fun init(testId: Int, tasksCount: Int) {
         this.tasksCount = tasksCount
         this.testId = testId
@@ -86,8 +90,10 @@ class UserTaskPassingViewModelImpl(
     }
 
     override fun submitAnswer() {
+        if (proceedJob.isRunning) return
         val taskId = currentTask?.id ?: return
-        viewModelScope.startLoadingTask(loadingLiveData) {
+
+        proceedJob = viewModelScope.startLoadingTask(loadingLiveData) {
             val blockIds = orderedBlocks.filter { !disabledBlocks.contains(it.id) }.map { it.id }
             val result = safeCall { answerUserTaskUseCase(taskId, blockIds) } ?: return@startLoadingTask
 
