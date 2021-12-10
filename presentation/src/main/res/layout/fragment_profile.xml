@@ -68,16 +68,39 @@
         android:background="@drawable/bg_separator_padded"
         android:layout_marginTop="8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerStatistics"
+    <FrameLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerStatistics"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="24dp"
+            android:paddingHorizontal="12dp"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:spanCount="2"
+            tools:itemCount="5"
+            tools:listitem="@layout/view_holder_profile_statistics" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/separatorLogout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/bg_separator_padded" />
+
+    <TextView
+        style="@style/Text.Button"
+        android:id="@+id/buttonLogout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginHorizontal="12dp"
-        android:nestedScrollingEnabled="false"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:spanCount="2"
-        tools:itemCount="5"
-        tools:listitem="@layout/view_holder_profile_statistics" />
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
+        android:layout_marginVertical="12dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/button_logout" />
 
 </LinearLayout>
