@@ -74,7 +74,7 @@ class AdminTaskEditViewModelImpl(
 
     private var proceedJob: Job? = null
 
-    override val taskNameLiveData = MutableLiveData<String>()
+    override val taskNameLiveData = MutableLiveData(name)
 
     override val loadingLiveData = MutableLiveData<Boolean>()
 
