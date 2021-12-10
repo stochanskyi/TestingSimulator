@@ -1,15 +1,23 @@
 package com.flaringapp.testingsimulator.admin.presentation.task_edit
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.flaringapp.testingsimulator.admin.domain.tasks.CreateTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.EditTaskUseCase
+import com.flaringapp.testingsimulator.admin.domain.tasks.GetAdminTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskBlock
 import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskDetailed
 import com.flaringapp.testingsimulator.core.app.common.clearAndAdd
+import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import kotlinx.coroutines.Job
 import java.lang.RuntimeException
 
 abstract class AdminTaskEditViewModel : BaseViewModel() {
+
+    abstract val loadingLiveData: LiveData<Boolean>
 
     abstract fun init(testId: Int, taskId: Int?)
 
@@ -29,7 +37,8 @@ abstract class AdminTaskEditViewModel : BaseViewModel() {
 
 class AdminTaskEditViewModelImpl(
     private val createTaskUseCase: CreateTaskUseCase,
-    private val editTaskUseCase: EditTaskUseCase
+    private val editTaskUseCase: EditTaskUseCase,
+    private val getAdminTaskUseCase: GetAdminTaskUseCase
 ) : AdminTaskEditViewModel() {
 
     private var testId: Int? = null
@@ -42,6 +51,8 @@ class AdminTaskEditViewModelImpl(
     private val linkedBlock: MutableMap<Int, Int> = mutableMapOf()
 
     private var proceedJob: Job? = null
+
+    override val loadingLiveData = MutableLiveData<Boolean>()
 
     override fun init(testId: Int, taskId: Int?) {
         this.testId = testId
@@ -77,9 +88,14 @@ class AdminTaskEditViewModelImpl(
     }
 
     private fun loadTask(taskId: Int) {
-        //TODO load task
-        val task = taskMockFunc()
+        viewModelScope.startLoadingTask(loadingLiveData) {
+            val result = safeCall { getAdminTaskUseCase(taskId) } ?: return@startLoadingTask
 
+            withMainContext { initTask(result) }
+        }
+    }
+
+    private fun initTask(task: AdminTaskDetailed) {
         currentTask = task
         orderedBlocks.clearAndAdd(task.blocks)
         disabledBlocks.clearAndAdd(getDisabledBlocks(task))
@@ -91,10 +107,6 @@ class AdminTaskEditViewModelImpl(
             .filter { !it.isEnabled }
             .map { it.id }
             .toSet()
-    }
-
-    private fun taskMockFunc(): AdminTaskDetailed {
-        throw RuntimeException()
     }
 
 }
