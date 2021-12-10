@@ -166,4 +166,9 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="CheckBoxTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/gray_very_light</item>
+        <item name="colorControlActivated">@color/color_primary</item>
+    </style>
+
 </resources>

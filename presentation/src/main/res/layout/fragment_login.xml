@@ -79,10 +79,12 @@
 
     <CheckBox
         style="@style/Text"
+        android:theme="@style/CheckBoxTheme"
         android:id="@+id/remember_me_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="8dp"
+        android:paddingVertical="12dp"
         android:layout_marginTop="8dp"
         android:text="@string/remember_me" />
 
