@@ -52,6 +52,24 @@ class AdminTaskEditBlocksAdapter(
         onMove(item.id, fromPosition, toPosition)
     }
 
+    fun setItems(newItems: MutableList<AdminTaskEditBlockViewData>) {
+        val oldItems = items
+        items = newItems
+        notifyItemRangeRemoved(0, oldItems.size)
+        notifyItemRangeInserted(0, newItems.size)
+    }
+
+    fun removeItemAtPosition(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun changeItemIsLinked(position: Int, isLinked: Boolean) {
+        val item = items[position]
+        item.isLinked = isLinked
+        notifyItemChanged(position)
+    }
+
     private fun onBlockActiveChange(
         viewHolder: AdminTaskEditBlockViewHolder,
         id: Int,
@@ -74,13 +92,6 @@ class AdminTaskEditBlocksAdapter(
         } else {
             items.size - 1
         }
-    }
-
-    fun setItems(newItems: MutableList<AdminTaskEditBlockViewData>) {
-        val oldItems = items
-        items = newItems
-        notifyItemRangeRemoved(0, oldItems.size)
-        notifyItemRangeInserted(0, newItems.size)
     }
 
     private fun getItem(position: Int) = items[position]
