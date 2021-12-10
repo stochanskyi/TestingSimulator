@@ -5,6 +5,7 @@ import com.flaringapp.testingsimulator.admin.domain.login.AdminLoginUseCase
 import com.flaringapp.testingsimulator.admin.domain.profile.*
 import com.flaringapp.testingsimulator.admin.domain.tasks.CreateTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.EditTaskUseCase
+import com.flaringapp.testingsimulator.admin.domain.tasks.GetAdminTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.AdminCreateTestUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestsUseCase
@@ -36,4 +37,5 @@ val UseCaseModule = module {
 
     factory { CreateTaskUseCase(get()) }
     factory { EditTaskUseCase(get()) }
+    factory { GetAdminTaskUseCase(get()) }
 }
