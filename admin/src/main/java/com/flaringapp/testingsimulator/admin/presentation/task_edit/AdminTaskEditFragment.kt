@@ -32,7 +32,7 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
     override fun initViews() = with(binding) {
         model.init(
             testId = args.testId,
-            taskId = args.taskId
+            taskId = args.taskId.takeIf { it > 0 }
         )
 
         nameEditText.doAfterTextChanged {

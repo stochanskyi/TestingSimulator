@@ -5,6 +5,7 @@ import com.flaringapp.testingsimulator.admin.data.network.features.tests.respons
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.response.AdminTestWithStatisticsModel
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponse
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponseList
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -22,6 +23,6 @@ interface AdminTestsApi {
     ): ApiResponse<AdminTestWithStatisticsModel>
 
     @POST("Test")
-    suspend fun createTest(request: CreateTestRequest): ApiResponse<AdminTestWithStatisticsModel>
+    suspend fun createTest(@Body request: CreateTestRequest): ApiResponse<AdminTestWithStatisticsModel>
 
 }

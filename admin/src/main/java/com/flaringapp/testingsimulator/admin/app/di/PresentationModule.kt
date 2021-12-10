@@ -45,8 +45,9 @@ val PresentationModule = module {
     factory { AdminTestStatusNameTransformer(get()) }
     factory { AdminTestStatusColorTransformer(get()) }
 
-    viewModel<AdminTestDetailsViewModel> { AdminTestDetailsViewModeImpl(get(), get(), get(), get(), get()) }
+    viewModel<AdminTestDetailsViewModel> { AdminTestDetailsViewModeImpl(get(), get(), get(), get(), get(), get()) }
     factory { AdminTestStatusIsEditableTransformer() }
+    factory { AdminTestStatusIsEditTaskEnabledTransformer() }
 
     viewModel<AdminTaskEditViewModel> { AdminTaskEditViewModelImpl(get(), get(), get()) }
 

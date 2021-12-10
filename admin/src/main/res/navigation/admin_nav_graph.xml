@@ -72,6 +72,10 @@
             android:id="@+id/action_fragmentAdminTest_to_fragmentAdminViewTask"
             app:destination="@id/fragmentAdminViewTask" />
 
+        <action
+            android:id="@+id/action_fragmentAdminTest_to_fragmentAdminTaskEdit"
+            app:destination="@id/fragmentAdminTaskEdit" />
+
     </fragment>
 
     <fragment
@@ -86,10 +90,6 @@
         <argument
             app:argType="string"
             android:name="taskName" />
-
-        <action
-            android:id="@+id/action_fragmentAdminViewTask_to_fragmentAdminTaskEdit"
-            app:destination="@id/fragmentAdminTaskEdit" />
 
     </fragment>
 

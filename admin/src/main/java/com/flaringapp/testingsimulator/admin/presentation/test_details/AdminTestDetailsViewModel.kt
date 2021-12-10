@@ -7,6 +7,7 @@ import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
 import com.flaringapp.testingsimulator.admin.presentation.test_details.models.*
+import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusIsEditTaskEnabledTransformer
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusIsEditableTransformer
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusNameTransformer
 import com.flaringapp.testingsimulator.core.app.common.tryAdd
@@ -29,6 +30,8 @@ abstract class AdminTestDetailsViewModel : BaseViewModel() {
 
     abstract val openViewTaskLiveData: LiveData<AdminTestDetailsOpenViewTaskViewData>
 
+    abstract val openEditTaskLiveData: LiveData<AdminTestDetailsOpenEditTaskViewData>
+
     abstract fun init(
         testId: Int,
         testName: String,
@@ -44,6 +47,7 @@ class AdminTestDetailsViewModeImpl(
     private val getTestDetailedUseCase: GetAdminTestDetailedUseCase,
     private val testStatusNameTransformer: AdminTestStatusNameTransformer,
     private val testStatusIsEditableTransformer: AdminTestStatusIsEditableTransformer,
+    private val testStatusIsEditTaskEnabledTransformer: AdminTestStatusIsEditTaskEnabledTransformer,
     private val textProvider: TextProvider,
     private val taxonomyFormatter: TaxonomyFormatter,
 ) : AdminTestDetailsViewModel() {
@@ -56,6 +60,8 @@ class AdminTestDetailsViewModeImpl(
 
     override val openViewTaskLiveData = SingleLiveEvent<AdminTestDetailsOpenViewTaskViewData>()
 
+    override val openEditTaskLiveData = SingleLiveEvent<AdminTestDetailsOpenEditTaskViewData>()
+
     private var test: AdminTestDetailed? = null
 
     override fun init(testId: Int, testName: String) {
@@ -67,14 +73,27 @@ class AdminTestDetailsViewModeImpl(
         val test = test ?: return
         val task = test.tasks.find { it.id == id } ?: return
 
-        openViewTaskLiveData.value = AdminTestDetailsOpenViewTaskViewData(
-            taskId = task.id,
-            taskName = task.name,
-        )
+        val isEditEnabled = test.status.transform(testStatusIsEditTaskEnabledTransformer)
+
+        if (isEditEnabled) {
+            openEditTaskLiveData.value = AdminTestDetailsOpenEditTaskViewData(
+                testId = test.id,
+                taskId = task.id,
+            )
+        } else {
+            openViewTaskLiveData.value = AdminTestDetailsOpenViewTaskViewData(
+                taskId = task.id,
+                taskName = task.name,
+            )
+        }
     }
 
     override fun createTask() {
-        // TODO admin test create task
+        val test = test ?: return
+
+        openEditTaskLiveData.value = AdminTestDetailsOpenEditTaskViewData(
+            testId = test.id,
+        )
     }
 
     private fun loadTest(id: Int) {

@@ -1,6 +1,7 @@
 package com.flaringapp.testingsimulator.admin.presentation.test_details
 
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flaringapp.testingsimulator.admin.R
@@ -49,6 +50,9 @@ class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_d
         openViewTaskLiveData.observe(viewLifecycleOwner) { data ->
             openViewTask(data)
         }
+        openEditTaskLiveData.observe(viewLifecycleOwner) { data ->
+            openEditTask(data)
+        }
     }
 
     private fun openViewTask(data: AdminTestDetailsOpenViewTaskViewData) {
@@ -56,6 +60,15 @@ class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_d
             taskId = data.taskId,
             taskName = data.taskName,
         )
+    }
+
+    private fun openEditTask(data: AdminTestDetailsOpenEditTaskViewData) {
+        val action = AdminTestDetailsFragmentDirections.actionFragmentAdminTestToFragmentAdminTaskEdit(
+            taskId = data.taskId ?: -1,
+            testId = data.testId
+        )
+        
+        findNavController().navigate(action)
     }
 
     private fun <T> adapterAction(action: (AdminTestDetailsItemsAdapter) -> T): T {
