@@ -22,8 +22,7 @@ class EmojiDefinitionImpl : EmojiDefinition {
         13 to R.drawable.img_emoji_win, // Average rate for user, - for admin
     )
 
-    //TODO replace with real default emoji
-    private val defaultEmoji = R.drawable.img_emoji_testing_enabled
+    private val defaultEmoji = R.drawable.img_emoji_eyes
 
     override fun getEmojiById(emojiId: Int): Int? {
         return emojisMap[emojiId]
