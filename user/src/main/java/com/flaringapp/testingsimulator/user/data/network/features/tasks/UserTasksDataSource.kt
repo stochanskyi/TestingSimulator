@@ -1,7 +1,7 @@
 package com.flaringapp.testingsimulator.user.data.network.features.tasks
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
-import com.flaringapp.testingsimulator.core.data.network.base.validate
+import com.flaringapp.testingsimulator.core.data.network.base.validateNullable
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.request.UserTaskAnswerRequest
 import com.flaringapp.testingsimulator.user.data.network.features.tasks.response.UserTaskResponse
 
@@ -16,7 +16,7 @@ class UserTasksDataSourceImpl(
 ) : UserTasksDataSource {
 
     override suspend fun answerTask(request: UserTaskAnswerRequest): CallResult<UserTaskResponse?> {
-        return api.answerTask(request).validate()
+        return api.answerTask(request).validateNullable()
     }
 
 }

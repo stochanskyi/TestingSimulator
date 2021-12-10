@@ -32,7 +32,16 @@ fun <T> Response<out ValidateableResponse<List<T>>>.validateList(): CallResult<L
 
 fun <T> Response<out ValidateableResponse<T>>.validate(): CallResult<T> {
     return validateAny { data ->
-        if (data == null) return@validateAny null
+        if (data == null) {
+            return@validateAny null
+        }
+        CallResult.Success(data)
+    }
+}
+
+fun <T> Response<out ValidateableResponse<T?>>.validateNullable(): CallResult<T?> {
+    return validateAny { data ->
+        if (data == null) CallResult.Success(null)
         CallResult.Success(data)
     }
 }
