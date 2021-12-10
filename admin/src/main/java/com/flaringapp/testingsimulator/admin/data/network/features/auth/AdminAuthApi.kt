@@ -8,7 +8,6 @@ import retrofit2.http.POST
 
 interface AdminAuthApi {
 
-    //TODO change route
     @POST("User/login")
     suspend fun login(
         @Body request: AdminLoginRequest
