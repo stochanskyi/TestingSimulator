@@ -1,6 +1,7 @@
 package com.flaringapp.testingsimulator.user.presentation.tests
 
 import com.flaringapp.testingsimulator.core.data.color.ColorProvider
+import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultList
 import com.flaringapp.testingsimulator.core.data.common.call.transformList
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
@@ -20,10 +21,14 @@ class UserTestsBehaviour(
 
     private var tests: List<UserTest> = emptyList()
 
-    override suspend fun getTests(moduleId: Int): CallResultList<TestViewData> {
-        return getTestsUseCase(moduleId)
+    override suspend fun getTests(topicId: Int): CallResultList<TestViewData> {
+        return getTestsUseCase(topicId)
             .doOnSuccess { tests = it }
             .transformList { this.toViewData() }
+    }
+
+    override suspend fun createTest(topicId: Int): CallResult<Test> {
+        return CallResult.Error("Not available")
     }
 
     override fun getTest(testId: Int): Test? {

@@ -37,7 +37,7 @@ val PresentationModule = module {
 
     factory<TestsNavigator> { AdminTestsNavigator() }
     factory<TestsFragmentArgsHandler> { AdminTestsFragmentArgsHandler() }
-    factory<TestsBehaviour> { AdminTestsBehaviour(get(), get(), get(), get()) }
+    factory<TestsBehaviour> { AdminTestsBehaviour(get(), get(), get(), get(), get()) }
     factory { AdminTestStatusNameTransformer(get()) }
     factory { AdminTestStatusColorTransformer(get()) }
 

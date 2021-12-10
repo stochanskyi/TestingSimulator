@@ -1,6 +1,9 @@
 package com.flaringapp.testingsimulator.admin.presentation.tests
 
+import com.flaringapp.testingsimulator.admin.domain.tests.AdminCreateTestUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
+import com.flaringapp.testingsimulator.core.app.common.withMainContext
+import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultList
 import com.flaringapp.testingsimulator.core.data.common.call.transformList
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
@@ -12,17 +15,26 @@ import com.flaringapp.testingsimulator.presentation.features.tests.models.TestVi
 
 class AdminTestsBehaviour(
     private val getTestsUseCase: GetTestsUseCase<AdminTest>,
+    private val createTestUseCase: AdminCreateTestUseCase,
     private val textProvider: TextProvider,
     private val testStatusNameTransformer: AdminTestStatusNameTransformer,
     private val testStatusColorTransformer: AdminTestStatusColorTransformer,
 ) : TestsBehaviour {
 
-    private var tests: List<AdminTest> = emptyList()
+    private var tests: MutableList<AdminTest> = mutableListOf()
 
-    override suspend fun getTests(moduleId: Int): CallResultList<TestViewData> {
-        return getTestsUseCase(moduleId)
-            .doOnSuccess { tests = it }
+    override suspend fun getTests(topicId: Int): CallResultList<TestViewData> {
+        return getTestsUseCase(topicId)
+            .doOnSuccess { tests = it.toMutableList() }
             .transformList { this.toViewData() }
+    }
+
+    override suspend fun createTest(topicId: Int): CallResult<Test> {
+        return createTestUseCase(topicId)
+            .doOnSuccessSuspend { test ->
+                withMainContext { tests.add(test) }
+            }
+            .transform { this }
     }
 
     override fun getTest(testId: Int): Test? {
