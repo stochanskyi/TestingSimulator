@@ -5,14 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/Text.Medium"
-        android:id="@+id/name_text_view"
+    <EditText
+        style="@style/InputNoUnderline"
+        android:id="@+id/name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"
         android:textSize="20sp"
+        android:inputType="text|textCapWords"
+        android:maxLines="1"
+        android:maxLength="64"
+        android:imeOptions="actionDone"
         tools:text="Test 1" />
 
     <View

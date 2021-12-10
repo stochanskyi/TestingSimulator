@@ -23,13 +23,13 @@ import java.util.concurrent.atomic.AtomicInteger
 
 abstract class AdminTaskEditViewModel : BaseViewModel() {
 
-    abstract val loadingLiveData: LiveData<Boolean>
+    abstract val taskNameLiveData: LiveData<String>
 
-    abstract val addNewBlockLiveData: LiveData<AddBlockViewData>
+    abstract val loadingLiveData: LiveData<Boolean>
 
     abstract val blocksLiveData: LiveData<MutableList<AdminTaskEditBlockViewData>>
 
-    abstract val taskNameLiveData: LiveData<String>
+    abstract val addNewBlockLiveData: LiveData<AddBlockViewData>
 
     abstract val removeBlockAtPositionLiveData: LiveData<Int>
 
@@ -37,9 +37,9 @@ abstract class AdminTaskEditViewModel : BaseViewModel() {
 
     abstract fun init(testId: Int, taskId: Int?)
 
-    abstract fun createBlock()
-
     abstract fun setName(name: String)
+
+    abstract fun createBlock()
 
     abstract fun setBlockText(id: Int, text: String)
 
@@ -74,11 +74,16 @@ class AdminTaskEditViewModelImpl(
 
     private var proceedJob: Job? = null
 
-    override val loadingLiveData = MutableLiveData<Boolean>()
-    override val addNewBlockLiveData = SingleLiveEvent<AddBlockViewData>()
-    override val blocksLiveData = MutableLiveData<MutableList<AdminTaskEditBlockViewData>>()
     override val taskNameLiveData = MutableLiveData<String>()
+
+    override val loadingLiveData = MutableLiveData<Boolean>()
+
+    override val blocksLiveData = MutableLiveData<MutableList<AdminTaskEditBlockViewData>>()
+
+    override val addNewBlockLiveData = SingleLiveEvent<AddBlockViewData>()
+
     override val removeBlockAtPositionLiveData = SingleLiveEvent<Int>()
+
     override val openTestScreen = SingleLiveEvent<Unit>()
 
     private val taskIds = AtomicInteger(0)
@@ -90,6 +95,11 @@ class AdminTaskEditViewModelImpl(
         if (taskId != null) {
             loadTask(taskId)
         }
+    }
+
+    override fun setName(name: String) {
+        this.name = name
+        taskNameLiveData.value = name
     }
 
     override fun createBlock() {
@@ -104,11 +114,6 @@ class AdminTaskEditViewModelImpl(
 
         orderedBlocks.add(newBlock)
         addNewBlockLiveData.value = AddBlockViewData(position, newBlock.toViewData())
-    }
-
-    override fun setName(name: String) {
-        this.name = name
-        taskNameLiveData.value = name
     }
 
     override fun setBlockText(id: Int, text: String) {

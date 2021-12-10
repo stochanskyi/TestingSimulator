@@ -1,5 +1,6 @@
 package com.flaringapp.testingsimulator.admin.presentation.task_edit
 
+import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,6 +9,8 @@ import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.databinding.FragmentAdminTaskEditBinding
 import com.flaringapp.testingsimulator.admin.presentation.task_edit.adapter.AdminTaskEditBlockTouchCallback
 import com.flaringapp.testingsimulator.admin.presentation.task_edit.adapter.AdminTaskEditBlocksAdapter
+import com.flaringapp.testingsimulator.core.presentation.utils.doOnDoneClicked
+import com.flaringapp.testingsimulator.core.presentation.utils.hideKeyboard
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
 import com.flaringapp.testingsimulator.presentation.common.recycler.drag.TouchDragListener
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
@@ -23,6 +26,13 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
     )
 
     override fun initViews() = with(binding) {
+        nameEditText.doAfterTextChanged {
+            model.setName(it.toString())
+        }
+        nameEditText.doOnDoneClicked {
+            hideKeyboard()
+        }
+
         recyclerBlocks.layoutManager = LinearLayoutManager(requireContext())
         recyclerBlocks.addItemDecoration(
             AdminTaskEditBlockItemDecoration()
@@ -82,8 +92,8 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
             }
         }
 
-        model.taskNameLiveData.observe(viewLifecycleOwner) { data ->
-            //TODO
+        model.taskNameLiveData.observeOnce(viewLifecycleOwner) { name ->
+            binding.nameEditText.setText(name)
         }
 
         model.removeBlockAtPositionLiveData.observe(viewLifecycleOwner) { position ->
