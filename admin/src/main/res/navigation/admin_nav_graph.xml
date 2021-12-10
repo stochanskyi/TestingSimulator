@@ -96,6 +96,7 @@
     <fragment
         android:id="@+id/fragmentAdminTaskEdit"
         android:name="com.flaringapp.testingsimulator.admin.presentation.task_edit.AdminTaskEditFragment"
+        android:label="Edit task"
         tools:layout="@layout/fragment_admin_task_edit">
 
         <argument
