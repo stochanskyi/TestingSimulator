@@ -7,6 +7,7 @@ import com.flaringapp.testingsimulator.admin.domain.tasks.CreateTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.EditTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.GetAdminTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.AdminCreateTestUseCase
+import com.flaringapp.testingsimulator.admin.domain.tests.AdminReadyToPublishTestUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestsUseCase
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
@@ -34,6 +35,8 @@ val UseCaseModule = module {
     factory<GetTestsUseCase<AdminTest>> { GetAdminTestsUseCase(get()) }
     factory { AdminCreateTestUseCase(get()) }
     factory { GetAdminTestDetailedUseCase(get()) }
+    factory { AdminReadyToPublishTestUseCase(get()) }
+    factory { AdminReadyToPublishTestUseCase(get()) }
 
     factory { CreateTaskUseCase(get()) }
     factory { EditTaskUseCase(get()) }

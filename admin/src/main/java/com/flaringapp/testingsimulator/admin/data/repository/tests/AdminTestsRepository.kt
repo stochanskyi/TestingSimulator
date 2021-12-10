@@ -1,6 +1,7 @@
 package com.flaringapp.testingsimulator.admin.data.repository.tests
 
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.AdminTestsDataSource
+import com.flaringapp.testingsimulator.admin.data.network.features.tests.request.ChangeTestStateRequest
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.request.CreateTestRequest
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTestDetailed
@@ -14,6 +15,8 @@ interface AdminTestsRepository {
     suspend fun createTest(topicId: Int): CallResult<AdminTest>
 
     suspend fun getTestDetailed(testId: Int): CallResult<AdminTestDetailed>
+
+    suspend fun changeTestState(testId: Int, state: Int): CallResult<AdminTestDetailed>
 
 }
 
@@ -36,6 +39,15 @@ class AdminTestsRepositoryImpl(
 
     override suspend fun getTestDetailed(testId: Int): CallResult<AdminTestDetailed> {
         return adminTestsDataSource.getTest(testId)
+            .transform { adminTestMapper.mapTestWithStatistics(this) }
+    }
+
+    override suspend fun changeTestState(
+        testId: Int,
+        state: Int
+    ): CallResult<AdminTestDetailed> {
+        val request = ChangeTestStateRequest(testId, state)
+        return adminTestsDataSource.changeTestState(request)
             .transform { adminTestMapper.mapTestWithStatistics(this) }
     }
 }

@@ -1,5 +1,6 @@
 package com.flaringapp.testingsimulator.admin.data.network.features.tests
 
+import com.flaringapp.testingsimulator.admin.data.network.features.tests.request.ChangeTestStateRequest
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.request.CreateTestRequest
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.response.AdminTestResponse
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.response.AdminTestWithStatisticsModel
@@ -15,6 +16,10 @@ interface AdminTestsDataSource {
     suspend fun getTest(testId: Int): CallResult<AdminTestWithStatisticsModel>
 
     suspend fun createTest(request: CreateTestRequest): CallResult<AdminTestResponse>
+
+    suspend fun changeTestState(
+        request: ChangeTestStateRequest
+    ): CallResult<AdminTestWithStatisticsModel>
 
 }
 
@@ -32,5 +37,11 @@ class AdminTestsDataSourceImpl(
 
     override suspend fun createTest(request: CreateTestRequest): CallResult<AdminTestResponse> {
         return testsApi.createTest(request).validate()
+    }
+
+    override suspend fun changeTestState(
+        request: ChangeTestStateRequest
+    ): CallResult<AdminTestWithStatisticsModel> {
+        return testsApi.changeTestState(request).validate()
     }
 }

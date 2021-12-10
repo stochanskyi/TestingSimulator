@@ -1,14 +1,12 @@
 package com.flaringapp.testingsimulator.admin.data.network.features.tests
 
+import com.flaringapp.testingsimulator.admin.data.network.features.tests.request.ChangeTestStateRequest
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.request.CreateTestRequest
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.response.AdminTestResponse
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.response.AdminTestWithStatisticsModel
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponse
 import com.flaringapp.testingsimulator.core.data.network.base.ApiResponseList
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface AdminTestsApi {
 
@@ -24,5 +22,10 @@ interface AdminTestsApi {
 
     @POST("Test")
     suspend fun createTest(@Body request: CreateTestRequest): ApiResponse<AdminTestResponse>
+
+    @PUT("Test/state")
+    suspend fun changeTestState(
+        @Body request: ChangeTestStateRequest
+    ): ApiResponse<AdminTestWithStatisticsModel>
 
 }
