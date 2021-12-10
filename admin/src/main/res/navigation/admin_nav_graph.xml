@@ -55,7 +55,6 @@
         android:label="Edit profile"
         tools:layout="@layout/fragment_edit_profile" />
 
-
     <fragment
         android:id="@+id/fragmentAdminTest"
         android:name="com.flaringapp.testingsimulator.admin.presentation.test_details.AdminTestDetailsFragment"
@@ -68,6 +67,25 @@
         <argument
             app:argType="string"
             android:name="testName" />
+
+        <action
+            android:id="@+id/action_fragmentAdminTest_to_fragmentAdminViewTask"
+            app:destination="@id/fragmentAdminViewTask" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAdminViewTask"
+        android:name="com.flaringapp.testingsimulator.admin.presentation.task_view.AdminViewTaskFragment"
+        tools:layout="@layout/fragment_admin_task_view">
+
+        <argument
+            app:argType="integer"
+            android:name="taskId" />
+
+        <argument
+            app:argType="string"
+            android:name="taskName" />
 
     </fragment>
 

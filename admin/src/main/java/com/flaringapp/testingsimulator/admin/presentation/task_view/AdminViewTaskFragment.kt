@@ -1,6 +1,7 @@
 package com.flaringapp.testingsimulator.admin.presentation.task_view
 
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flaringapp.testingsimulator.admin.R
 import com.flaringapp.testingsimulator.admin.databinding.FragmentAdminTaskViewBinding
@@ -18,11 +19,18 @@ class AdminViewTaskFragment : ModelledFragment(R.layout.fragment_admin_task_view
         FragmentAdminTaskViewBinding::bind
     )
 
+    private val args: AdminViewTaskFragmentArgs by navArgs()
+
     override fun initViews() = with(binding) {
         blocksRecycler.layoutManager = LinearLayoutManager(requireContext())
         blocksRecycler.adapter = AdminViewTaskBlocksAdapter()
         blocksRecycler.addItemDecoration(
             AdminViewTaskBlocksSpacingDecoration()
+        )
+
+        model.init(
+            taskId = args.taskId,
+            taskName = args.taskName,
         )
     }
 
