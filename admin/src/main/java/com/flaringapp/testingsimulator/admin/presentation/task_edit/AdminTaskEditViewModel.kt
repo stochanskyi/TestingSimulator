@@ -159,7 +159,7 @@ class AdminTaskEditViewModelImpl(
 
             safeCall { editTaskUseCase(task) } ?: return@startLoadingTask
 
-            openTestScreen.call()
+            withMainContext { openTestScreen.call() }
         }
     }
 
@@ -175,7 +175,7 @@ class AdminTaskEditViewModelImpl(
                 )
             } ?: return@startLoadingTask
 
-            openTestScreen.call()
+            withMainContext { openTestScreen.call() }
         }
     }
 
@@ -229,7 +229,7 @@ class AdminTaskEditViewModelImpl(
     }
 
     private fun AdminTaskBlock.asAdminBlockCreation(): AdminBlockCreation {
-        return AdminBlockCreation(name, isEnabled, linkedBlockId)
+        return AdminBlockCreation(text, isEnabled, linkedBlockId)
     }
 
 }
