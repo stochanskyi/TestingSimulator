@@ -6,6 +6,7 @@ import androidx.core.widget.doAfterTextChanged
 import com.flaringapp.testingsimulator.core.presentation.utils.doOnDoneClicked
 import com.flaringapp.testingsimulator.core.presentation.utils.hideKeyboardAndClearCurrentFocus
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
+import com.flaringapp.testingsimulator.core.presentation.views.input.NoSpacesInputFilter
 import com.flaringapp.testingsimulator.presentation.features.auth.launcher.ScreenLauncher
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentSignUpBinding
@@ -23,6 +24,7 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
     private val screenLauncher: ScreenLauncher by inject()
 
     override fun initViews() = with(binding) {
+        emailInputEditText.filters += NoSpacesInputFilter()
         emailInputEditText.doAfterTextChanged {
             model.setEmail(it.toString())
             emailInputLayout.error = null
@@ -47,10 +49,12 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
             model.setRole(it.toString())
             roleInputLayout.error = null
         }
+        passwordInputEditText.filters += NoSpacesInputFilter()
         passwordInputEditText.doAfterTextChanged {
             model.setPassword(it.toString())
             passwordInputLayout.error = null
         }
+        confirmPasswordInputEditText.filters += NoSpacesInputFilter()
         confirmPasswordInputEditText.doAfterTextChanged {
             model.setConfirmPassword(it.toString())
             confirmPasswordInputLayout.error = null

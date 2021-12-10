@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.flaringapp.testingsimulator.core.presentation.utils.doOnDoneClicked
 import com.flaringapp.testingsimulator.core.presentation.utils.hideKeyboardAndClearCurrentFocus
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.observeOnce
+import com.flaringapp.testingsimulator.core.presentation.views.input.NoSpacesInputFilter
 import com.flaringapp.testingsimulator.presentation.features.auth.launcher.ScreenLauncher
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentLoginBinding
@@ -24,14 +25,18 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
     private val screenLauncher: ScreenLauncher by inject()
 
     override fun initViews() = with(binding) {
+        emailInputEditText.filters += NoSpacesInputFilter()
         emailInputEditText.doAfterTextChanged {
             model.setEmail(it.toString())
             binding.emailInputLayout.error = null
         }
+
+        emailInputEditText.filters += NoSpacesInputFilter()
         passwordInputEditText.doAfterTextChanged {
             model.setPassword(it.toString())
             binding.passwordInputLayout.error = null
         }
+
         passwordInputEditText.doOnDoneClicked {
             signInButton.performClick()
         }
