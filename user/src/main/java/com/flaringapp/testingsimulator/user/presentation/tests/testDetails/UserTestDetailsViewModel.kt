@@ -10,7 +10,6 @@ import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLi
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.data.taxonomy.DefaultTaxonomyFormatterConfig
-import com.flaringapp.testingsimulator.presentation.features.tests.models.TestDetailNavArgs
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 import com.flaringapp.testingsimulator.user.R
 import com.flaringapp.testingsimulator.user.domain.tests.GetUserTestDetailsUseCase
@@ -20,6 +19,7 @@ import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.model
 import com.flaringapp.testingsimulator.user.presentation.tests.testDetails.models.UserTestStatusViewData
 
 abstract class UserTestDetailsViewModel : BaseViewModel() {
+
     abstract val loadingLiveData: LiveData<Boolean>
 
     abstract val testNameLiveData: LiveData<String>
@@ -36,12 +36,11 @@ abstract class UserTestDetailsViewModel : BaseViewModel() {
 }
 
 class UserTestDetailsViewModelImpl(
+    private val getUserTestDetailsUseCase: GetUserTestDetailsUseCase,
     private val textProvider: TextProvider,
     private val colorProvider: ColorProvider,
     private val taxonomyFormatter: TaxonomyFormatter,
-    private val getUserTestDetailsUseCase: GetUserTestDetailsUseCase,
-
-    ) : UserTestDetailsViewModel() {
+) : UserTestDetailsViewModel() {
 
     private var testDetails: UserTestDetails? = null
 
@@ -89,13 +88,11 @@ class UserTestDetailsViewModelImpl(
 
     private fun updateStatistics(testDetails: UserTestDetails) {
         val statistics = createCustomStatistics(testDetails) + testDetails.statistics
-
         testStatisticsLiveData.value = taxonomyFormatter.format(statistics)
     }
 
     private fun createCustomStatistics(testDetails: UserTestDetails): Map<String, String> {
         val tasksCount = testDetails.tasksCount.toString()
-
         return mapOf(textProvider.getString(R.string.statistics_tests_count) to tasksCount)
     }
 
