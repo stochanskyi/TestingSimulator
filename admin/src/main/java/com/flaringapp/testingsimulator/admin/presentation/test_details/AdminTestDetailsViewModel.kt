@@ -12,18 +12,20 @@ import com.flaringapp.testingsimulator.admin.presentation.test_details.models.Ad
 import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsTaskViewData
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusIsEditableTransformer
 import com.flaringapp.testingsimulator.admin.presentation.tests.AdminTestStatusNameTransformer
-import com.flaringapp.testingsimulator.core.app.common.launchOnIO
 import com.flaringapp.testingsimulator.core.app.common.tryAdd
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.data.textprovider.TextProvider
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.LiveDataList
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.MutableLiveDataList
+import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
 import com.flaringapp.testingsimulator.domain.features.taxonomy.TaxonomyFormatter
 import com.flaringapp.testingsimulator.presentation.mvvm.BaseViewModel
 
 abstract class AdminTestDetailsViewModel : BaseViewModel() {
 
     abstract val nameLiveData: LiveData<String>
+
+    abstract val loadingLiveData: LiveData<Boolean>
 
     abstract val listItemsLiveData: LiveDataList<AdminTestDetailsItemViewData>
 
@@ -48,6 +50,8 @@ class AdminTestDetailsViewModeImpl(
 
     override val nameLiveData = MutableLiveData<String>()
 
+    override val loadingLiveData = MutableLiveData(false)
+
     override val listItemsLiveData = MutableLiveDataList<AdminTestDetailsItemViewData>()
 
     private var test: AdminTestDetailed? = null
@@ -66,10 +70,10 @@ class AdminTestDetailsViewModeImpl(
     }
 
     private fun loadTest(id: Int) {
-        viewModelScope.launchOnIO {
+        viewModelScope.startLoadingTask(loadingLiveData) {
             val loadedTest = safeCall {
                 getTestDetailedUseCase(id)
-            } ?: return@launchOnIO
+            } ?: return@startLoadingTask
 
             test = loadedTest
 

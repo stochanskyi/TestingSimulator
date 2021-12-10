@@ -1,6 +1,7 @@
 package com.flaringapp.testingsimulator.admin.presentation.test_details
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flaringapp.testingsimulator.admin.R
@@ -42,6 +43,9 @@ class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_d
             updateAppBarConfiguration {
                 this.title = title
             }
+        }
+        loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.isVisible = isLoading
         }
         listItemsLiveData.observe(viewLifecycleOwner) { items ->
             adapterAction { it.submitList(items) }
