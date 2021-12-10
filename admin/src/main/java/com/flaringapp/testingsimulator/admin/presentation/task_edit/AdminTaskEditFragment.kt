@@ -1,5 +1,6 @@
 package com.flaringapp.testingsimulator.admin.presentation.task_edit
 
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -76,8 +77,8 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
 
     override fun observeModel() {
 
-        model.loadingLiveData.observe(viewLifecycleOwner) {
-            // TODO
+        model.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.isVisible = isLoading
         }
 
         model.addNewBlockLiveData.observe(viewLifecycleOwner) { data ->
