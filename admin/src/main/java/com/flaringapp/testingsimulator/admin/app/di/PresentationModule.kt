@@ -12,6 +12,8 @@ import com.flaringapp.testingsimulator.admin.presentation.task_view.AdminViewTas
 import com.flaringapp.testingsimulator.admin.presentation.task_view.AdminViewTaskViewModelImpl
 import com.flaringapp.testingsimulator.admin.presentation.test_details.AdminTestDetailsViewModeImpl
 import com.flaringapp.testingsimulator.admin.presentation.test_details.AdminTestDetailsViewModel
+import com.flaringapp.testingsimulator.admin.presentation.test_details.AdminTestStatusActionTransformer
+import com.flaringapp.testingsimulator.admin.presentation.test_details.AdminTestStatusChangeUseCaseProvider
 import com.flaringapp.testingsimulator.admin.presentation.tests.*
 import com.flaringapp.testingsimulator.admin.presentation.topics.AdminTopicsNavigator
 import com.flaringapp.testingsimulator.presentation.features.auth.login.LoginViewBehaviour
@@ -45,9 +47,13 @@ val PresentationModule = module {
     factory { AdminTestStatusNameTransformer(get()) }
     factory { AdminTestStatusColorTransformer(get()) }
 
-    viewModel<AdminTestDetailsViewModel> { AdminTestDetailsViewModeImpl(get(), get(), get(), get(), get(), get()) }
+    viewModel<AdminTestDetailsViewModel> {
+        AdminTestDetailsViewModeImpl(get(), get(), get(), get(), get(), get(), get(), get())
+    }
     factory { AdminTestStatusIsEditableTransformer() }
     factory { AdminTestStatusIsEditTaskEnabledTransformer() }
+    factory { AdminTestStatusActionTransformer(get()) }
+    factory { AdminTestStatusChangeUseCaseProvider(get(), get()) }
 
     viewModel<AdminTaskEditViewModel> { AdminTaskEditViewModelImpl(get(), get(), get()) }
 

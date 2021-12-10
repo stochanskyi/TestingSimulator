@@ -28,6 +28,8 @@ abstract class AdminTestDetailsViewModel : BaseViewModel() {
 
     abstract val listItemsLiveData: LiveDataList<AdminTestDetailsItemViewData>
 
+    abstract val actionLiveData: LiveData<String?>
+
     abstract val openViewTaskLiveData: LiveData<AdminTestDetailsOpenViewTaskViewData>
 
     abstract val openEditTaskLiveData: LiveData<AdminTestDetailsOpenEditTaskViewData>
@@ -41,6 +43,8 @@ abstract class AdminTestDetailsViewModel : BaseViewModel() {
 
     abstract fun createTask()
 
+    abstract fun moveToNextState()
+
 }
 
 class AdminTestDetailsViewModeImpl(
@@ -48,6 +52,8 @@ class AdminTestDetailsViewModeImpl(
     private val testStatusNameTransformer: AdminTestStatusNameTransformer,
     private val testStatusIsEditableTransformer: AdminTestStatusIsEditableTransformer,
     private val testStatusIsEditTaskEnabledTransformer: AdminTestStatusIsEditTaskEnabledTransformer,
+    private val testStatusActionTransformer : AdminTestStatusActionTransformer,
+    private val testStatusChangeStatusUseCaseProvider : AdminTestStatusChangeUseCaseProvider,
     private val textProvider: TextProvider,
     private val taxonomyFormatter: TaxonomyFormatter,
 ) : AdminTestDetailsViewModel() {
@@ -57,6 +63,8 @@ class AdminTestDetailsViewModeImpl(
     override val loadingLiveData = MutableLiveData(false)
 
     override val listItemsLiveData = MutableLiveDataList<AdminTestDetailsItemViewData>()
+
+    override val actionLiveData = MutableLiveData<String?>()
 
     override val openViewTaskLiveData = SingleLiveEvent<AdminTestDetailsOpenViewTaskViewData>()
 
@@ -96,20 +104,41 @@ class AdminTestDetailsViewModeImpl(
         )
     }
 
+    override fun moveToNextState() {
+        val lastTest = test ?: return
+        val useCase = lastTest.status.transform(testStatusChangeStatusUseCaseProvider) ?: return
+
+        viewModelScope.startLoadingTask(loadingLiveData) {
+            val loadedTest = safeCall {
+                useCase(lastTest.id)
+            } ?: return@startLoadingTask
+
+
+            withMainContext {
+                test = loadedTest
+                updateUI(loadedTest)
+            }
+        }
+    }
+
     private fun loadTest(id: Int) {
         viewModelScope.startLoadingTask(loadingLiveData) {
             val loadedTest = safeCall {
                 getTestDetailedUseCase(id)
             } ?: return@startLoadingTask
 
-            test = loadedTest
-
-            val items = composeListItemsViewData(loadedTest)
-
             withMainContext {
-                listItemsLiveData.value = items
+                test = loadedTest
+                updateUI(loadedTest)
             }
         }
+    }
+
+    private fun updateUI(test: AdminTestDetailed) {
+        val statusAction = test.status.transform(testStatusActionTransformer)
+        actionLiveData.value = statusAction
+
+        listItemsLiveData.value = composeListItemsViewData(test)
     }
 
     private fun composeListItemsViewData(

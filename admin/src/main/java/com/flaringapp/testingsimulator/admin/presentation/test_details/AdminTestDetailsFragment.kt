@@ -9,6 +9,7 @@ import com.flaringapp.testingsimulator.admin.databinding.FragmentAdminTestDetail
 import com.flaringapp.testingsimulator.admin.presentation.test_details.adapter.AdminTestDetailsItemsAdapter
 import com.flaringapp.testingsimulator.admin.presentation.test_details.models.AdminTestDetailsOpenViewTaskViewData
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.updateAppBarConfiguration
+import com.flaringapp.testingsimulator.core.presentation.utils.textWithVisibility
 import com.flaringapp.testingsimulator.presentation.mvvm.ModelledFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,6 +34,10 @@ class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_d
         recyclerListItems.addItemDecoration(
             AdminTestDetailsTaskSpacingDecoration()
         )
+
+        actionButton.setOnClickListener {
+            model.moveToNextState()
+        }
     }
 
     override fun observeModel() = with(model) {
@@ -46,6 +51,9 @@ class AdminTestDetailsFragment : ModelledFragment(R.layout.fragment_admin_test_d
         }
         listItemsLiveData.observe(viewLifecycleOwner) { items ->
             adapterAction { it.submitList(items) }
+        }
+        actionLiveData.observe(viewLifecycleOwner) { action ->
+            binding.actionButton.textWithVisibility = action
         }
         openViewTaskLiveData.observe(viewLifecycleOwner) { data ->
             openViewTask(data)
