@@ -4,6 +4,9 @@
 
     <application
         android:name=".app.AdminApplication"
-        tools:ignore="AllowBackup,MissingApplicationIcon" />
+        tools:ignore="AllowBackup,MissingApplicationIcon"
+        android:icon="@mipmap/ic_launcher_admin"
+        android:roundIcon="@mipmap/ic_launcher_admin"
+        tools:replace="android:icon, android:roundIcon" />
 
 </manifest>
