@@ -105,7 +105,7 @@ class AdminTestDetailsViewModeImpl(
         val statusNameWithStatistics = LinkedHashMap<CharSequence, CharSequence>(
             test.statistics.size + 1
         )
-        val statusLabel = textProvider.getText(R.string.task_status)
+        val statusLabel = textProvider.getText(R.string.test_status)
         val statusName = test.status.transform(testStatusNameTransformer)
 
         statusNameWithStatistics[statusLabel] = statusName

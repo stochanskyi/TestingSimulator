@@ -7,8 +7,8 @@
     <string name="task_published">Published</string>
 
     <!-- Task -->
-    <string name="task_status">Status</string>
-    <string name="button_admin_task_add_test">+ New task</string>
-    <string name="title_admin_task_add_test">Tasks</string>
+    <string name="test_status">Status</string>
+    <string name="button_admin_test_add_task">+ New task</string>
+    <string name="title_admin_test_add_task">Tasks</string>
 
 </resources>
