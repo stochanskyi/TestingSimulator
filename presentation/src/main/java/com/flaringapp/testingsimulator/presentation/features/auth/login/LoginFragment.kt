@@ -56,22 +56,21 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
             binding.signUpTextView.isVisible = it
         }
 
-        emailLiveData.observeOnce(viewLifecycleOwner) { email ->
-            binding.emailInputEditText.setText(email)
-        }
-
+        observeEmail()
         passwordLiveData.observeOnce(viewLifecycleOwner) { password ->
             binding.passwordInputEditText.setText(password)
         }
-
         rememberMeLiveData.observeOnce(viewLifecycleOwner) { rememberMe ->
             binding.rememberMeCheckBox.isChecked = rememberMe
+        }
+
+        updateEmailLiveData.observe(viewLifecycleOwner) {
+            observeEmail()
         }
 
         invalidEmailLiveData.observe(viewLifecycleOwner) {
             binding.emailInputLayout.error = getString(R.string.error_invalid_email)
         }
-
         passwordEmptyLiveData.observe(viewLifecycleOwner) {
             binding.passwordInputLayout.error = getString(R.string.error_password_empty)
         }
@@ -88,6 +87,12 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
         model.authSuccessLiveData.observe(viewLifecycleOwner) {
             activity?.finish()
             screenLauncher.launchMainScreen(context ?: return@observe)
+        }
+    }
+
+    private fun observeEmail() {
+        model.emailLiveData.observeOnce(viewLifecycleOwner) { email ->
+            binding.emailInputEditText.setText(email)
         }
     }
 

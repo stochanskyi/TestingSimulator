@@ -3,10 +3,13 @@ package com.flaringapp.testingsimulator.presentation.features.auth.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.flaringapp.testingsimulator.core.app.common.launchOnIO
 import com.flaringapp.testingsimulator.core.app.common.withMainContext
 import com.flaringapp.testingsimulator.core.presentation.utils.isRunning
 import com.flaringapp.testingsimulator.core.presentation.utils.livedata.SingleLiveEvent
 import com.flaringapp.testingsimulator.core.presentation.utils.startLoadingTask
+import com.flaringapp.testingsimulator.domain.features.auth.GetLastEmailUseCase
+import com.flaringapp.testingsimulator.domain.features.auth.IsLoggedInUseCase
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
 import com.flaringapp.testingsimulator.domain.usecase.validation.ValidateEmailUseCase
 import com.flaringapp.testingsimulator.domain.usecase.validation.ValidatePasswordEmptyUseCase
@@ -20,6 +23,8 @@ abstract class LoginViewModel : BaseViewModel() {
     abstract val emailLiveData: LiveData<String>
     abstract val passwordLiveData: LiveData<String>
     abstract val rememberMeLiveData: LiveData<Boolean>
+
+    abstract val updateEmailLiveData: LiveData<Unit>
 
     abstract val invalidEmailLiveData: LiveData<Unit>
     abstract val passwordEmptyLiveData: LiveData<Unit>
@@ -39,6 +44,8 @@ abstract class LoginViewModel : BaseViewModel() {
 }
 
 class LoginViewModelImpl(
+    private val isLoggedInUseCase: IsLoggedInUseCase,
+    private val getLastEmailUseCase: GetLastEmailUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordEmptyUseCase: ValidatePasswordEmptyUseCase,
     private val loginUseCase: LoginUseCase,
@@ -49,7 +56,9 @@ class LoginViewModelImpl(
 
     override val emailLiveData = MutableLiveData("")
     override val passwordLiveData = MutableLiveData("")
-    override val rememberMeLiveData = MutableLiveData(false)
+    override val rememberMeLiveData = MutableLiveData(true)
+
+    override val updateEmailLiveData = SingleLiveEvent<Unit>()
 
     override val invalidEmailLiveData = SingleLiveEvent<Unit>()
     override val passwordEmptyLiveData = SingleLiveEvent<Unit>()
@@ -65,6 +74,10 @@ class LoginViewModelImpl(
     private var rememberMe: Boolean = false
 
     private var loginJob: Job? = null
+
+    init {
+        initData()
+    }
 
     override fun login() {
         if (!validateCredentials()) return
@@ -88,6 +101,24 @@ class LoginViewModelImpl(
     override fun setRememberMe(remember: Boolean) {
         this.rememberMe = remember
         rememberMeLiveData.value = remember
+    }
+
+    private fun initData() {
+        if (isLoggedInUseCase()) {
+            authSuccessLiveData.call()
+            return
+        }
+
+        viewModelScope.launchOnIO {
+            val email = safeCall {
+                getLastEmailUseCase()
+            } ?: return@launchOnIO
+
+            withMainContext {
+                setEmail(email)
+                updateEmailLiveData.call()
+            }
+        }
     }
 
     private fun performLogin() {
