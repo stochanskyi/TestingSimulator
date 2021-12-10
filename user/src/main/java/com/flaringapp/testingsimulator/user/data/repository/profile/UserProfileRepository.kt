@@ -1,6 +1,7 @@
 package com.flaringapp.testingsimulator.user.data.repository.profile
 
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
+import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.data.network.features.edit_profile.EditProfileDataSource
 import com.flaringapp.testingsimulator.data.network.features.edit_profile.request.EditProfileRequest
 import com.flaringapp.testingsimulator.domain.storage.DataStorage
@@ -15,6 +16,8 @@ interface UserProfileRepository {
     suspend fun saveProfile(profile: UserProfile)
 
     suspend fun editProfile(profile: EditUserProfile): CallResult<UserProfile>
+
+    suspend fun logout(): CallResultNothing
 
 }
 
@@ -43,6 +46,11 @@ class UserProfileRepositoryImpl(
             .doOnSuccess { saveIntoStorage(it) }
     }
 
+    override suspend fun logout(): CallResultNothing {
+        clearStorage()
+        return CallResult.Success(Unit)
+    }
+
     private fun createProfileFromStorage(): UserProfile? {
         return UserProfile(
             id = dataStorage.userId,
@@ -64,6 +72,18 @@ class UserProfileRepositoryImpl(
             studying = profile.studying
             workPlace = profile.workPlace
             role = profile.role
+        }
+    }
+
+    private fun clearStorage() {
+        dataStorage.userId = -1
+        with(profileDataStorage) {
+            firstName = null
+            lastName = null
+            email = null
+            studying = null
+            workPlace = null
+            role = null
         }
     }
 

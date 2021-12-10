@@ -4,6 +4,7 @@ import com.flaringapp.testingsimulator.admin.data.storage.profile.AdminProfileDa
 import com.flaringapp.testingsimulator.admin.domain.profile.AdminProfile
 import com.flaringapp.testingsimulator.admin.domain.profile.EditAdminProfile
 import com.flaringapp.testingsimulator.core.data.common.call.CallResult
+import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.data.network.features.edit_profile.EditProfileDataSource
 import com.flaringapp.testingsimulator.data.network.features.edit_profile.request.EditProfileRequest
 import com.flaringapp.testingsimulator.domain.storage.DataStorage
@@ -15,6 +16,8 @@ interface AdminProfileRepository {
     suspend fun saveProfile(profile: AdminProfile)
 
     suspend fun editProfile(profile: EditAdminProfile): CallResult<AdminProfile>
+
+    suspend fun logout(): CallResultNothing
 
 }
 
@@ -43,6 +46,11 @@ class AdminProfileRepositoryImpl(
             .doOnSuccess { saveIntoStorage(it) }
     }
 
+    override suspend fun logout(): CallResultNothing {
+        clearStorage()
+        return CallResult.Success(Unit)
+    }
+
     private fun createProfileFromStorage(): AdminProfile? {
         return AdminProfile(
             id = dataStorage.userId,
@@ -62,6 +70,17 @@ class AdminProfileRepositoryImpl(
             email = profile.email
             workPlace = profile.workPlace
             role = profile.role
+        }
+    }
+
+    private fun clearStorage() {
+        dataStorage.userId = -1
+        with(profileDataStorage) {
+            firstName = null
+            lastName = null
+            email = null
+            workPlace = null
+            role = null
         }
     }
 
