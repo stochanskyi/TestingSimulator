@@ -5,6 +5,9 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flaringapp.testingsimulator.core.presentation.appbar.configuration.configureAppBarWithLifecycle
+import com.flaringapp.testingsimulator.core.presentation.utils.debounce.Debouncer
+import com.flaringapp.testingsimulator.core.presentation.utils.debounce.NavigationDebouncer
+import com.flaringapp.testingsimulator.core.presentation.utils.debounce.observeDebounced
 import com.flaringapp.testingsimulator.presentation.R
 import com.flaringapp.testingsimulator.presentation.common.recycler.LineItemDecoration
 import com.flaringapp.testingsimulator.presentation.databinding.FragmentTopicsBinding
@@ -20,6 +23,8 @@ class TopicsFragment : ModelledFragment(R.layout.fragment_topics) {
     override val model: TopicsViewModel by viewModel()
 
     private val binding by viewBinding { FragmentTopicsBinding.bind(it) }
+
+    private val debouncer: Debouncer by NavigationDebouncer
 
     private val navigator: TopicsNavigator by inject()
 
@@ -43,14 +48,13 @@ class TopicsFragment : ModelledFragment(R.layout.fragment_topics) {
             adapterAction { it.submitList(topics) }
         }
 
-        model.openProfileLiveData.observe(viewLifecycleOwner) {
+        model.openProfileLiveData.observeDebounced(viewLifecycleOwner, debouncer) {
             navigator.navigateToProfile(findNavController())
         }
 
-        model.openTestsLiveData.observe(viewLifecycleOwner) { topicData ->
+        model.openTestsLiveData.observeDebounced(viewLifecycleOwner, debouncer) { topicData ->
             navigator.navigateToTests(findNavController(), topicData)
         }
-
     }
 
     private fun onMenuItemSelected(item: MenuItem): Boolean {
