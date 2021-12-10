@@ -8,6 +8,8 @@ import com.flaringapp.testingsimulator.admin.presentation.navigation.tests.Admin
 import com.flaringapp.testingsimulator.admin.presentation.profile.AdminProfileBehaviour
 import com.flaringapp.testingsimulator.admin.presentation.task_edit.AdminTaskEditViewModel
 import com.flaringapp.testingsimulator.admin.presentation.task_edit.AdminTaskEditViewModelImpl
+import com.flaringapp.testingsimulator.admin.presentation.task_view.AdminViewTaskViewModel
+import com.flaringapp.testingsimulator.admin.presentation.task_view.AdminViewTaskViewModelImpl
 import com.flaringapp.testingsimulator.admin.presentation.test_details.AdminTestDetailsViewModeImpl
 import com.flaringapp.testingsimulator.admin.presentation.test_details.AdminTestDetailsViewModel
 import com.flaringapp.testingsimulator.admin.presentation.tests.*
@@ -47,5 +49,7 @@ val PresentationModule = module {
     factory { AdminTestStatusIsEditableTransformer() }
 
     viewModel<AdminTaskEditViewModel> { AdminTaskEditViewModelImpl(get(), get(), get()) }
+
+    viewModel<AdminViewTaskViewModel> { AdminViewTaskViewModelImpl() }
 
 }

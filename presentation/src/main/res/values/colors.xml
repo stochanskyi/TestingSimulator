@@ -39,5 +39,7 @@
     <color name="statistics_win_bg">#FAF8F5</color>
     <color name="statistics_win_accent">#FCC63F</color>
     <color name="statistics_win_variant">#A89F88</color>
+
+    <color name="block_disabled_bg">#F0F0F0</color>
     
 </resources>
