@@ -46,9 +46,9 @@ class AdminTestMapperImpl : AdminTestMapper {
 
     private fun mapStatus(status: Int): AdminTestStatus {
         return when (status) {
-            1 -> DraftAdminTestStatus()
-            2 -> ReadyToPublishAdminTestStatus()
-            3 -> PublishedAdminTestStatus()
+            0 -> DraftAdminTestStatus()
+            1 -> ReadyToPublishAdminTestStatus()
+            2 -> PublishedAdminTestStatus()
             else -> throw IllegalStateException("Test status $status not supported by admin")
         }
     }

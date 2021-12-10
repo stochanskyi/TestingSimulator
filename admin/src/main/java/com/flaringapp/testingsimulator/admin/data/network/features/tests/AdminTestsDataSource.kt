@@ -14,7 +14,7 @@ interface AdminTestsDataSource {
 
     suspend fun getTest(testId: Int): CallResult<AdminTestWithStatisticsModel>
 
-    suspend fun createTest(request: CreateTestRequest): CallResult<AdminTestWithStatisticsModel>
+    suspend fun createTest(request: CreateTestRequest): CallResult<AdminTestResponse>
 
 }
 
@@ -30,7 +30,7 @@ class AdminTestsDataSourceImpl(
         return testsApi.getTest(testId).validate()
     }
 
-    override suspend fun createTest(request: CreateTestRequest): CallResult<AdminTestWithStatisticsModel> {
+    override suspend fun createTest(request: CreateTestRequest): CallResult<AdminTestResponse> {
         return testsApi.createTest(request).validate()
     }
 }

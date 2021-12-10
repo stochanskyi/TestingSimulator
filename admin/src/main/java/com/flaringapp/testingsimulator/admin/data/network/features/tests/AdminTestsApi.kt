@@ -23,6 +23,6 @@ interface AdminTestsApi {
     ): ApiResponse<AdminTestWithStatisticsModel>
 
     @POST("Test")
-    suspend fun createTest(@Body request: CreateTestRequest): ApiResponse<AdminTestWithStatisticsModel>
+    suspend fun createTest(@Body request: CreateTestRequest): ApiResponse<AdminTestResponse>
 
 }

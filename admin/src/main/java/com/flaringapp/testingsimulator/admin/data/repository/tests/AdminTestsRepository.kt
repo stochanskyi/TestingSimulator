@@ -11,7 +11,7 @@ interface AdminTestsRepository {
 
     suspend fun getTests(topicId: Int): CallResultList<AdminTest>
 
-    suspend fun createTest(topicId: Int): CallResult<AdminTestDetailed>
+    suspend fun createTest(topicId: Int): CallResult<AdminTest>
 
     suspend fun getTestDetailed(testId: Int): CallResult<AdminTestDetailed>
 
@@ -27,11 +27,11 @@ class AdminTestsRepositoryImpl(
             .transform { adminTestMapper.mapTests(this) }
     }
 
-    override suspend fun createTest(topicId: Int): CallResult<AdminTestDetailed> {
+    override suspend fun createTest(topicId: Int): CallResult<AdminTest> {
         val request = CreateTestRequest(topicId)
 
         return adminTestsDataSource.createTest(request)
-            .transform { adminTestMapper.mapTestWithStatistics(this) }
+            .transform { adminTestMapper.mapTest(this) }
     }
 
     override suspend fun getTestDetailed(testId: Int): CallResult<AdminTestDetailed> {
