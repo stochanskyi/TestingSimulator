@@ -102,7 +102,6 @@ class AdminTaskEditViewModelImpl(
     override fun setName(name: String) {
         this.name = name
         taskNameLiveData.value = name
-        updateNameLiveData.call()
     }
 
     override fun createBlock() {
