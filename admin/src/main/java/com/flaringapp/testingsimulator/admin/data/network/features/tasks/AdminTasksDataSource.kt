@@ -8,7 +8,10 @@ import com.flaringapp.testingsimulator.core.data.network.base.validate
 
 interface AdminTasksDataSource {
 
+    fun getTask(taskId: Int): CallResult<AdminTaskResponse>
+
     fun createTask(request: CreateAdminTaskRequest): CallResult<AdminTaskResponse>
+
     fun editTask(request: EditAdminTaskRequest): CallResult<AdminTaskResponse>
 
 }
@@ -16,6 +19,11 @@ interface AdminTasksDataSource {
 class AdminTasksDataSourceImpl(
     private val api: AdminTasksApi
 ) : AdminTasksDataSource {
+
+    override fun getTask(taskId: Int): CallResult<AdminTaskResponse> {
+        return api.getTask(taskId).validate()
+    }
+
     override fun createTask(request: CreateAdminTaskRequest): CallResult<AdminTaskResponse> {
         return api.createTask(request).validate()
     }

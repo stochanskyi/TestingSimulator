@@ -12,6 +12,8 @@ import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 
 interface AdminTasksRepository {
 
+    suspend fun getTask(taskId: Int): CallResult<AdminTaskDetailed>
+
     suspend fun createTask(
         testId: Int,
         taskName: String,
@@ -28,6 +30,12 @@ class AdminTasksRepositoryImpl(
     private val addBlockMapper: AdminAddBlockMapper,
     private val taskDetailedMapper: AdminTaskDetailedMapper
 ) : AdminTasksRepository {
+
+    override suspend fun getTask(taskId: Int): CallResult<AdminTaskDetailed> {
+        return adminTasksDataSource.getTask(taskId)
+            .transform { taskDetailedMapper.mapTask(this) }
+    }
+
     override suspend fun createTask(
         testId: Int,
         taskName: String,
@@ -45,7 +53,7 @@ class AdminTasksRepositoryImpl(
 
     override suspend fun editTask(task: AdminTaskEdition): CallResult<AdminTaskDetailed> {
         val request = taskEditionMapper.mapToRequest(task)
-
-        return adminTasksDataSource.editTask(request).transform { taskDetailedMapper.mapTask(this) }
+        return adminTasksDataSource.editTask(request)
+            .transform { taskDetailedMapper.mapTask(this) }
     }
 }

@@ -1,6 +1,5 @@
 package com.flaringapp.testingsimulator.admin.data.repository.tasks.mappers
 
-import com.flaringapp.testingsimulator.admin.data.network.features.tasks.request.CreateAdminTaskRequest
 import com.flaringapp.testingsimulator.admin.data.network.features.tasks.request.EditAdminTaskRequest
 import com.flaringapp.testingsimulator.admin.domain.tasks.models.AdminTaskEdition
 
