@@ -6,10 +6,7 @@ import com.flaringapp.testingsimulator.admin.domain.profile.*
 import com.flaringapp.testingsimulator.admin.domain.tasks.CreateTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.EditTaskUseCase
 import com.flaringapp.testingsimulator.admin.domain.tasks.GetAdminTaskUseCase
-import com.flaringapp.testingsimulator.admin.domain.tests.AdminCreateTestUseCase
-import com.flaringapp.testingsimulator.admin.domain.tests.AdminReadyToPublishTestUseCase
-import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestDetailedUseCase
-import com.flaringapp.testingsimulator.admin.domain.tests.GetAdminTestsUseCase
+import com.flaringapp.testingsimulator.admin.domain.tests.*
 import com.flaringapp.testingsimulator.admin.domain.tests.models.AdminTest
 import com.flaringapp.testingsimulator.domain.features.auth.GetLastEmailUseCase
 import com.flaringapp.testingsimulator.domain.features.auth.IsLoggedInUseCase
@@ -36,7 +33,7 @@ val UseCaseModule = module {
     factory { AdminCreateTestUseCase(get()) }
     factory { GetAdminTestDetailedUseCase(get()) }
     factory { AdminReadyToPublishTestUseCase(get()) }
-    factory { AdminReadyToPublishTestUseCase(get()) }
+    factory { AdminPublishTestUseCase(get()) }
 
     factory { CreateTaskUseCase(get()) }
     factory { EditTaskUseCase(get()) }
