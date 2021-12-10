@@ -1,5 +1,6 @@
 package com.flaringapp.testingsimulator.presentation.features.auth.signup
 
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.flaringapp.testingsimulator.core.presentation.utils.doOnDoneClicked
@@ -116,8 +117,9 @@ class SignUpFragment : ModelledFragment(R.layout.fragment_sign_up) {
             binding.confirmPasswordInputLayout.error = getString(R.string.error_passwords_not_equal)
         }
 
-        model.loadingLiveData.observe(viewLifecycleOwner) {
-            //TODO show progress
+        model.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.isInvisible = !isLoading
+            binding.signUpButton.isEnabled = !isLoading
         }
 
         model.authSuccessLiveData.observe(viewLifecycleOwner) {

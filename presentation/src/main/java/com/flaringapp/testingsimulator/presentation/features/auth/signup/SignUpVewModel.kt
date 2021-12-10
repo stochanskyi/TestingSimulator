@@ -85,7 +85,7 @@ class SignUpVewModelImpl(
     override val invalidPasswordLiveData = SingleLiveEvent<Unit>()
     override val passwordsNotEqualLiveData = SingleLiveEvent<Unit>()
 
-    override val loadingLiveData = MutableLiveData<Boolean>()
+    override val loadingLiveData = MutableLiveData(false)
 
     override val authSuccessLiveData = SingleLiveEvent<Unit>()
 
