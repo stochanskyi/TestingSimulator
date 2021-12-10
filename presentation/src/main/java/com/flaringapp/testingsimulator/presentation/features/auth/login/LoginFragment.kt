@@ -78,6 +78,7 @@ class LoginFragment : ModelledFragment(R.layout.fragment_login) {
 
         loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isInvisible = !isLoading
+            binding.signInButton.isEnabled = !isLoading
         }
 
         openSignUpLiveData.observe(viewLifecycleOwner) {
