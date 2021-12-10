@@ -6,4 +6,6 @@ interface DataStorage {
 
     var userId: Int
 
+    var remember: Boolean
+
 }

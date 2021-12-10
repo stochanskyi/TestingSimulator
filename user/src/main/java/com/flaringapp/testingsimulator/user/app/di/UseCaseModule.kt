@@ -1,10 +1,13 @@
 package com.flaringapp.testingsimulator.user.app.di
 
+import com.flaringapp.testingsimulator.domain.features.auth.GetLastEmailUseCase
+import com.flaringapp.testingsimulator.domain.features.auth.IsLoggedInUseCase
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
 import com.flaringapp.testingsimulator.domain.features.profile.EditProfileUseCase
 import com.flaringapp.testingsimulator.domain.features.profile.GetProfileUseCase
 import com.flaringapp.testingsimulator.domain.features.profile.LogoutUseCase
 import com.flaringapp.testingsimulator.domain.features.tests.GetTestsUseCase
+import com.flaringapp.testingsimulator.user.domain.login.UserIsLoggedInUseCase
 import com.flaringapp.testingsimulator.user.domain.login.UserLoginUseCase
 import com.flaringapp.testingsimulator.user.domain.profile.*
 import com.flaringapp.testingsimulator.user.domain.signup.UserSignUpUseCase
@@ -18,12 +21,15 @@ import org.koin.dsl.module
 
 val UseCaseModule = module {
 
+    factory<IsLoggedInUseCase> { UserIsLoggedInUseCase(get()) }
     factory<LoginUseCase> { UserLoginUseCase(get(), get(), get()) }
 
     factory { UserSignUpUseCase(get(), get(), get()) }
 
     factory<GetProfileUseCase<UserProfile>> { GetUserProfileUseCase(get()) }
     factory<EditProfileUseCase<EditUserProfile, UserProfile>> { EditUserProfileUseCase(get()) }
+
+    factory<GetLastEmailUseCase> { GetUserEmailUseCase(get()) }
 
     factory<LogoutUseCase> { UserLogoutUseCase(get(), get()) }
 

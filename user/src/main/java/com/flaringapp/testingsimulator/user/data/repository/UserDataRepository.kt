@@ -6,6 +6,8 @@ interface UserDataRepository {
 
     var token: String?
 
+    var remember: Boolean
+
 }
 
 class UserDataRepositoryImpl(
@@ -16,5 +18,11 @@ class UserDataRepositoryImpl(
         get() = dataStorage.token
         set(value) {
             dataStorage.token = value
+        }
+
+    override var remember: Boolean
+        get() = dataStorage.remember
+        set(value) {
+            dataStorage.remember = value
         }
 }

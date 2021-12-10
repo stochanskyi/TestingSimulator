@@ -17,6 +17,10 @@ interface UserProfileRepository {
 
     suspend fun editProfile(profile: EditUserProfile): CallResult<UserProfile>
 
+    suspend fun getLastEmail(): CallResult<String>
+
+    fun isLoggedIn(): Boolean
+
     suspend fun logout(): CallResultNothing
 
 }
@@ -44,6 +48,15 @@ class UserProfileRepositoryImpl(
         return editProfileDataSource.editProfile(request)
             .transform { editProfileMapper.map(this) }
             .doOnSuccess { saveIntoStorage(it) }
+    }
+
+    override suspend fun getLastEmail(): CallResult<String> {
+        val email = profileDataStorage.email ?: ""
+        return CallResult.Success(email)
+    }
+
+    override fun isLoggedIn(): Boolean {
+        return dataStorage.token != null && dataStorage.userId != -1
     }
 
     override suspend fun logout(): CallResultNothing {
@@ -80,7 +93,6 @@ class UserProfileRepositoryImpl(
         with(profileDataStorage) {
             firstName = null
             lastName = null
-            email = null
             studying = null
             workPlace = null
             role = null

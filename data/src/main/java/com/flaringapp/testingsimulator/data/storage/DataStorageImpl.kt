@@ -12,4 +12,6 @@ class DataStorageImpl(context: Context) : BaseDataStorage(context, PREFS_NAME), 
 
     override var userId: Int by preference("user_id", -1)
 
+    override var remember: Boolean by preference("remember", true)
+
 }

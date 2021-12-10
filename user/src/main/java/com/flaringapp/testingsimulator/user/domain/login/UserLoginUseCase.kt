@@ -1,6 +1,5 @@
 package com.flaringapp.testingsimulator.user.domain.login
 
-import com.flaringapp.testingsimulator.core.data.common.call.CallResult
 import com.flaringapp.testingsimulator.core.data.common.call.CallResultNothing
 import com.flaringapp.testingsimulator.domain.features.auth.LoginUseCase
 import com.flaringapp.testingsimulator.user.data.repository.auth.UserAuthRepository
@@ -24,6 +23,7 @@ class UserLoginUseCase(
         )
             .doOnSuccess {
                 dataRepository.token = it.token
+                dataRepository.remember = rememberMe
             }
             .doOnSuccessSuspend {
                 profileRepository.saveProfile(it.profile)

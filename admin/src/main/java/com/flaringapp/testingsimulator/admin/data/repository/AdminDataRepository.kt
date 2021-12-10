@@ -6,6 +6,8 @@ interface AdminDataRepository {
 
     var token: String?
 
+    var remember: Boolean
+
 }
 
 class AdminDataRepositoryImpl(
@@ -16,5 +18,11 @@ class AdminDataRepositoryImpl(
         get() = dataStorage.token
         set(value) {
             dataStorage.token = value
+        }
+
+    override var remember: Boolean
+        get() = dataStorage.remember
+        set(value) {
+            dataStorage.remember = value
         }
 }

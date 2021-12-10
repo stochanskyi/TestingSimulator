@@ -23,6 +23,7 @@ class AdminLoginUseCase(
         )
             .doOnSuccess {
                 dataRepository.token = it.token
+                dataRepository.remember = rememberMe
             }
             .doOnSuccessSuspend {
                 profileRepository.saveProfile(it.profile)
