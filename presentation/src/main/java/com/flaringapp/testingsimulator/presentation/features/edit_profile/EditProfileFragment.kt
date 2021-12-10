@@ -1,5 +1,6 @@
 package com.flaringapp.testingsimulator.presentation.features.edit_profile
 
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.flaringapp.testingsimulator.core.presentation.utils.hideKeyboardAndClearCurrentFocus
@@ -68,8 +69,9 @@ class EditProfileFragment : ModelledFragment(R.layout.fragment_edit_profile) {
              observeFields()
         }
 
-        model.loadingLiveData.observe(viewLifecycleOwner) {
-            //TODO show progress
+        model.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.isInvisible = !isLoading
+            binding.saveButton.isEnabled = !isLoading
         }
 
         model.editSuccessLiveData.observe(viewLifecycleOwner) {

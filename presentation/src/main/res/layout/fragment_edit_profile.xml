@@ -17,8 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="16dp"
-            android:paddingTop="24dp"
-            android:paddingBottom="40dp"
+            android:paddingVertical="24dp"
             android:clipToPadding="false">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -115,6 +114,18 @@
                     android:nextFocusDown="@id/password_input_edit_text" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:minHeight="40dp" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 

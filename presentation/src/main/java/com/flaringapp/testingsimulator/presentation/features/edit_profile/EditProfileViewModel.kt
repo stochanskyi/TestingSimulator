@@ -73,7 +73,7 @@ class EditProfileViewModelImpl(
 
     override val updateFieldsLiveData = SingleLiveEvent<Unit>()
 
-    override val loadingLiveData = MutableLiveData<Boolean>()
+    override val loadingLiveData = MutableLiveData(false)
 
     override val editSuccessLiveData = SingleLiveEvent<Unit>()
 
