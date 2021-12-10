@@ -32,6 +32,8 @@ abstract class ProfileViewModel : BaseViewModel() {
     abstract val roleLiveData: LiveData<CharSequence?>
 
     abstract val statisticsLiveData: LiveDataList<ProfileStatisticsViewData>
+
+    abstract fun refreshData()
 }
 
 class ProfileViewModelImpl(
@@ -50,18 +52,17 @@ class ProfileViewModelImpl(
     override val roleLiveData = MutableLiveData<CharSequence?>(null)
     override val statisticsLiveData = MutableLiveDataList<ProfileStatisticsViewData>(emptyList())
 
+    override fun refreshData() {
+        loadProfile()
+    }
+
     init {
         taxonomyFormatter.config = DefaultTaxonomyFormatterConfig.customize(
             colorProvider = colorProvider,
             valueTextSize = 14,
         )
 
-        viewModelScope.launchOnIO {
-            listOf(
-                async { loadProfileData() },
-                async { loadStatistics() }
-            ).awaitAll()
-        }
+        loadProfile()
     }
 
     override fun handleProfileData(
@@ -81,6 +82,15 @@ class ProfileViewModelImpl(
         }
         roleLiveData.value = role?.takeIfNotEmpty()?.let {
             taxonomyFormatter.format(R.string.profile_role, role)
+        }
+    }
+
+    private fun loadProfile() {
+        viewModelScope.launchOnIO {
+            listOf(
+                async { loadProfileData() },
+                async { loadStatistics() }
+            ).awaitAll()
         }
     }
 

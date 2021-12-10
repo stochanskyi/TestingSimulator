@@ -23,6 +23,8 @@ class ProfileFragment : ModelledFragment(R.layout.fragment_profile) {
     private val navigator: ProfileNavigator by inject()
 
     override fun initViews() = with(binding) {
+        model.refreshData()
+
         recyclerStatistics.layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerStatistics.adapter = ProfileStatisticsAdapter()
         recyclerStatistics.addItemDecoration(
