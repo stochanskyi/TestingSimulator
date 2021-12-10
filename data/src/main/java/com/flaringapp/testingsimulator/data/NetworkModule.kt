@@ -23,7 +23,7 @@ val NetworkModule = module {
     }
 
     val adapter: SharedNetworkAdapter by lazy {
-        SharedNetworkAdapter(GlobalContext.get().get())
+        SharedNetworkAdapter(GlobalContext.get().get(), BuildConfig.API_URL)
     }
 
     single { adapter.createProfileStatisticsApi() }

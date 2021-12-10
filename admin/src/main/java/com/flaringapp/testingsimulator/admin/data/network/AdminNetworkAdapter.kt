@@ -4,13 +4,16 @@ import com.flaringapp.testingsimulator.admin.data.network.features.auth.AdminAut
 import com.flaringapp.testingsimulator.admin.data.network.features.tests.AdminTestsApi
 import com.flaringapp.testingsimulator.core.data.network.adapter.DelegatedNetworkAdapter
 import com.flaringapp.testingsimulator.core.data.network.adapter.NetworkAdapter
+import com.flaringapp.testingsimulator.core.data.network.adapter.withModifiers
+import com.flaringapp.testingsimulator.data.network.modifiers.token.RequestTokenAppender
 
 class AdminNetworkAdapter(
     override val delegatedAdapter: NetworkAdapter,
     apiUrl: String,
 ) : DelegatedNetworkAdapter() {
 
-    private val client = createClient(apiUrl)
+    private val client = withModifiers(RequestTokenAppender())
+        .createClient(apiUrl)
 
     fun createAuthApi(): AdminAuthApi = client.create(AdminAuthApi::class.java)
 

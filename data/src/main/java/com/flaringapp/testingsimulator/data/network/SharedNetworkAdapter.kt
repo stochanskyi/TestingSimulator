@@ -9,11 +9,12 @@ import com.flaringapp.testingsimulator.data.network.features.topics.TopicsApi
 import com.flaringapp.testingsimulator.data.network.modifiers.token.RequestTokenAppender
 
 class SharedNetworkAdapter(
-    override val delegatedAdapter: NetworkAdapter
+    override val delegatedAdapter: NetworkAdapter,
+    apiUrl: String,
 ) : DelegatedNetworkAdapter() {
 
     private val client = withModifiers(RequestTokenAppender())
-        .createClient("http://test")
+        .createClient(apiUrl)
 
     fun createProfileStatisticsApi(): ProfileStatisticsApi {
         return client.create(ProfileStatisticsApi::class.java)
