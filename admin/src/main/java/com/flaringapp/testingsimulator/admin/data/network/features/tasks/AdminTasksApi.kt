@@ -9,17 +9,17 @@ import retrofit2.http.*
 interface AdminTasksApi {
 
     @GET("Task/{taskId}")
-    fun getTask(
+    suspend fun getTask(
         @Path("taskId") task: Int
     ): ApiResponse<AdminTaskResponse>
 
     @POST("Task")
-    fun createTask(
+    suspend fun createTask(
         @Body request: CreateAdminTaskRequest
     ): ApiResponse<AdminTaskResponse>
 
     @PUT("Task")
-    fun editTask(
+    suspend fun editTask(
         @Body request: EditAdminTaskRequest
     ): ApiResponse<AdminTaskResponse>
 

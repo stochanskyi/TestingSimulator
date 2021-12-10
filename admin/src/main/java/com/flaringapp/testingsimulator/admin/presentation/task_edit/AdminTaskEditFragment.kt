@@ -35,6 +35,9 @@ class AdminTaskEditFragment : ModelledFragment(R.layout.fragment_admin_task_edit
             taskId = args.taskId.takeIf { it > 0 }
         )
 
+
+        addBlockButton.setOnClickListener { model.createBlock() }
+
         nameEditText.doAfterTextChanged {
             model.setName(it.toString())
         }

@@ -78,7 +78,12 @@ class AdminTaskEditBlocksAdapter(
     }
 
     fun addItemAt(item: AdminTaskEditBlockViewData, positionId: Int) {
-        items[positionId] = item
+
+        if (positionId >= items.size) {
+            items.add(item)
+        } else {
+            items[positionId] = item
+        }
         notifyItemInserted(positionId)
     }
 
