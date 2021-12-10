@@ -16,5 +16,5 @@ class UserTestResponse(
     @Json(name = "tasksPassed")
     val tasksPassed: Int,
     @Json(name = "bestScore")
-    val bestScore: Int,
+    val bestScore: Int? = null,
 )
