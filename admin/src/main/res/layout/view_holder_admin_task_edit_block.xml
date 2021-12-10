@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginVertical="8dp"
+        android:hint="@string/hint_admin_task_edit_block"
         android:inputType="text|textMultiLine"
         android:maxLines="6"
         android:maxLength="1024"

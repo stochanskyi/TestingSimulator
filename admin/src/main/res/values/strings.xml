@@ -15,6 +15,8 @@
     <string name="message_admin_task_edit_hint">To mark block as a redundant, select checkbox. To link such block to the valid press “link” icon.</string>
     <string name="button_admin_task_edit_add_block">+ Add new</string>
     <string name="button_admin_task_edit_save_changes">Save changes</string>
+    <string name="hint_admin_task_name">Enter task text</string>
+    <string name="hint_admin_task_edit_block">Enter block text</string>
     <string name="button_task_edit_drag_block">Reorder block</string>
     <string name="button_admin_task_edit_link">Link block</string>
     <string name="button_admin_task_edit_remove_block">Remove block</string>
